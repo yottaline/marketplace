@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('admin_id', true, true);
+            $table->integer('admin_user')->unsigned();
+            $table->boolean('admin_status')->default('1');
+            // $table->timestamps();
         });
     }
 
