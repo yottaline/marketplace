@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'AdminController@index');
         Route::post('load', 'AdminController@load');
         Route::match(['post', 'put'], 'submit', 'AdminController@submit');
+        Route::post('edit_status', 'AdminController@editStatus');
     });
 
     Route::prefix('retailers')->group(function(){

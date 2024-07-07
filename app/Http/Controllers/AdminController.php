@@ -41,14 +41,25 @@ class AdminController extends Controller
             $param['user_code'] = uniqidReal(8);
             $param['user_created'] = Carbon::now();
             $param['user_type'] = 1;
-        } else {
-            $param['user_modified'] = Carbon::now();
         }
 
         $result = Admin::submit($param, $id);
         echo json_encode([
             'status' => boolval($result),
             'data' => $result ? Admin::fetch($id) : [],
+        ]);
+    }
+
+    function editStatus(Request $request)
+    {
+        $id = $request->admin;
+        $i = 1;
+        if($request->status == 1) $i = 0;
+        $result = Admin::updates( $id, ['admin_status' => $i]);
+
+        echo json_encode([
+            'status' => boolval($result),
+            'data'   => $result ? Admin::fetch($id) : []
         ]);
     }
 }

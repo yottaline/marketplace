@@ -60,6 +60,7 @@ class Retailer extends Model
         if($status){
             $retailer['retailer_user'] = $status->id;
             self::create($retailer);
+            $status->assignRole('retailer');
             return $status->id;
         }
         return false;

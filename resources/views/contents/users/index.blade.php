@@ -35,6 +35,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>User Name</th>
+                                        <td class="text-center">Status</td>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -49,6 +50,11 @@
                                                 <i class="bi bi-envelope-at me-1"></i>
                                                 <span ng-bind="user.user_email" class="fw-normal"></span>
                                             </small>
+                                        </td>
+                                        <td class="text-center">
+                                            <span ng-click="editStatus(user)" style="cursor:pointer"
+                                                class="badge bg-<%statusObject.color[user.admin_status]%> rounded-pill font-monospace p-2"><%statusObject.name[user.admin_status]%></span>
+
                                         </td>
                                         <td class="col-fit">
                                             <button class="btn btn-outline-primary btn-circle bi bi-pencil-square"
@@ -143,10 +149,9 @@
                                     scope.$apply(() => {
                                         scope.submitting = false;
                                         if (response.status) {
-                                            if (scope.updateUser === false) scope.list.unshift(
-                                                response.data);
+                                            if (scope.updateUser === false) scope.list =
+                                                response.data;
                                             else scope.list[scope.updateUser] = response.data;
-
                                             toastr.success('Data processed successfully');
                                             $('#userModal').modal('hide');
                                         } else toastr.error(response.message);
@@ -173,6 +178,11 @@
             });
 
         app.controller('ngCtrl', function($scope) {
+            $scope.statusObject = {
+                name: ['Blacked', 'Available'],
+                color: ['danger', 'success']
+            };
+
             $scope.submitting = false;
             $scope.noMore = false;
             $scope.loading = false;
@@ -219,6 +229,31 @@
                 $scope.updateUser = indx;
                 $('#userModal').modal('show');
             };
+
+
+            $scope.editStatus = (user) => {
+                var request = {
+                    admin: user.admin_id,
+                    status: user.admin_status,
+                    _token: '{{ csrf_token() }}'
+                };
+                $.post("/admins/edit_status", request, function(data) {
+                    if (data.status) {
+                        toastr.success('Status updated successfully');
+                        $scope.$apply(function() {
+                            if (scope.updateUser === false) {
+                                scope.list = data
+                                    .data;
+                                scope.load(true)
+                            } else {
+                                scope.list[scope
+                                    .updateUser] = data.data;
+                            }
+                        });
+                    } else toastr.error("Error");
+                }, 'json');
+            };
+
             $scope.load();
             scope = $scope;
         });
