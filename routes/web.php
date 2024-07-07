@@ -20,10 +20,17 @@ Route::get('/', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
     Route::prefix('admins')->group(function(){
         Route::get('/', 'AdminController@index');
         Route::post('load', 'AdminController@load');
         Route::match(['post', 'put'], 'submit', 'AdminController@submit');
+    });
+
+    Route::prefix('retailers')->group(function(){
+        Route::get('/', 'RetailerController@index');
+        Route::post('load', 'RetailerController@load');
+        Route::match(['post', 'put'], 'submit', 'RetailerController@submit');
     });
 });
 

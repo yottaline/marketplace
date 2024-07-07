@@ -209,7 +209,7 @@
                             $scope.noMore = ln < limit;
                             $scope.list = data;
                             console.log(data)
-                            $scope.last_id = data[ln - 1].id;
+                            $scope.last_id = data[ln - 1].admin_id;
                         }
                     });
                 }, 'json');

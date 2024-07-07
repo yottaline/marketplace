@@ -40,6 +40,7 @@ class AdminController extends Controller
         if (!$id) {
             $param['user_code'] = uniqidReal(8);
             $param['user_created'] = Carbon::now();
+            $param['user_type'] = 1;
         } else {
             $param['user_modified'] = Carbon::now();
         }
