@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
   `subcategories` (
     `subcategory_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `subcategory_code` VARCHAR(8) NOT NULL,
     `subcategory_name` VARCHAR(120) NOT NULL,
     `subcategory_category` INT UNSIGNED NOT NULL,
     `subcategory_status` BOOLEAN NOT NULL DEFAULT '1',
