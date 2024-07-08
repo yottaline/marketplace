@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Category extends Model
 {
@@ -21,6 +22,15 @@ class Category extends Model
     static function fetch($id = 0, $param = null, $limit = null, $lastId = null)
     {
         $categories = self::join('brands', 'category_brand', 'brand_id')->limit($limit)->orderBy('category_id', 'DESC');
+
+        if (isset($param['q'])) {
+            $categories->where(function (Builder $query) use ($param) {
+                $query->where('category_name',  $param['q'])
+                ->orWhere('category_code', 'like', '%' . $param['q'] . '%')
+                ->orWhere('brand_name',  $param['q']);
+            });
+            unset($param['q']);
+        }
 
         if($param) $categories->where($param);
 

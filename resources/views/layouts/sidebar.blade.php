@@ -25,13 +25,14 @@
                          <i class="bi bi-slack text-secondary me-2"></i><b>Brands</b>
                      </a>
                  </li>
-                 {{--
+
                  <li class="list-group-item nav-support">
-                     <a class="link-dark d-block" href="/ws_orders/">
-                         <i class="bi bi-clipboard2-check-fill text-secondary me-2"></i><b>Wholesale
-                             Orders</b>
+                     <a class="link-dark d-block" href="/categories/">
+                         <i class="bi bi-bezier text-secondary me-2"></i><b>Categories</b>
                      </a>
-                 </li> --}}
+                 </li>
+
+
 
                  <li class="list-group-item">
                      <a class="link-dark d-block" data-bs-toggle="collapse" href="#userCollapse" role="button"

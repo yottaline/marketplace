@@ -1,5 +1,5 @@
 @extends('index')
-@section('title', 'Brands')
+@section('title', 'Categories')
 @section('search')
     <form id="nvSearch" role="search">
         <input type="search" name="q" class="form-control my-3 my-md-0 rounded-pill" placeholder="Search...">
@@ -12,7 +12,7 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="statusFilter">Brand Code</label>
+                            <label for="statusFilter">category Code</label>
                             <input type="text" id="code-filter" class="form-control">
                         </div>
                     </div>
@@ -23,10 +23,10 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="d-flex">
-                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">BRANDS</h5>
+                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">CATEGORIES</h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
-                                    ng-click="setBrand(false)"></button>
+                                    ng-click="setCategory(false)"></button>
                                 <button type="button" class="btn btn-outline-dark btn-circle bi bi-arrow-repeat"
                                     ng-click="load(true)"></button>
                             </div>
@@ -37,25 +37,28 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
+                                        <th class="text-center">Category Name</th>
+                                        <th class="text-center">Brand Name</th>
                                         <th class="text-center">Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="brand in list track by $index">
-                                        <td ng-bind="brand.brand_code" class="small font-monospace text-uppercase">
+                                    <tr ng-repeat="category in list track by $index">
+                                        <td ng-bind="category.category_code" class="small font-monospace text-uppercase">
                                         </td>
-                                        <td ng-bind="brand.brand_name">
+                                        <td ng-bind="category.category_name" class="text-center">
+                                        </td>
+                                        <td ng-bind="category.brand_name" class="text-center">
                                         </td>
                                         <td class="text-center">
                                             <span
-                                                class="badge bg-<%statusObject.color[brand.brand_status]%> rounded-pill font-monospace p-2"><%statusObject.name[brand.brand_status]%></span>
+                                                class="badge bg-<%statusObject.color[category.category_status]%> rounded-pill font-monospace p-2"><%statusObject.name[category.category_status]%></span>
 
                                         </td>
                                         <td class="col-fit">
                                             <button class="btn btn-outline-primary btn-circle bi bi-pencil-square"
-                                                ng-click="setBrand($index)"></button>
+                                                ng-click="setCategory($index)"></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -69,21 +72,34 @@
             </div>
         </div>
 
-        <div class="modal fade" id="brandModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        <div class="modal fade" id="categoryModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
             role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form id="brandForm" method="post" action="/brands/submit">
+                        <form id="categoryForm" method="post" action="/categories/submit">
                             @csrf
-                            <input ng-if="updatebrand !== false" type="hidden" name="_method" value="put">
-                            <input type="hidden" name="id" ng-value="list[updatebrand].brand_id">
+                            <input ng-if="updatecategory !== false" type="hidden" name="_method" value="put">
+                            <input type="hidden" name="id" ng-value="list[updatecategory].category_id">
                             <div class="row">
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3">
-                                        <label for="fullName">brand Name<b class="text-danger">&ast;</b></label>
+                                        <label for="fullName">category Name<b class="text-danger">&ast;</b></label>
                                         <input id="fullName" name="name" class="form-control" maxlength="120"
-                                            ng-value="list[updatebrand].brand_name" required>
+                                            ng-value="list[updatecategory].category_name" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="brand">
+                                            Brand <b class="text-danger">&ast;</b></label>
+                                        <select name="brand" id="brand" class="form-select" required>
+                                            <option value="default">--
+                                                SELECT BRAND NAME --</option>
+                                            <option ng-repeat="b in brands" ng-value="b.brand_id" ng-bind="b.brand_name">
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -91,8 +107,9 @@
                                 <div class="col-6">
                                     <div class="form-check form-switch mb-3">
                                         <input class="form-check-input" type="checkbox" role="switch" name="status"
-                                            value="1" ng-checked="+list[updatebrand].brand_status" id="brandStatus">
-                                        <label class="form-check-label" for="brandStatus">Status</label>
+                                            value="1" ng-checked="+list[updatecategory].category_status"
+                                            id="categoryStatus">
+                                        <label class="form-check-label" for="categoryStatus">Status</label>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +117,7 @@
                         <div class="modal-footer d-flex">
                             <button type="button" class="btn btn-outline-secondary me-auto"
                                 data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="brandForm" class="btn btn-outline-primary"
+                            <button type="submit" form="categoryForm" class="btn btn-outline-primary"
                                 ng-disabled="submitting">Submit</button>
                             <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                 ng-if="submitting"></span>
@@ -110,7 +127,7 @@
 
                 <script>
                     $(function() {
-                        $('#brandForm').on('submit', e => e.preventDefault()).validate({
+                        $('#categoryForm').on('submit', e => e.preventDefault()).validate({
                             rules: {
                                 password: {
                                     password: true
@@ -137,11 +154,11 @@
                                     scope.$apply(() => {
                                         scope.submitting = false;
                                         if (response.status) {
-                                            if (scope.updatebrand === false) scope.list.unshift(
+                                            if (scope.updatecategory === false) scope.list.unshift(
                                                 response.data);
-                                            else scope.list[scope.updatebrand] = response.data;
+                                            else scope.list[scope.updatecategory] = response.data;
                                             toastr.success('Data processed successfully');
-                                            $('#brandModal').modal('hide');
+                                            $('#categoryModal').modal('hide');
                                         } else toastr.error(response.message);
                                     });
                                 }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -175,11 +192,13 @@
             $scope.noMore = false;
             $scope.loading = false;
             $scope.q = '';
-            $scope.updatebrand = false;
+            $scope.updatecategory = false;
             $scope.list = [];
             $scope.last_id = 0;
 
             $scope.jsonParse = (str) => JSON.parse(str);
+            $scope.brands = <?= json_encode($brands) ?>;
+
             $scope.load = function(reload = false) {
                 if (reload) {
                     $scope.list = [];
@@ -198,7 +217,7 @@
                     _token: '{{ csrf_token() }}'
                 };
 
-                $.post("/brands/load", request, function(data) {
+                $.post("/categories/load", request, function(data) {
 
                     var ln = data.length;
                     $scope.$apply(() => {
@@ -206,16 +225,17 @@
                         if (ln) {
                             $scope.noMore = ln < limit;
                             $scope.list = data;
-                            $scope.last_id = data[ln - 1].brand_id;
+                            $scope.last_id = data[ln - 1].category_id;
                         }
                     });
                 }, 'json');
             }
 
-            $scope.setBrand = (indx) => {
-                $scope.updatebrand = indx;
-                $('#brandModal').modal('show');
+            $scope.setCategory = (indx) => {
+                $scope.updatecategory = indx;
+                $('#categoryModal').modal('show');
             };
+
 
             $scope.load();
             scope = $scope;

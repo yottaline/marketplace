@@ -39,6 +39,12 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'BrandController@load');
         Route::match(['post', 'put'], 'submit', 'BrandController@submit');
     });
+
+    Route::prefix('categories')->group(function(){
+        Route::get('/', 'CategoryController@index');
+        Route::post('load', 'CategoryController@load');
+        Route::match(['post', 'put'], 'submit', 'CategoryController@submit');
+    });
 });
 
 
