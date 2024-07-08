@@ -32,7 +32,11 @@
                      </a>
                  </li>
 
-
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/subcategories/">
+                         <i class="bi bi-bezier2 text-secondary me-2"></i><b>Subcategories</b>
+                     </a>
+                 </li>
 
                  <li class="list-group-item">
                      <a class="link-dark d-block" data-bs-toggle="collapse" href="#userCollapse" role="button"

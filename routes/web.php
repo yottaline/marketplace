@@ -45,6 +45,12 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'CategoryController@load');
         Route::match(['post', 'put'], 'submit', 'CategoryController@submit');
     });
+
+    Route::prefix('subcategories')->group(function(){
+        Route::get('/', 'SubcategoryController@index');
+        Route::post('load', 'SubcategoryController@load');
+        Route::match(['post', 'put'], 'submit', 'SubcategoryController@submit');
+    });
 });
 
 
