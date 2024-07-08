@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'RetailerController@load');
         Route::match(['post', 'put'], 'submit', 'RetailerController@submit');
     });
+
+
 });
 
 

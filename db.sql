@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`retailer_id`),
     FOREIGN KEY (`retailer_user`) REFERENCES `users` (`id`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-  
+
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
   `customers` (
@@ -54,16 +54,17 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`customer_id`),
     FOREIGN KEY (`customer_user`) REFERENCES `users` (`id`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-  
+
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
   `brands` (
     `brand_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `brand_code` VARCHAR(8) NOT NULL,
     `brand_name` VARCHAR(120) NOT NULL,
     `brand_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`brand_id`),
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-  
+
  -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
   `categories` (
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`category_id`),
     FOREIGN KEY (`category_brand`) REFERENCES `brands` (`brand_id`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-  
+
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
   `subcategories` (
@@ -85,7 +86,7 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`subcategory_id`),
     FOREIGN KEY (`subcategory_category`) REFERENCES `categories` (`category_id`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-  
+
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
   `sizes` (
@@ -97,7 +98,7 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`brand_id`),
     FOREIGN KEY (`size_subcategory`) REFERENCES `subcategories` (`subcategory_id`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
-  
+
  -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
   `products` (
