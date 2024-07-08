@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
   `categories` (
     `category_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `category_code` VARCHAR(8) NOT NULL,
     `category_name` VARCHAR(120) NOT NULL,
     `category_brand` INT UNSIGNED NOT NULL,
     `category_status` BOOLEAN NOT NULL DEFAULT '1',
