@@ -122,6 +122,13 @@
                  </li>
              @endhasrole
 
+             @hasrole('retailer')
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/products/">
+                         <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>Products</b>
+                     </a>
+                 </li>
+             @endhasrole
 
 
          </ul>

@@ -60,8 +60,29 @@ class LoginRequest extends FormRequest
                     dd(11);
             }else{
                 RateLimiter::clear($this->throttleKey());
-                // Auth::login($user);
-                Auth::login($user);
+
+                if ($user->hasRole('admin')) {
+
+                    Auth::login($user);
+
+                } elseif ($user->hasRole('retailer')) {
+
+                   if($user->retailer_approved == 'null'){
+                        RateLimiter::hit($this->throttleKey());
+                        throw ValidationException::withMessages([
+                        'mobile' => 'Your account not approved']);
+                   }
+                   else{
+                    if($user->retailer_status == 0)   Auth::login($user);
+                    else {
+                        RateLimiter::hit($this->throttleKey());
+                        throw ValidationException::withMessages([
+                        'mobile' => 'Your account is backed']);
+                    }
+                   }
+
+                }
+
             }
         }
     }
