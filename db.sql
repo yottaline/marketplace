@@ -93,9 +93,10 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
   `sizes` (
     `size_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `size_code` VARCHAR(8) NOT NULL,
     `size_name` VARCHAR(120) NOT NULL,
     `size_subcategory` INT UNSIGNED NOT NULL,
-    `size_sign` VARCHAR(12) DEFAULT  NULL,
+    `size_sign` VARCHAR(20) DEFAULT  NULL,
     `size_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`brand_id`),
     FOREIGN KEY (`size_subcategory`) REFERENCES `subcategories` (`subcategory_id`)
