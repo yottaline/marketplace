@@ -38,6 +38,12 @@
                      </a>
                  </li>
 
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/sizes/">
+                         <i class="bi bi-aspect-ratio text-secondary me-2"></i><b>Sizes</b>
+                     </a>
+                 </li>
+
                  <li class="list-group-item">
                      <a class="link-dark d-block" data-bs-toggle="collapse" href="#userCollapse" role="button"
                          aria-expanded="false" aria-controls="userCollapse">

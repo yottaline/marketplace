@@ -51,6 +51,12 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'SubcategoryController@load');
         Route::match(['post', 'put'], 'submit', 'SubcategoryController@submit');
     });
+
+    Route::prefix('sizes')->group(function(){
+        Route::get('/', 'SizeController@index');
+        Route::post('load', 'SizeController@load');
+        Route::match(['post', 'put'], 'submit', 'SizeController@submit');
+    });
 });
 
 

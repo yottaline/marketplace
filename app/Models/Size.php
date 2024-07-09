@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Size extends Model
 {
@@ -20,7 +21,18 @@ class Size extends Model
 
     static function fetch($id = 0, $param = null, $limit = null, $lastId = null)
     {
-        $sizes = self::join('size_subcategories', 'size_subcategory', 'subcategory_id')->limit($limit)->orderBy('size_id', 'DESC');
+        $sizes = self::join('subcategories', 'size_subcategory', 'subcategory_id')->limit($limit)->orderBy('size_id', 'DESC');
+
+        if (isset($param['q'])) {
+            $sizes->where(function (Builder $query) use ($param) {
+                $query->where('size_name',  $param['q'])
+                ->orWhere('size_sign',  $param['q'])
+                ->orWhere('size_code', 'like', '%' . $param['q'] . '%')
+                ->orWhere('subcategory_code', 'like', '%' . $param['q'] . '%')
+                ->orWhere('subcategory_name',  $param['q']);
+            });
+            unset($param['q']);
+        }
 
         if($param) $sizes->where($param);
 
