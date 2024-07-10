@@ -207,11 +207,12 @@
                                         <th class="text-center">#</th>
                                         <th class="text-center">Size Name</th>
                                         <th class="text-center">Color Name</th>
-                                        <th class="text-center">Size Cost</th>
-                                        <th class="text-center">WSP</th>
-                                        <th class="text-center">RRP</th>
-                                        <th class="text-center">Size Qty </th>
-                                        <th class="text-center">AVAILABLE QUANTITY</th>
+                                        <th class="text-center">Cost</th>
+                                        <th class="text-center">Mai</th>
+                                        <th class="text-center">Max</th>
+                                        <th class="text-center">Sell price</th>
+                                        <th class="text-center">Price</th>
+                                        <th class="text-center">Qty </th>
                                         <th class="text-center">Status</th>
                                         <th></th>
                                     </tr>
@@ -224,19 +225,17 @@
                                         <td class="text-center" ng-bind="si.size_name"></td>
                                         <td class="text-center" ng-bind="si.prodcolor_name"></td>
                                         <td class="text-center" ng-bind="si.prodsize_cost"></td>
-                                        <td style="width:100px">
-                                            <input type="text" class="font-monospace text-center w-100"
-                                                ng-model="si.prodsize_wsp" ng-blur="updatePrice(si)">
-                                        </td>
-                                        <td class="text-center" ng-bind="si.prodsize_rrp"></td>
+                                        <td class="text-center" ng-bind="si.prodcolor_minqty"></td>
+                                        <td class="text-center" ng-bind="si.prodcolor_maxqty"></td>
+                                        <td class="text-center" ng-bind="si.prodsize_price"></td>
+                                        <td class="text-center" ng-bind="si.prodsize_sellprice"></td>
                                         <td class="text-center" ng-bind="si.prodsize_qty"></td>
-                                        <td class="text-center" ng-bind="si.prodsize_stock"></td>
                                         <td class="text-center">
                                             <span
-                                                class="badge bg-<%statusObject.color[si.prodsize_visible]%> rounded-pill font-monospace p-2"
-                                                data-ng-model="si.prodsize_visible" data-ng-click="toggle(si)"
+                                                class="badge bg-<%statusObject.color[si.prodsize_status]%> rounded-pill font-monospace p-2"
+                                                data-ng-model="si.prodsize_status" data-ng-click="toggle(si)"
                                                 style="cursor: pointer">
-                                                <%statusObject.name[si.prodsize_visible]%>
+                                                <%statusObject.name[si.prodsize_status]%>
                                             </span>
                                         </td>
                                         <td class="col-fit">
@@ -272,38 +271,89 @@
                                                 <div class="mb-3">
                                                     <label for="colorName">Color Name<b
                                                             class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control"
-                                                        ng-value="siezs[updateSize].prodcolor_name" name="name"
+                                                    <input type="text" class="form-control" name="name"
                                                         id="colorName">
                                                 </div>
                                             </div>
 
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="cost">Cost <b class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="cost"
+                                                        id="cost">
+                                                </div>
+                                            </div>
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="Wholesale">Wholesale <b
+                                                    <label for="Qty">QTY <b class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="qty"
+                                                        id="Qty">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="price">Priec <b class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="price"
+                                                        id="price">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="sell">Sell Price <b
                                                             class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" ng-model="wsp"
-                                                        ng-value="siezs[updateSize].prodsize_wsp" name="wholesale"
-                                                        id="Wholesale">
+                                                    <input type="text" class="form-control" name="sell"
+                                                        id="sell">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="min"> Min Order QTY</label>
+                                                    <input type="text" class="form-control" name="min"
+                                                        id="min">
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="Recommanded">RRP <b class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" ng-value="to(wsp , 2.4)"
-                                                        name="rrp" id="Recommanded" readonly>
+                                                    <label for="max">Max Order QTY</label>
+                                                    <input type="text" class="form-control" name="max"
+                                                        id="max">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12">
+                                                <div class="mb-3">
+                                                    <label for="discount">Discount</label>
+                                                    <input type="text" class="form-control" name="discount"
+                                                        id="discount">
                                                 </div>
                                             </div>
 
 
-                                            <input type="hidden" name="ps_size"
-                                                ng-value="siezs[updateSize].prodsize_size">
+                                            <div class="col-12 col-md-6">
+                                                <div class="mb-3">
+                                                    <label>Discount Start</label>
+                                                    <input id="subStart" type="text" class="form-control text-center"
+                                                        name="start" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="mb-3">
+                                                    <label>Discount End</label>
+                                                    <input id="subEnd" type="text" class="form-control text-center"
+                                                        name="end">
+                                                </div>
+                                            </div>
+
                                             <div class="col-12 col-sm-12">
                                                 <label for="size">Sizes<b class="text-danger">&ast;</b></label>
                                                 <div class="form-check form-switch mb-5" style="display: inline-block"
-                                                    ng-repeat="s in allsizes">
+                                                    ng-repeat="s in subcatesizes">
                                                     <input type="checkbox" name="size[]" ng-value="s.size_id">
                                                     <label for="size" ng-bind="s.size_name">Size<b
                                                             class="text-danger">&ast;</b></label>
@@ -333,9 +383,24 @@
                                     code: {
                                         required: true,
                                     },
-                                    wholesale: {
+                                    cost: {
                                         digits: true,
-                                    }
+                                    },
+                                    sell: {
+                                        digits: true,
+                                    },
+                                    price: {
+                                        digits: true,
+                                    },
+                                    min: {
+                                        digits: true,
+                                    },
+                                    max: {
+                                        digits: true,
+                                    },
+                                    discount: {
+                                        digits: true,
+                                    },
                                 },
                                 submitHandler: function(form) {
                                     var formData = new FormData(form),
@@ -371,9 +436,22 @@
                         function sClsForm() {
                             $('#prodsizeId').val('');
                             $('#colorName').val('');
-                            $('#Wholesale').val('');
-                            $('#Recommanded').val('0');
+                            $('#cost').val('');
+                            $('#Qty').val('0');
+                            $('#price').val('');
+                            $('#sell').val('');
+                            $('#max').val('');
+                            $('#min').val('');
                         }
+                        $("#subStart").datetimepicker($.extend({}, dtp_opt, {
+                            showTodayButton: false,
+                            format: "YYYY-MM-DD",
+                        }));
+
+                        $("#subEnd").datetimepicker($.extend({}, dtp_opt, {
+                            showTodayButton: false,
+                            format: "YYYY-MM-DD",
+                        }));
                     </script>
                     {{-- end  add  size model --}}
 
@@ -382,7 +460,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <form method="post" id="sizeFormedit" action="/product_sizes/submit">
+                                    <form method="post" id="sizeFormedit" action="/product_sizes/update">
                                         @csrf
                                         <div class="row">
                                             <input type="hidden" name="p_id" ng-value="product.product_id">
@@ -390,96 +468,71 @@
                                                 value="put">
                                             <input type="hidden" name="id" id="prodsizeId"
                                                 ng-value="siezs[updateSize].prodsize_id">
-                                            <input type="hidden" name="color_id" id="prodsizeId"
-                                                ng-value="siezs[updateSize].prodcolor_id">
 
-                                            {{-- <div class="col-12 col-sm-12">
+                                            <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="colorName">Color Name<b
-                                                            class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control"
-                                                        ng-value="siezs[updateSize].prodcolor_name" name="name"
-                                                        id="colorName">
-                                                </div>
-                                            </div> --}}
-
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="minQtyForColor">
-                                                        Mini order quantity per-order <b
-                                                            class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="mincolorqty"
-                                                        ng-value="siezs[updateSize].prodcolor_mincolorqty"
-                                                        id="minQtyForColor" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="productMinQty">
-                                                        Product Min Qty <b class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="minqty"
-                                                        ng-value="siezs[updateSize].prodcolor_minqty"
-                                                        id="productMinQty" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="productMaxQty">
-                                                        Product Max Qty <b class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="maxqty"
-                                                        ng-value="siezs[updateSize].prodcolor_maxqty"
-                                                        id="productMaxQty" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="productMinOrder">
-                                                        Product Min Order </label>
-                                                    <input type="text" class="form-control" name="minorder"
-                                                        ng-value="siezs[updateSize].prodcolor_minorder"
-                                                        id="productMinOrder" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="productDiscount">
-                                                        Product Discount <b class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="discount"
-                                                        ng-value="siezs[updateSize].prodcolor_discount"
-                                                        id="productDiscount" />
+                                                    <label for="cost">Cost <b class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="cost"
+                                                        ng-value="siezs[updateSize].prodsize_cost" id="cost">
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="Qty">in-stock <b
+                                                    <label for="Qty">QTY <b class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="qty"
+                                                        ng-value="siezs[updateSize].prodsize_qty" id="Qty">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="price">Priec <b class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="price"
+                                                        ng-value="siezs[updateSize].prodsize_price" id="price">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="sell">Sell Price <b
                                                             class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control"
-                                                        ng-value="siezs[updateSize].prodsize_qty" name="qty"
-                                                        id="Qty">
+                                                    <input type="text" class="form-control" name="sell"
+                                                        id="sell" ng-value="siezs[updateSize].prodsize_sellprice">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12">
+                                                <div class="mb-3">
+                                                    <label for="discount">Discount</label>
+                                                    <input type="text" class="form-control" name="discount"
+                                                        id="discount" ng-value="siezs[updateSize].prodsize_discount">
                                                 </div>
                                             </div>
 
 
-                                            <div class="col-6">
-                                                <div class="form-check form-switch mb-3">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        name="freeshipping" value="1"
-                                                        ng-checked="+siezs[updateSize].prodcolor_freeshipping">
-                                                    <label class="form-check-label">Free Shipping </label>
+                                            <div class="col-12 col-md-6">
+                                                <div class="mb-3">
+                                                    <label>Discount Start</label>
+                                                    <input id="subStart" type="text" class="form-control text-center"
+                                                        name="start"
+                                                        ng-value="siezs[updateSize].prodsize_discount_start" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="mb-3">
+                                                    <label>Discount End</label>
+                                                    <input id="subEnd" type="text" class="form-control text-center"
+                                                        name="end" ng-value="siezs[updateSize].prodsize_discount_end">
                                                 </div>
                                             </div>
 
                                             <div class="col-6">
                                                 <div class="form-check form-switch mb-3">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                        name="color_status" value="1"
-                                                        ng-checked="+siezs[updateSize].prodcolor_published">
-                                                    <label class="form-check-label">Color product status </label>
+                                                        name="status" value="1"
+                                                        ng-checked="+siezs[updateSize].prodsize_status">
+                                                    <label class="form-check-label">product status </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -499,50 +552,24 @@
                         $(function() {
                             $('#sizeFormedit').on('submit', e => e.preventDefault()).validate({
                                 rules: {
-                                    name: {
-                                        required: true
-                                    },
-                                    code: {
-                                        required: true,
-                                    },
                                     cost: {
                                         digits: true,
-                                        required: true,
                                     },
-                                    mincolorqty: {
+                                    sell: {
                                         digits: true,
-                                        required: true,
                                     },
-                                    minqty: {
+                                    price: {
                                         digits: true,
-                                        required: true
                                     },
-                                    maxqty: {
+                                    min: {
                                         digits: true,
-                                        required: true
                                     },
-                                    minorder: {
+                                    max: {
                                         digits: true,
-                                        required: true
                                     },
                                     discount: {
-                                        digits: true
-                                    },
-                                    order: {
-                                        required: true
-                                    },
-                                    size: {
-                                        required: true
-                                    },
-                                    wholesale: {
                                         digits: true,
                                     },
-                                    qty: {
-                                        digits: true,
-                                    },
-                                    stock: {
-                                        digits: true,
-                                    }
                                 },
                                 submitHandler: function(form) {
                                     var formData = new FormData(form),
@@ -761,6 +788,7 @@
             $scope.siezs = [];
             $scope.colors = [];
             $scope.medails = [];
+            $scope.subcatesizes = [];
             $scope.updateMedails = false;
 
             $scope.jsonParse = (str) => JSON.parse(str);
@@ -773,6 +801,12 @@
                     product_id: $scope.product.product_id,
                     _token: '{{ csrf_token() }}'
                 };
+                var sub = {
+                    q: $scope.q,
+                    subcategory: $scope.product.product_subcategory,
+                    _token: '{{ csrf_token() }}'
+                };
+
 
                 $.post("/product_sizes/load", request, function(data) {
                     $('.loading-spinner').hide();
@@ -782,6 +816,19 @@
                         if (ln) {
                             $scope.siezs = data;
                             console.log(data)
+                        }
+                    });
+                }, 'json');
+
+
+                $.post("/subcategories/get_sizes", sub, function(data) {
+                    $('.loading-spinner').hide();
+                    var ln = data.length;
+                    $scope.$apply(() => {
+                        $scope.loading = false;
+                        if (ln) {
+                            $scope.subcatesizes = data;
+
                         }
                     });
                 }, 'json');
@@ -808,6 +855,7 @@
                     product_id: $scope.product.product_id,
                     _token: '{{ csrf_token() }}'
                 };
+
                 $.post("/product_medias/load", request, function(data) {
                     $('.loading-spinner').hide();
                     var ln = data.length;
@@ -832,38 +880,6 @@
                 }, 'json');
             }
 
-            $scope.to = function(wsp, rrp) {
-                if (wsp == null) return 0;
-                return (wsp * rrp).toFixed(2);
-            };
-
-            $scope.updatePrice = function(item) {
-                item.prodsize_wsp = parseFloat(item.prodsize_wsp);
-
-                var data = {
-                    id: item.prodsize_id,
-                    newPrice: item.prodsize_wsp,
-                    pr_id: $scope.product.product_id,
-                    _token: '{{ csrf_token() }}'
-                };
-
-                $.post('/product_sizes/update', data)
-                    .then(function(response) {
-                        var data = JSON.parse(response);
-                        scope.$apply(function() {
-                            scope.submitting = false;
-                            if (data.status) {
-                                toastr.success('Data processed successfully');
-                                $scope.data = data.data
-                                // console.log()
-                                scope.load()
-                            } else toastr.error(data.message);
-                        });
-                    })
-                    .catch(function(error) {
-                        console.error('Error occurred:', error);
-                    });
-            };
 
             $scope.toggle = function(item) {
                 var data = {
@@ -904,7 +920,6 @@
 
         $(function() {
             setTimeout(() => {
-                // $("#sortable").sortable();
                 $("#sortable").disableSelection();
                 $('#sortable').sortable({
                     connectWith: '#sortable',

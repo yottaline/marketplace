@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Subcategory;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
@@ -45,5 +46,11 @@ class SubcategoryController extends Controller
             'status' => boolval($result),
             'data'   => $result ? Subcategory::fetch($result) : []
         ]);
+    }
+
+    function getSizes(Request $request)
+    {
+        echo json_encode(Size::fetch(0, [['size_subcategory', $request->subcategory]]));
+
     }
 }

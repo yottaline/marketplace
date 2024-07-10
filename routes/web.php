@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'SubcategoryController@index');
         Route::post('load', 'SubcategoryController@load');
         Route::match(['post', 'put'], 'submit', 'SubcategoryController@submit');
+        Route::post('get_sizes', 'SubcategoryController@getSizes');
     });
 
     Route::prefix('sizes')->group(function(){
@@ -65,6 +66,12 @@ Route::middleware('auth')->group(function () {
         Route::match(['post', 'put'], 'submit', 'ProductController@submit');
         Route::get('view/{product_code}', 'ProductController@view');
 
+    });
+
+    Route::prefix('product_sizes')->group(function(){
+        Route::post('load', 'ProductSizeController@load');
+        Route::post('submit', 'ProductSizeController@submit');
+        Route::put('update', 'ProductSizeController@update');
     });
 });
 

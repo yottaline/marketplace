@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('prodcolor_code', 8);
             $table->string('prodcolor_name', 120);
             $table->integer('prodcolor_product')->unsigned();
-            $table->integer('prodcolor_media')->unsigned();
+            $table->integer('prodcolor_media')->unsigned()->nullable();
             $table->smallInteger('prodcolor_minqty')->default('0');
             $table->smallInteger('prodcolor_maxqty')->default('0');
             $table->boolean('prodcolor_status')->default('0');
