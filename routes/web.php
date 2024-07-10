@@ -73,6 +73,11 @@ Route::middleware('auth')->group(function () {
         Route::post('submit', 'ProductSizeController@submit');
         Route::put('update', 'ProductSizeController@update');
     });
+
+    Route::prefix('medias')->group(function(){
+        Route::post('load', 'ProductMediaController@load');
+        Route::post('submit', 'ProductMediaController@submit');
+    });
 });
 
 

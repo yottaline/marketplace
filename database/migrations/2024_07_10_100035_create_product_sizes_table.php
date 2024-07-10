@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('prodsize_id', true, true);
             $table->integer('prodsize_product')->unsigned();
             $table->integer('prodsize_size')->unsigned();
+            $table->string('prodsize_color', 8);
             $table->string('prodsize_code', 8);
             $table->decimal('prodsize_cost', 9, 2)->default('0.00');
             $table->decimal('prodsize_sellprice', 9, 2)->default('0.00');

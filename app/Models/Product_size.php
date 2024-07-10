@@ -13,6 +13,7 @@ class Product_size extends Model
     protected $fillable = [
         'prodsize_product',
         'prodsize_size',
+        'prodsize_color',
         'prodsize_code',
         'prodsize_cost',
         'prodsize_sellprice',
@@ -28,7 +29,7 @@ class Product_size extends Model
     static function fetch($id = 0, $params = null, $ids = null)
     {
         $ws_products_sizes = self::join('products', 'prodsize_product', 'product_id')
-            ->join('sizes', 'prodsize_size', 'size_id')->join('subcategories', 'size_id', 'size_subcategory');
+            ->join('sizes', 'prodsize_size', 'size_id')->join('subcategories', 'size_id', 'size_subcategory')->join('ws_products_colors', 'prodsize_color', 'prodcolor_code');
 
         if ($params) $ws_products_sizes->where($params);
         if ($id) $ws_products_sizes->where('prodsize_id', $id);

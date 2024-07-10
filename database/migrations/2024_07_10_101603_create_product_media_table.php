@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_media', function (Blueprint $table) {
             $table->integer('media_id', true, true);
-            $table->integer('product_id')->unsigned();
+            $table->integer('media_product')->unsigned();
             $table->string('media_url', 70);
             $table->enum('media_type', ['image', 'video']);
             $table->boolean('media_status')->default('1');

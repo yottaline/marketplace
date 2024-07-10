@@ -687,41 +687,9 @@
                         <form method="post" id="mediaForm" action="/product_medias/submit">
                             @csrf
                             <input type="hidden" name="product_id" ng-value="product.product_id">
-                            <div class="row">
-                                <div class="col-12 col-sm-12">
 
-                                    <div class="mb-3">
-                                        <label for="category">
-                                            Color <b class="text-danger">&ast;</b></label>
-                                        <select name="color" id="color" class="form-select" required>
-                                            <option ng-repeat="color in colors" ng-value="color.prodcolor_ref">
-                                                <%color.prodcolor_name%>
-                                            </option>
-                                        </select>
-                                    </div>
-                                    {{-- <div class="mb-3">
-                                        <label for="color">Color</label>
-                                        <input type="text" class="form-control font-monospace" name="color"
-                                            id="color">
-                                    </div> --}}
-                                </div>
-                                {{--
-                                <div class="col-12 col-sm-6">
-                                    <div class="mb-3">
-                                        <label for="order">Order<b class="text-danger">&ast;</b></label>
-                                        <input type="text" class="form-control" name="order" id="order">
-                                    </div>
-                                </div> --}}
+                            <input type="file" class="filepond" name="filepond" multiple data-allow-reorder="true">
 
-                                <div class="col-12 col-sm-12">
-                                    <div class="mb-3">
-                                        <label for="media">Media<b class="text-danger">&ast;</b></label>
-                                        <input type="file" class="form-control dropify" name="media[]" multiple
-                                            id="media">
-                                    </div>
-                                </div>
-
-                            </div>
                         </form>
                         <div class="modal-footer d-flex">
                             <button type="button" class="btn btn-outline-secondary me-auto"
@@ -760,7 +728,7 @@
                     }
                 });
 
-                $('.dropify').dropify();
+                FilePond.parse(document.body);
             </script>
         </div>
         {{-- end media section --}}
@@ -856,7 +824,7 @@
                     _token: '{{ csrf_token() }}'
                 };
 
-                $.post("/product_medias/load", request, function(data) {
+                $.post("/medias/load", request, function(data) {
                     $('.loading-spinner').hide();
                     var ln = data.length;
                     $scope.$apply(() => {

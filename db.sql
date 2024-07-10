@@ -140,6 +140,7 @@ CREATE TABLE IF NOT EXISTS
     `prodsize_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `prodsize_product` INT UNSIGNED NOT NULL,
     `prodsize_size` INT UNSIGNED NOT NULL,
+    `prodsize_color` VARCHAR(24) NOT NULL,
     `prodsize_code` VARCHAR(8) NOT NULL,
     `prodsize_cost` DECIMAL(9, 2) DEFAULT '0.00',
     `prodsize_sellprice` DECIMAL(9, 2) DEFAULT '0.00',
@@ -150,7 +151,8 @@ CREATE TABLE IF NOT EXISTS
     `prodsize_discount_end` DATETIME DEFAULT NULL,
     `prodsize_status` BOOLEAN NOT NULL DEFAULT '1'
     PRIMARY KEY (`prodsize_id`),
-    FOREIGN KEY (`prodsize_product`) REFERENCES `products` (`product_id`)
+    FOREIGN KEY (`prodsize_product`) REFERENCES `products` (`product_id`),
+    FOREIGN KEY (`prodsize_color`) REFERENCES `products_colors` (`prodcolor_code`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
   -- --------------------------------------

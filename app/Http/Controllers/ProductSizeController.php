@@ -45,8 +45,9 @@ class ProductSizeController extends Controller
                 foreach ($sizes as $size) {
                     $sizeParam[] = [
                         'prodsize_size'            => $size,
-                        'prodsize_code'           => uniqidReal(8),
+                        'prodsize_code'            => uniqidReal(8),
                         'prodsize_product'         => $request->p_id,
+                        'prodsize_color'           =>  $color_ref,
                         'prodsize_sellprice'       => $request->sell,
                         'prodsize_price'           => $request->price,
                         'prodsize_qty'             => $request->qty,
@@ -72,6 +73,7 @@ class ProductSizeController extends Controller
                         'prodsize_size'            => $size,
                         'prodsize_code'           => uniqidReal(8),
                         'prodsize_product'         => $request->p_id,
+                        'prodsize_color'           =>  $color_ref,
                         'prodsize_sellprice'       => $request->sell,
                         'prodsize_price'           => $request->price,
                         'prodsize_qty'             => $request->qty,
