@@ -20,17 +20,22 @@ class Product extends Model
         'product_created_by'
     ];
 
-    static function fetch($id = 0, $param = null, $limit = null, $lastId = null)
+    static function fetch($id = 0, $param = null, $limit = 24, $offset = 0)
     {
         $products = self::join('categories', 'product_category', 'category_id')->join('subcategories', 'product_subcategory', 'subcategory_id')
-        ->join('retailers', 'product_created_by', 'retailer_id')->limit($limit)->orderBy('product_id', 'DESC');
+        ->limit($limit)->offset($offset)->orderBy('product_id', 'DESC');
 
         if($param) $products->where($param);
-
-        if($lastId) $products->where('product_id', '<', $lastId);
 
         if($id) $products->where('product_id', $id);
 
         return $id ? $products->first() : $products->get();
+    }
+
+    static function submit($params, $id)
+    {
+        if($id) return self::where('product_id', $id)->update($params) ? $id : false;
+        $status = self::create($params);
+        return $status ? $status->id : false;
     }
 }

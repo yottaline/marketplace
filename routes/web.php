@@ -60,6 +60,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('products')->group(function(){
         Route::get('/', 'ProductController@index');
+        Route::post('load', 'ProductController@load');
+        Route::get('subcategory/{id}', 'ProductController@getSubcategory');
+        Route::match(['post', 'put'], 'submit', 'ProductController@submit');
+        Route::get('view/{product_code}', 'ProductController@view');
+
     });
 });
 
