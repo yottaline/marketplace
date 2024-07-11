@@ -241,7 +241,7 @@
                         $scope.loading = false;
                         if (ln) {
                             $scope.noMore = ln < limit;
-                            $scope.list = data;
+                            $scope.list.push(...data);
                             $scope.last_id = data[ln - 1].size_id;
                         }
                     });

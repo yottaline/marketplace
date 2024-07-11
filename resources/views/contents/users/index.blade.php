@@ -217,7 +217,7 @@
                         $scope.loading = false;
                         if (ln) {
                             $scope.noMore = ln < limit;
-                            $scope.list = data;
+                           $scope.list.push(...data);
                             console.log(data)
                             $scope.last_id = data[ln - 1].admin_id;
                         }
