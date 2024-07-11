@@ -339,8 +339,8 @@
                     var ln = data.length;
                     $scope.$apply(() => {
                         $scope.loading = false;
+                        $scope.noMore = ln < limit;
                         if (ln) {
-                            $scope.noMore = ln < limit;
                             $scope.list.push(...data);
                             console.log(data)
                             $scope.last_id = data[ln - 1].retailer_id;
