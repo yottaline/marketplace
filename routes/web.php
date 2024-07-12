@@ -78,6 +78,10 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'ProductMediaController@load');
         Route::post('submit', 'ProductMediaController@submit');
     });
+
+    Route::prefix('orders')->group(function(){
+        Route::get('/', 'OrderController@index');
+    });
 });
 
 

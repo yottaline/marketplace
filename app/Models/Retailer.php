@@ -52,9 +52,9 @@ class Retailer extends Model
         return $id ? $retailers->first() : $retailers->get();
     }
 
-    static function submit($id, $user, $retailer)
+    static function submit($id, $user_id ,$user, $retailer)
     {
-        if($id) return User::where('id', $id)->update($user) ? $id : false;
+        if($id && $user_id) return User::where('id', $user_id)->update($user) && self::where('retailer_id', $id) ? $id : false;
         $status = User::create($user);
 
         if($status){

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -47,5 +48,26 @@ class User extends Authenticatable
         'user_password' => 'hashed',
     ];
 
+
+    static function fetch($id = 0, $params = null, $limit = 1, $lastId = null)
+    {
+        $users = self::limit($limit);
+        if ($lastId) $users->where('id', '<', $lastId);
+
+        if (isset($params['q'])) {
+            $users->where(function (Builder $query) use ($params) {
+                $query->where('user_code', 'like', '%' . $params['q'] . '%')
+                    ->orWhere('user_email', 'like', '%' . $params['q'] . '%')
+                    ->orWhere('user_name', $params['q']);
+            });
+
+            unset($params['q']);
+        }
+
+        if ($params) $users->where($params);
+        if ($id) $users->where('id', $id);
+
+        return $id ? $users->first() : $users->get();
+    }
 
 }

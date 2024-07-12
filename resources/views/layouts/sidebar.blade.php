@@ -57,11 +57,11 @@
                                  </a>
                              </li>
 
-                             <li class="list-group-item nav-premissions">
+                             {{-- <li class="list-group-item nav-premissions">
                                  <a class="link-dark d-block" href="/currencies/">
                                      <i class="bi bi-person-fill-check text-secondary me-2"></i><b>Currencies</b>
                                  </a>
-                             </li>
+                             </li> --}}
 
                          </ul>
                      </div>
@@ -74,7 +74,7 @@
                      </script>
                  </li>
 
-                 <li class="list-group-item">
+                 {{-- <li class="list-group-item">
                      <a class="link-dark d-block" data-bs-toggle="collapse" href="#settingCollapse" role="button"
                          aria-expanded="false" aria-controls="settingCollapse">
                          <i class="bi bi-gear text-secondary me-2"></i><b>Settings</b>
@@ -119,13 +119,19 @@
                          if (['subsc', 'trans', 'refunds', 'promos'].includes(navTarget))
                              settingCollapse.show();
                      </script>
-                 </li>
+                 </li> --}}
              @endhasrole
 
              @hasrole('retailer')
                  <li class="list-group-item nav-support">
                      <a class="link-dark d-block" href="/products/">
                          <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>Products</b>
+                     </a>
+                 </li>
+
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/orders/">
+                         <i class="bi bi-cart4 text-secondary me-2"></i><b>Orders</b>
                      </a>
                  </li>
              @endhasrole

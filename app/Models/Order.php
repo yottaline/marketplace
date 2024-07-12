@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order_item;
 
 class Order extends Model
 {
@@ -61,9 +62,9 @@ class Order extends Model
             $id = $id ? $id : $status->id;
             if (!empty($orderItemParam)) {
                 for ($i = 0; $i < count($orderItemParam); $i++) {
-                    $orderItemParam[$i]['ordprod_order'] = $id;
+                    $orderItemParam[$i]['orderItem_order'] = $id;
                 }
-                // orders_product::insert($orderItemParam);
+                Order_item::insert($orderItemParam);
             }
             DB::commit();
             return ['status' => true, 'id' => $id];

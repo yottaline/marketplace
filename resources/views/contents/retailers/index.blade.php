@@ -251,14 +251,14 @@
                                         if (scope.updateRetailer === false) {
                                             scope.list.unshift(response
                                                 .data);
-                                            scope.load();
+                                            scope.load(true);
                                             categoyreClsForm()
                                         } else {
                                             scope.list[scope
                                                 .updateRetailer] = response.data;
                                         }
                                     });
-                                } else toastr.error("Error");
+                                } else toastr.error(response.message);
                             }).fail(function(jqXHR, textStatus, errorThrown) {
                                 // error msg
                             })
@@ -295,13 +295,13 @@
 
 @section('js')
     <script>
-        var scope,
+        var scope, timeout,
             app = angular.module('ngApp', [], function($interpolateProvider) {
                 $interpolateProvider.startSymbol('<%');
                 $interpolateProvider.endSymbol('%>');
             });
 
-        app.controller('ngCtrl', function($scope) {
+        app.controller('ngCtrl', function($scope, $timeout) {
             $scope.statusObject = {
                 name: ['Available', 'Blacked'],
                 color: ['success', 'danger']
@@ -335,14 +335,12 @@
                 };
 
                 $.post("/retailers/load", request, function(data) {
-
                     var ln = data.length;
                     $scope.$apply(() => {
                         $scope.loading = false;
                         $scope.noMore = ln < limit;
                         if (ln) {
                             $scope.list.push(...data);
-                            console.log(data)
                             $scope.last_id = data[ln - 1].retailer_id;
                         }
                     });

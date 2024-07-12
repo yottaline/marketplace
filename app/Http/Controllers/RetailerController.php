@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Retailer;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,6 +35,7 @@ class RetailerController extends Controller
     {
 
         $id    = $request->retailer_id;
+        $user_id = $request->id;
         $email = $request->email;
         $phone = $request->phone;
 
@@ -43,7 +45,7 @@ class RetailerController extends Controller
             return;
         }
 
-        if (count(Retailer::fetch(0, [['retailer_id', '!=', $id], ['user_email', $email]]))) {
+        if (count(User::fetch(0, [['id', '!=', $user_id], ['user_email', $email], ['user_type', 2]]))) {
             echo json_encode(['status' => false, 'message' => __('Email already exists'),]);
             return;
         }
@@ -68,7 +70,7 @@ class RetailerController extends Controller
             'retailer_approved_by' =>  auth()->user()->id,
         ];
 
-        $result = Retailer::submit($id, $userParam, $retailerParam);
+        $result = Retailer::submit($id, $user_id,$userParam, $retailerParam);
         echo json_encode([
             'status' => boolval($result),
             'data'   => $result ? Retailer::fetch($result) : []
