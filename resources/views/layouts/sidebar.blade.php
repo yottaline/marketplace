@@ -74,52 +74,11 @@
                      </script>
                  </li>
 
-                 {{-- <li class="list-group-item">
-                     <a class="link-dark d-block" data-bs-toggle="collapse" href="#settingCollapse" role="button"
-                         aria-expanded="false" aria-controls="settingCollapse">
-                         <i class="bi bi-gear text-secondary me-2"></i><b>Settings</b>
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/customers/">
+                         <i class="bi bi-person-video text-secondary me-2"></i><b>Customers</b>
                      </a>
-                     <div class="collapse" id="settingCollapse">
-                         <ul class="list-group list-group-flush">
-                             <li class="list-group-item nav-support">
-                                 <a class="link-dark d-block" href="/locations/">
-                                     <i class="bi bi-globe-asia-australia text-secondary me-2"></i><b>Locations</b>
-                                 </a>
-                             </li>
-
-                             <li class="list-group-item nav-support">
-                                 <a class="link-dark d-block" href="/currencies/">
-                                     <i class="bi bi-currency-exchange text-secondary me-2"></i><b>Currencies</b>
-                                 </a>
-                             </li>
-
-                             <li class="list-group-item nav-subsc">
-                                 <a class="link-dark d-block" href="/categories/">
-                                     <i class="bi bi-grid text-secondary me-2"></i><b>Categories</b>
-                                 </a>
-                             </li>
-
-                             <li class="list-group-item nav-trans">
-                                 <a class="link-dark d-block" href="/seasons/">
-                                     <i class="bi bi-brilliance text-secondary me-2"></i><b>Seasons</b>
-                                 </a>
-                             </li>
-
-                             <li class="list-group-item nav-refunds">
-                                 <a class="link-dark d-block" href="/sizes/">
-                                     <i class="bi bi-arrows-fullscreen text-secondary me-2"></i><b>Sizes</b>
-                                 </a>
-                             </li>
-                         </ul>
-                     </div>
-                     <script>
-                         const settingCollapse = new bootstrap.Collapse('#settingCollapse', {
-                             toggle: false
-                         });
-                         if (['subsc', 'trans', 'refunds', 'promos'].includes(navTarget))
-                             settingCollapse.show();
-                     </script>
-                 </li> --}}
+                 </li>
              @endhasrole
 
              @hasrole('retailer')

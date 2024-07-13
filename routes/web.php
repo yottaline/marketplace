@@ -59,6 +59,12 @@ Route::middleware('auth')->group(function () {
         Route::match(['post', 'put'], 'submit', 'SizeController@submit');
     });
 
+    Route::prefix('customers')->group(function(){
+        Route::get('/', 'CustomerController@index');
+        Route::post('load', 'CustomerController@load');
+        Route::match(['post', 'put'], 'submit', 'CustomerController@submit');
+    });
+
     Route::prefix('products')->group(function(){
         Route::get('/', 'ProductController@index');
         Route::post('load', 'ProductController@load');
