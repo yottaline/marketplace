@@ -156,10 +156,12 @@
                                     scope.$apply(() => {
                                         scope.submitting = false;
                                         if (response.status) {
-                                            if (scope.updatesubcategory === false) scope.list
-                                                .unshift(
-                                                    response.data);
-                                            else scope.list[scope.updatesubcategory] = response
+                                            if (scope.updatesubcategory === false) {
+                                                scope.list
+                                                    .unshift(
+                                                        response.data);
+                                                clsForm();
+                                            } else scope.list[scope.updatesubcategory] = response
                                                 .data;
                                             toastr.success('Data processed successfully');
                                             $('#subcategoryModal').modal('hide');
@@ -171,6 +173,10 @@
                             }
                         });
                     });
+
+                    clsForm = function() {
+                        $('#fullName').val('');
+                    };
                 </script>
             </div>
         </div>

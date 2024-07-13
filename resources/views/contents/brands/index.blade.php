@@ -77,7 +77,7 @@
                         <form id="brandForm" method="post" action="/brands/submit">
                             @csrf
                             <input ng-if="updatebrand !== false" type="hidden" name="_method" value="put">
-                            <input type="hidden" name="id" ng-value="list[updatebrand].brand_id">
+                            <input type="hidden" id="id" name="id" ng-value="list[updatebrand].brand_id">
                             <div class="row">
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3">
@@ -137,9 +137,11 @@
                                     scope.$apply(() => {
                                         scope.submitting = false;
                                         if (response.status) {
-                                            if (scope.updatebrand === false) scope.list.unshift(
-                                                response.data);
-                                            else scope.list[scope.updatebrand] = response.data;
+                                            if (scope.updatebrand === false) {
+                                                scope.list.unshift(
+                                                    response.data);
+                                                clsForm();
+                                            } else scope.list[scope.updatebrand] = response.data;
                                             toastr.success('Data processed successfully');
                                             $('#brandModal').modal('hide');
                                         } else toastr.error(response.message);
@@ -150,6 +152,11 @@
                             }
                         });
                     });
+
+                    clsForm = function() {
+                        $('#id').val('');
+                        $('#fullName').val('');
+                    };
                 </script>
             </div>
         </div>

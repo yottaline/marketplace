@@ -36,4 +36,9 @@ class Product_media extends Model
         $status = self::create($params);
         return $status ? $status->id : false;
     }
+
+    static function destroyed($id)
+    {
+        return self::where('media_id', $id)->delete();
+    }
 }

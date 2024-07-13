@@ -154,9 +154,11 @@
                                     scope.$apply(() => {
                                         scope.submitting = false;
                                         if (response.status) {
-                                            if (scope.updatecategory === false) scope.list.unshift(
-                                                response.data);
-                                            else scope.list[scope.updatecategory] = response.data;
+                                            if (scope.updatecategory === false) {
+                                                scope.list.unshift(
+                                                    response.data);
+                                                clsForm();
+                                            } else scope.list[scope.updatecategory] = response.data;
                                             toastr.success('Data processed successfully');
                                             $('#categoryModal').modal('hide');
                                         } else toastr.error(response.message);
@@ -167,6 +169,10 @@
                             }
                         });
                     });
+
+                    clsForm = function() {
+                        $('#fullName').val('');
+                    };
                 </script>
             </div>
         </div>

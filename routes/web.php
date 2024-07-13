@@ -72,11 +72,13 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'ProductSizeController@load');
         Route::post('submit', 'ProductSizeController@submit');
         Route::put('update', 'ProductSizeController@update');
+        Route::post('edit_status', 'ProductSizeController@editStatus');
     });
 
     Route::prefix('medias')->group(function(){
         Route::post('load', 'ProductMediaController@load');
         Route::post('submit', 'ProductMediaController@submit');
+        Route::post('delete', 'ProductMediaController@destroy');
     });
 
     Route::prefix('orders')->group(function(){

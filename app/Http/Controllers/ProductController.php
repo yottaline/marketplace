@@ -16,9 +16,8 @@ class ProductController extends Controller
 
     function index()
     {
-        $subcategories = Subcategory::fetch(0, [['subcategory_id', 1]]);
-        $categories    = Category::fetch(0, [['category_id', 1]]);
-       return view('contents.products.index', compact('subcategories', 'categories'));
+        $categories    = Category::fetch(0, [['category_status', 1]]);
+       return view('contents.products.index', compact('categories'));
     }
 
     function load(Request $request)

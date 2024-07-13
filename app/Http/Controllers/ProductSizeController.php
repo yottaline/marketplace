@@ -113,4 +113,18 @@ class ProductSizeController extends Controller
             'data'   => $result ?  Product_size::fetch($result, [['prodsize_product', $request->p_id]]) : []
         ]);
     }
+
+    function editStatus(Request $request)
+    {
+        $i = 1;
+        $id = $request->id;
+        if ($request->status) $i = 0;
+        $params = ['prodsize_status' => $i];
+
+        $result = Product_size::submit($params, $id);
+        echo json_encode([
+            'status' => boolval($result),
+            'data'   => $result ?  Product_size::fetch($result) : []
+        ]);
+    }
 }

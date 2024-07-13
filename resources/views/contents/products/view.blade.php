@@ -31,6 +31,20 @@
     .image-container:hover .beautiful-image {
         transform: scale(1.1);
     }
+
+    .linak {
+        margin-left: 230px;
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .linak {
+            margin-left: 0px;
+            padding: 0px;
+            border-radius: none%;
+        }
+    }
 </style>
 @section('content')
     <div class="container-fluid" ng-app="ngApp" ng-controller="ngCtrl">
@@ -622,56 +636,21 @@
 
                     <div ng-if="medails.length" class="row" id="sortable">
                         <div ng-repeat="m in medails" class="col-6 col-sm-4 col-md-3 col-xl-2" data-id="<%m.media_id%>">
-                            <form action="/product_medias/image_default" method="post">
-                                @csrf
-                                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
-                                <div class="mb-3 text-center image-container">
-                                    <img src="{{ asset('media/product/') }}/<%m.media_product%>/<%m.media_file%>"
-                                        class="card-img-top beautiful-image">
-                                    <div class="card-body" style="display:ruby-text">
-                                        <input type="hidden" name="c_id" ng-value="m.prodcolor_id">
-                                        <input type="hidden" name="m_id" ng-value="m.media_id">
-                                        <input type="hidden" name="s" ng-value="m.prodcolor_media">
-                                        <h6 class="card-title" ng-bind="m.prodcolor_name"></h6>
-                                        <button class="btn" style="padding-top:1px"
-                                            ng-if="m.prodcolor_media == null || m.prodcolor_media !== m.media_id"><i
-                                                class="bi bi-bookmark"></i></button>
-                                        <button class="btn" style="padding-top:1px"
-                                            ng-if="+m.prodcolor_media == m.media_id"><i
-                                                class="bi bi-bookmark-star-fill"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                            <script>
-                                $('#sortable form').on('submit', function(e) {
-                                    e.preventDefault();
-                                    var form = $(this),
-                                        formData = new FormData(this),
-                                        action = form.attr('action'),
-                                        method = form.attr('method'),
-                                        controls = form.find('button, input');
-                                    $.ajax({
-                                        url: action,
-                                        type: method,
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                    }).done(function(data, textStatus, jqXHR) {
-                                        var response = JSON.parse(data);
-                                        if (response.status) {
-                                            toastr.success('Actived successfully');
-                                            scope.loadProductMedia(true)
-                                        }
-                                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                                        // toastr.error("error");
-                                    }).always(function() {});
+                            <div class="mb-3 text-center image-container">
+                                <a data-ng-click="delete(m)" class="btn btn-dark linak p-2" style="border-radius: 50%"><i
+                                        class="bi bi-x"></i></a>
+                                <img src="{{ asset('media/product/') }}/<%m.media_product%>/<%m.media_url%>"
+                                    class="card-img-top">
+                                <div class="card-body" style="display:ruby-text">
+                                    <input type="hidden" name="c_id" ng-value="m.prodcolor_id">
+                                    <input type="hidden" name="m_id" ng-value="m.media_id">
+                                    <input type="hidden" name="s" ng-value="m.prodcolor_media">
+                                    <h6 class="card-title" ng-bind="m.prodcolor_name"></h6>
 
-                                })
-                            </script>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
                     <div ng-if="!medails.length" class="py-5 text-center text-secondary">
                         <i class="bi bi-exclamation-circle display-3"></i>
                         <h5>No Data</h5>
@@ -684,11 +663,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <form method="post" id="mediaForm" action="/product_medias/submit">
+                        <form method="post" id="mediaForm" action="/medias/submit">
                             @csrf
                             <input type="hidden" name="product_id" ng-value="product.product_id">
 
-                            <input type="file" class="filepond" name="filepond" multiple data-allow-reorder="true">
+                            <div class="col-12 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="media">Media<b class="text-danger">&ast;</b></label>
+                                    <input type="file" class="form-control dropify" name="media[]" multiple
+                                        id="media">
+                                </div>
+                            </div>
 
                         </form>
                         <div class="modal-footer d-flex">
@@ -727,8 +712,7 @@
                         }).fail((jqXHR, textStatus, errorThrown) => toastr.error("Request failed!"));
                     }
                 });
-
-                FilePond.parse(document.body);
+                $('.dropify').dropify();
             </script>
         </div>
         {{-- end media section --}}
@@ -754,7 +738,6 @@
             $scope.q = '';
             $scope.updateSize = false;
             $scope.siezs = [];
-            $scope.colors = [];
             $scope.medails = [];
             $scope.subcatesizes = [];
             $scope.updateMedails = false;
@@ -836,17 +819,7 @@
                 }, 'json');
             }
 
-            $scope.loadcolor = function(reload = false) {
-                var request = {
-                    ref: $scope.product.product_ref,
-                    _token: '{{ csrf_token() }}'
-                };
-                $.post("/product_medias/get_color", request, function(data) {
-                    $scope.$apply(() => {
-                        $scope.colors = data;
-                    });
-                }, 'json');
-            }
+
 
 
             $scope.toggle = function(item) {
@@ -874,9 +847,29 @@
                     });
             };
 
+            $scope.delete = function(media) {
+                var request = {
+                    id: media.media_id,
+                    product_id: $scope.product.product_id,
+                    _token: '{{ csrf_token() }}'
+                };
+                $.post('/medias/delete', request)
+                    .then(function(response) {
+                        var data = JSON.parse(response);
+                        scope.$apply(function() {
+                            if (response) {
+                                toastr.success('Delete Media successfully');
+                                scope.loadProductMedia(true);
+                            } else toastr.error(response.message);
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error('Error occurred:', error);
+                    });
+            }
+
             $scope.load();
             $scope.loadProductMedia();
-            $scope.loadcolor();
             scope = $scope;
         });
 
@@ -884,31 +877,6 @@
             e.preventDefault();
             scope.$apply(() => scope.q = $(this).find('input').val());
             scope.load(true);
-        });
-
-        $(function() {
-            setTimeout(() => {
-                $("#sortable").disableSelection();
-                $('#sortable').sortable({
-                    connectWith: '#sortable',
-                    update: function(event, ui) {
-                        var orders = [];
-                        $('#sortable').children().each(function(index, element) {
-                            orders.push($(element).data('id'));
-                        });
-                        $.post('/product_medias/order', {
-                            orders: orders,
-                            _token: '{{ csrf_token() }}'
-                        }, function(data) {
-                            var response = JSON.parse(data);
-                            if (response.status) {
-                                toastr.success('Media Ordered successfully');
-
-                            } else toastr.error(response.message);
-                        });
-                    }
-                });
-            }, 5000);
         });
     </script>
 @endsection
