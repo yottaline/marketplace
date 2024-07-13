@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS
     `user_name` VARCHAR(120) NOT NULL,
     `user_email` VARCHAR(120) NOT NULL,
     `user_password` VARCHAR(255) NOT NULL,
-    `user_type` INT UNSIGNED NOT NULL COMMENT '1 : admin, 2 : retailer, 3 : customer',
+    `user_type` INT UNSIGNED NOT NULL COMMENT '1 : admin, 2 : retailer',
     `user_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE (`user_code`),
@@ -46,13 +46,17 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
   `customers` (
     `customer_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `customer_user` INT UNSIGNED NOT NULL,
+     `customer_code` VARCHAR(8) NOT NULL,
+    `customer_name` VARCHAR(120) NOT NULL,
+    `customer_email` VARCHAR(120) NOT NULL,
     `customer_phone` VARCHAR(24) NOT NULL,
     `customer_note` VARCHAR(1024) DEFAULT NULL,
     `customer_address` VARCHAR(255) NOT NULL,
     `customer_status` BOOLEAN NOT NULL DEFAULT '1',
+    `customer_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`customer_id`),
-    FOREIGN KEY (`customer_user`) REFERENCES `users` (`id`)
+    UNIQUE (`customer_code`),
+    UNIQUE (`customer_email`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 -- --------------------------------------
