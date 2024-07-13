@@ -108,8 +108,87 @@ class OrderController extends Controller
     {
         $order = Order::fetch($code);
         $customer = Customer::fetch($order->order_customer);
-        $products = Order_item::fetch(0, [['order_code', $code]]);
-
+        $products = Order_item::fetch(0, [['orderItem_order', $order->order_id]]);
         return view('contents.orders.view', compact('order', 'customer', 'products'));
+    }
+
+    function updateStatus(Request $request)
+    {
+        $param = [
+            'order_status' => $request->status,
+        ];
+        if ($request->status == 3) $param['order_placed'] = Carbon::now();
+
+        $result =  Order::submit($request->id, $param);
+        echo json_encode([
+            'status'  => boolval($result),
+            'data'    => $result ? Order::fetch($request->id) : []
+        ]);
+    }
+
+    function delSize(Request $request)
+    {
+        $order = Order::fetch($request->order);
+        $products = Order_item::fetch(0, [['orderItem_order', $request->order]]);
+        $ndx = 0;
+        $order->order_subtotal = 0;
+        $order->order_total = 0;
+        for ($i = 0; $i < count($products); $i++) {
+            if ($products[$i]->orderItem_subtotal != $request->size) {
+                $order->order_subtotal += $products[$i]->orderItem_subtotal;
+                $order->order_total += $products[$i]->orderItem_total;
+            } else $ndx = $i;
+        }
+        unset($products[$ndx]);
+        $orderParam = [
+            'order_subtotal' => $order->order_subtotal,
+            'order_total' => $order->order_total,
+        ];
+
+        $result =  Order_item::delSize($request->size, [$request->order, $orderParam]);
+        echo json_encode(array_merge($result, [
+            'order' => $order,
+            'products' => $products,
+        ]));
+    }
+
+    function updateQty(Request $request)
+    {
+        $order = Order::fetch($request->order);
+        $products = Order_item::fetch(0, [['orderItem_order', $request->order]]);
+
+        $ndx = 0;
+        $order->order_subtotal = 0;
+        $order->order_total = 0;
+        for ($i = 0; $i < count($products); $i++) {
+            if ($products[$i]->orderItem_id == $request->product) {
+                $products[$i]->orderItem_qty = $request->qty;
+                $ndx = $i;
+            }
+            $products[$i]->orderItem_subtotal = $products[$i]->orderItem_qty * $products[$i]->orderItem_productPrice;
+            $products[$i]->orderItem_total = $products[$i]->orderItem_subtotal - ($products[$i]->orderItem_subtotal * $products[$i]->orderItem_discount / 100);
+
+            $order->order_subtotal += $products[$i]->orderItem_subtotal;
+            $order->order_total += $products[$i]->orderItem_total;
+        }
+        $param = [
+            'orderItem_qty' => $request->qty,
+            'orderItem_subtotal' => $products[$ndx]->orderItem_subtotal,
+            'orderItem_total' => $products[$ndx]->orderItem_total,
+        ];
+        if (!$request->target) {
+            $param['orderItem_qty'] = $request->qty;
+            $products[$ndx]->orderItem_request_qty = $request->qty;
+        };
+        $orderParam = [
+            'order_subtotal' => $order->order_subtotal,
+            'order_total' => $order->order_total,
+        ];
+
+        $result =  Order_item::submit([$request->product, $param], [$request->order, $orderParam]);
+        echo json_encode(array_merge($result, [
+            'order' => $order,
+            'products' => $products,
+        ]));
     }
 }

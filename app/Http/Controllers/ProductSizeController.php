@@ -54,7 +54,8 @@ class ProductSizeController extends Controller
                         'prodsize_qty'             => $request->qty,
                         'prodsize_discount'        => $request->discount ?? 0,
                         'prodsize_discount_start'  => $request->start,
-                        'prodsize_discount_end'    => $request->end
+                        'prodsize_discount_end'    => $request->end,
+                        'prodsize_status'          => 1,
                     ];
                 };
             }

@@ -27,9 +27,8 @@ class Order_item extends Model
     {
         $oder_products = self::join('products', 'orderItem_product', 'product_id')
             ->join('product_sizes', 'orderItem_size', 'prodsize_id')
-            ->join('sizes', 'prodsize_size', 'size_id')
+            ->join('sizes', 'product_sizes.prodsize_size', 'size_id')
             ->join('product_colors', 'prodcolor_code', 'prodsize_color')
-            ->join('product_media', 'media_product', 'orderItem_product')
             ->join('orders', 'orderItem_order', 'order_id');
 
         if ($params) $oder_products->where($params);
@@ -48,6 +47,20 @@ class Order_item extends Model
             if (!empty($order)) order::where('order_id', $order[0])->update($order[1]);
             DB::commit();
             return ['status' => true, 'id' => $id];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ['status' => false, 'message' => 'error: ' . $e->getMessage()];
+        }
+    }
+
+    static function delSize($size, $order = null)
+    {
+        try {
+            DB::beginTransaction();
+            self::where('orderItem_product', $size)->delete();
+            if (!empty($order)) Order::where('order_id', $order[0])->update($order[1]);
+            DB::commit();
+            return ['status' => true];
         } catch (\Exception $e) {
             DB::rollBack();
             return ['status' => false, 'message' => 'error: ' . $e->getMessage()];

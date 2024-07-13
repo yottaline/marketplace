@@ -438,7 +438,6 @@
                                                 $('#sizeModal').modal('hide');
                                                 scope.load(true);
                                                 sClsForm();
-                                                scope.loadcolor(true);
                                                 $('#sizeModal').modal('hide');
                                             } else toastr.error(response.message);
                                         });

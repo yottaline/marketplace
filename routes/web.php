@@ -93,8 +93,8 @@ Route::middleware('auth')->group(function () {
         Route::get('create', 'OrderController@create');
         Route::match(['post', 'put'], 'submit', 'OrderController@submit');
         Route::get('view/{code}', 'OrderController@view');
+        Route::post('change_status', 'OrderController@updateStatus');
         Route::post('update_qty', 'OrderController@updateQty');
-        Route::post('del_product', 'OrderController@delProduct');
         Route::post('del_size', 'OrderController@delSize');
     });
 });

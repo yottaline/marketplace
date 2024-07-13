@@ -25,9 +25,9 @@
             <div class="col-12 col-lg-8">
                 <div class="card card-box mb-3" ng-repeat="(pk, p) in parsedProducts">
                     <div class="card-body d-sm-flex">
-                        <div class="product-img rounded mb-2"
+                        {{-- <div class="product-img rounded mb-2"
                             style="background-image:url(/assets/img/default_product_image.png)">
-                        </div>
+                        </div> --}}
 
                         <div class="flex-fill">
                             <div class="d-flex">
@@ -42,9 +42,8 @@
                                         <tr class="text-center small">
                                             <th class="text-start">Color</th>
                                             <th>Size</th>
-                                            <th>WSP</th>
-                                            <th>Req.Qty</th>
-                                            <th ng-if="p.info.order_status > 2">Srv. Qty</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
                                             <th>Total</th>
                                             <th></th>
                                         </tr>
@@ -57,12 +56,8 @@
                                             </td>
                                             <td class="col-fit">
                                                 <input class="qty-input" ng-readonly="s.order_status > 2" type="text"
-                                                    ng-model="s.ordprod_request_qty"
+                                                    ng-model="s.orderItem_qty"
                                                     ng-blur="updateQty(s.orderItem_id, s.orderItem_qty, 0)">
-                                            </td>
-                                            <td class="col-fit" ng-if="s.order_status > 2">
-                                                <input class="qty-input" type="text" ng-model="s.ordprod_served_qty"
-                                                    ng-blur="updateQty(s.orderItem_qty, s.orderItem_qty, 1)">
                                             </td>
                                             <td width="80"
                                                 ng-bind="fn.toFixed(s.orderItem_qty * s.orderItem_productPrice, 2)"
@@ -130,7 +125,7 @@
                         </table>
                         <h6 class="font-monospace small">Qty: <span ng-bind="orderQty"></span></h6>
                         <div class="mt-4">
-                            <form action="/ws_orders/change_status" id="statusForm" method="post">
+                            <form action="/orders/change_status" id="statusForm" method="post">
                                 <input type="hidden" name="id" ng-value="order.order_id">
                                 @csrf
                                 <label for="orderStatus">Status</label>
@@ -230,29 +225,9 @@
                 });
             }
 
-            $scope.delProduct = function(id) {
-                if (!confirm('Are you sure to delete this product?')) return;
-                $.post('/ws_orders/del_product', {
-                    order: $scope.order.order_id,
-                    product: id,
-                    _token: '{{ csrf_token() }}',
-                }, function(response) {
-                    $scope.$apply(function() {
-                        if (response.status) {
-                            $scope.order = response.order;
-                            $scope.products = response.products;
-                            $scope.parseProducts();
-                        } else {
-                            toastr.error('Error deleting please reload the page');
-                            console.log(response.message);
-                        }
-                    });
-                }, 'json');
-            };
-
             $scope.delSize = function(id) {
                 if (!confirm('Are you sure to delete this item?')) return;
-                $.post('/ws_orders/del_size', {
+                $.post('/orders/del_size', {
                     order: $scope.order.order_id,
                     size: id,
                     _token: '{{ csrf_token() }}',
@@ -272,7 +247,7 @@
 
             $scope.updateQty = function(id, qty, target) {
                 $scope.qtyUpdate = true;
-                $.post('/ws_orders/update_qty', {
+                $.post('/orders/update_qty', {
                     order: $scope.order.order_id,
                     product: id,
                     qty: qty,

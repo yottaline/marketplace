@@ -24,7 +24,7 @@ return new class extends Migration
             $table->tinyInteger('prodsize_discount')->default('0');
             $table->dateTime('prodsize_discount_start')->nullable();
             $table->dateTime('prodsize_discount_end')->nullable();
-            $table->boolean('prodsize_status')->default('0');
+            $table->boolean('prodsize_status')->default('1');
             $table->timestamps();
         });
     }
