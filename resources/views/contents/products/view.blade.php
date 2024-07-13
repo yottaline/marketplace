@@ -234,7 +234,7 @@
                                 <tbody>
                                     <tr ng-repeat="si in siezs track by $index">
                                         <input type="hidden" ng-id="id" ng-value="si.size_id">
-                                        <td ng-bind="si.prodcolor_ref"
+                                        <td ng-bind="si.prodcolor_code"
                                             class="text-center small font-monospace text-uppercase"></td>
                                         <td class="text-center" ng-bind="si.size_name"></td>
                                         <td class="text-center" ng-bind="si.prodcolor_name"></td>

@@ -12,7 +12,7 @@ class Order extends Model
 {
     use HasFactory;
     public $timestamps = false;
- 
+
     protected $fillable = [
         'order_code',
         'order_customer',
@@ -34,7 +34,7 @@ class Order extends Model
     public static function fetch($id = 0, $params = null, $limit = null, $lastId = null)
     {
         $orders = self::join('customers', 'order_customer', 'customer_id')
-            ->join('users', 'order_create_by', 'id') ->join('retailer', 'retailer_user', 'users.id');
+            ->join('users', 'order_create_by', 'id');
 
         if ($lastId) $orders->where('order_id', '<', $lastId);
 

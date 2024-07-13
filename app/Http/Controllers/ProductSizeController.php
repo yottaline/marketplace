@@ -15,7 +15,7 @@ class ProductSizeController extends Controller
 
     function load(Request $request)
     {
-        echo json_encode(Product_size::fetch(0, [['prodsize_size', $request->product_id]]));
+        echo json_encode(Product_size::fetch(0, [['prodsize_product', $request->product_id]]));
     }
 
     function submit(Request $request)
@@ -49,6 +49,7 @@ class ProductSizeController extends Controller
                         'prodsize_product'         => $request->p_id,
                         'prodsize_color'           =>  $color_ref,
                         'prodsize_sellprice'       => $request->sell,
+                        'prodsize_cost'            => $request->cost,
                         'prodsize_price'           => $request->price,
                         'prodsize_qty'             => $request->qty,
                         'prodsize_discount'        => $request->discount ?? 0,
@@ -74,6 +75,7 @@ class ProductSizeController extends Controller
                         'prodsize_code'           => uniqidReal(8),
                         'prodsize_product'         => $request->p_id,
                         'prodsize_color'           =>  $color_ref,
+                        'prodsize_cost'            => $request->cost,
                         'prodsize_sellprice'       => $request->sell,
                         'prodsize_price'           => $request->price,
                         'prodsize_qty'             => $request->qty,

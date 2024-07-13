@@ -10,7 +10,7 @@ class Order_item extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    
+
     protected $fillable = [
         'orderItem_order',
         'orderItem_product',
@@ -26,11 +26,11 @@ class Order_item extends Model
     static function fetch($id = 0, $params = null)
     {
         $oder_products = self::join('products', 'orderItem_product', 'product_id')
-            ->join('products_sizes', 'orderItem_size', 'prodsize_id')
+            ->join('product_sizes', 'orderItem_size', 'prodsize_id')
             ->join('sizes', 'prodsize_size', 'size_id')
-            ->join('products_colors', 'prodcolor_code', 'prodsize_color')
-            ->join('products_media', 'media_product', 'orderItem_product')
-            ->groupBy('orderItem_id');
+            ->join('product_colors', 'prodcolor_code', 'prodsize_color')
+            ->join('product_media', 'media_product', 'orderItem_product')
+            ->join('orders', 'orderItem_order', 'order_id');
 
         if ($params) $oder_products->where($params);
 

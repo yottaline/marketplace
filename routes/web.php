@@ -89,6 +89,13 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('orders')->group(function(){
         Route::get('/', 'OrderController@index');
+        Route::post('load', 'OrderController@load');
+        Route::get('create', 'OrderController@create');
+        Route::match(['post', 'put'], 'submit', 'OrderController@submit');
+        Route::get('view/{code}', 'OrderController@view');
+        Route::post('update_qty', 'OrderController@updateQty');
+        Route::post('del_product', 'OrderController@delProduct');
+        Route::post('del_size', 'OrderController@delSize');
     });
 });
 

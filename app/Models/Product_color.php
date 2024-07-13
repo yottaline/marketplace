@@ -16,10 +16,12 @@ class Product_color extends Model
         'prodcolor_code',
         'prodcolor_name',
         'prodcolor_product',
+        'prodcolor_ref',
         'prodcolor_media',
         'prodcolor_minqty',
         'prodcolor_maxqty',
-        'prodcolor_status'
+        'prodcolor_status',
+        'prodcolor_slug'
     ];
 
 

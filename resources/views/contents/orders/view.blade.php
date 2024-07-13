@@ -26,7 +26,7 @@
                 <div class="card card-box mb-3" ng-repeat="(pk, p) in parsedProducts">
                     <div class="card-body d-sm-flex">
                         <div class="product-img rounded mb-2"
-                            style="background-image: url({{ asset('media/product/') }}/<% p.info.product_id %>/<% p.info.media_file %>);">
+                            style="background-image:url(/assets/img/default_product_image.png)">
                         </div>
 
                         <div class="flex-fill">
@@ -35,8 +35,6 @@
                                     <span class="me-1"><%p.info.product_name%></span>
                                     <span class="text-secondary">#<%p.info.product_code%></span>
                                 </h6>
-                                {{-- <a href="" class="link-danger h5 bi bi-x"
-                                    ng-click="delProduct(p.info.product_id)"></a> --}}
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover sizes-table">
@@ -55,22 +53,23 @@
                                         <tr class="small text-center" ng-repeat="(sk, s) in p.sizes">
                                             <td ng-bind="s.prodcolor_name" class="text-uppercase text-start"></td>
                                             <td width="70" ng-bind="s.size_name">
-                                            <td width="70" class="font-monospace" ng-bind="s.ordprod_price"></td>
+                                            <td width="70" class="font-monospace" ng-bind="s.orderItem_productPrice">
+                                            </td>
                                             <td class="col-fit">
                                                 <input class="qty-input" ng-readonly="s.order_status > 2" type="text"
                                                     ng-model="s.ordprod_request_qty"
-                                                    ng-blur="updateQty(s.ordprod_id, s.ordprod_request_qty, 0)">
+                                                    ng-blur="updateQty(s.orderItem_id, s.orderItem_qty, 0)">
                                             </td>
                                             <td class="col-fit" ng-if="s.order_status > 2">
                                                 <input class="qty-input" type="text" ng-model="s.ordprod_served_qty"
-                                                    ng-blur="updateQty(s.ordprod_id, s.ordprod_served_qty, 1)">
+                                                    ng-blur="updateQty(s.orderItem_qty, s.orderItem_qty, 1)">
                                             </td>
                                             <td width="80"
-                                                ng-bind="fn.toFixed(s.ordprod_request_qty * s.ordprod_price, 2)"
+                                                ng-bind="fn.toFixed(s.orderItem_qty * s.orderItem_productPrice, 2)"
                                                 class="text-center font-monospace"></td>
                                             <td class="col-fit">
                                                 <a href="" class="link-danger bi bi-x"
-                                                    ng-click="delSize(s.ordprod_id)"></a>
+                                                    ng-click="delSize(s.orderItem_id)"></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -96,46 +95,35 @@
                         <h6 class="fw-semibold text-uppercase">
                             <span>ORDER</span> <span><%order.order_code%></span>
                         </h6>
-                        <h6 class="small"><%order.season_name%></h6>
                         <span class="text-primary"><%statusObject.name[order.order_status]%></span>
                         <p class="text-secondary mb-0 small">created: <span class="font-monospace"
                                 ng-bind="fn.slice(order.order_created, 0, 16)"></span></p>
                         <p class="text-secondary mb-0 small" ng-if="order.order_placed">placed: <span class="font-monospace"
                                 ng-bind="fn.slice(order.order_placed, 0, 16)"></span></p>
                         <hr>
-                        <h6 class="fw-semibold text-uppercase">Retailer info</h6>
-                        <p class="mb-0 small font-monospace text-seconday"><% retailer.retailer_code %></p>
-                        <p class="mb-0 small"><% retailer.retailer_fullName %></p>
-                        <p class="mb-0 small"><% retailer.retailer_email %></p>
+                        <h6 class="fw-semibold text-uppercase">customer info</h6>
+                        <p class="mb-0 small font-monospace text-seconday"><% customer.customer_code %></p>
+                        <p class="mb-0 small"><% customer.customer_name %></p>
+                        <p class="mb-0 small"><% customer.customer_email %></p>
                         <hr>
                         <table class="table small">
                             <tbody>
                                 <tr ng-if="+order.order_discount">
                                     <td class="col-fit">Subtotal</td>
                                     <td class="text-end font-monospace">
-                                        <span ng-bind="order.currency_code"></span>
                                         <span ng-bind="fn.sepNumber(order.order_subtotal)"></span>
                                     </td>
                                 </tr>
                                 <tr ng-if="+order.order_discount">
                                     <td class="col-fit">Discount</td>
                                     <td class="text-end font-monospace">
-                                        <span ng-bind="order.currency_code"></span>
                                         <span ng-bind="fn.sepNumber(order.order_discount)"></span>
                                     </td>
                                 </tr>
                                 <tr class="fw-bold">
                                     <td class="col-fit">Total</td>
                                     <td class="text-end font-monospace">
-                                        <span ng-bind="order.currency_code"></span>
                                         <span ng-bind="fn.sepNumber(order.order_total)"></span>
-                                    </td>
-                                </tr>
-                                <tr class="text-secondary">
-                                    <td class="col-fit">Adv. Payment 30%</td>
-                                    <td class="text-end font-monospace">
-                                        <span ng-bind="order.currency_code"></span>
-                                        <span ng-bind="fn.sepNumber(order.order_total * 0.3)"></span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -149,13 +137,11 @@
                                 <div class="input-group mb-3">
                                     <select id="orderStatus" name="status" class="form-select"
                                         ng-value="order.order_status">
-                                        <option value="0">DRAFT</option>
-                                        <option value="1">CANCELLED</option>
-                                        <option value="2">PLACED</option>
-                                        <option value="3">CONFIRMED</option>
-                                        <option value="4">ADVANCE PAYMENT IS PENDING</option>
-                                        <option value="5">BALANCE PAYMENT IS PENDING</option>
-                                        <option value="6">SHIPPED</option>
+                                        <option value="1">DRAFT</option>
+                                        <option value="2">CANCELLED</option>
+                                        <option value="3">PLACED</option>
+                                        <option value="4">APPROVED</option>
+                                        <option value="5">DELIVERED</option>
                                     </select>
                                     <button type="submit" class="btn btn-outline-dark bi bi-arrow-right"></button>
                                 </div>
@@ -192,37 +178,6 @@
                                     });
                                 });
                             </script>
-
-                            <div class="d-flex align-items-center">
-                                <a ng-if="order.order_status == 2" class="btn btn-outline-dark btn-sm" style="width: 95%"
-                                    ng-click="Confirmation(order.order_id)" aria-describedby="basic-addon2">Get Order
-                                    Confirmation </a>
-                                <div class="loading-spinner-confirmation spinner-border ms-auto spinner-border-sm text-warning"
-                                    role="status" aria-hidden="true">
-                                </div>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <a ng-if="fn.inArray(order.order_status, [3, 4])" class="btn btn-outline-primary btn-sm"
-                                    style="width: 95%" ng-click="proforma(order.order_id)"
-                                    aria-describedby="basic-addon2">Get Proforma
-                                    Invoice</a>
-                                <div class="loading-spinner-proforma spinner-border ms-auto spinner-border-sm text-warning"
-                                    role="status" aria-hidden="true">
-                                </div>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <a ng-if="fn.inArray(order.order_status, [5, 6])"
-                                    class="btn btn-outline-success btn-sm w-100" style="width: 95%"
-                                    ng-click="invoice(order.order_id)" aria-describedby="basic-addon2">Get Invoice</a>
-                                <div class="loading-spinner-invoice spinner-border ms-auto spinner-border-sm text-warning"
-                                    role="status" aria-hidden="true">
-                                </div>
-                            </div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -242,21 +197,17 @@
         app.controller('ngCtrl', function($scope) {
             $scope.fn = NgFunctions;
             $scope.statusObject = {
-                name: [
-                    'Draft', 'Canceled', 'Placed',
-                    'Confirmed', 'Advance Payment Is Pending',
-                    'Balance Payment Is Pending', 'Shipped'
+                name: ['', 'Draft', 'Canceled', 'Placed',
+                    'APPROVED', 'DELIVERED'
                 ],
             };
-            $('.loading-spinner-confirmation').hide();
-            $('.loading-spinner-proforma').hide();
-            $('.loading-spinner-invoice').hide();
+
             $scope.statusSubmit = false;
             $scope.qtyUpdate = false;
             $scope.focusedQty = 0;
             $scope.orderDisc = 0;
             $scope.orderQty = 0;
-            $scope.retailer = <?= json_encode($retailer) ?>;
+            $scope.customer = <?= json_encode($customer) ?>;
             $scope.order = <?= json_encode($order) ?>;
             $scope.products = <?= json_encode($products) ?>;
             $scope.parsedProducts = {};
@@ -272,10 +223,10 @@
                             total: 0
                         };
                     $scope.parsedProducts[p.prodcolor_slug].sizes.push(p);
-                    $scope.parsedProducts[p.prodcolor_slug].qty += +p.ordprod_request_qty;
-                    $scope.parsedProducts[p.prodcolor_slug].total += +p.ordprod_request_qty * +p
-                        .ordprod_price;
-                    $scope.orderQty += +p.ordprod_request_qty;
+                    $scope.parsedProducts[p.prodcolor_slug].qty += +p.orderItem_qty;
+                    $scope.parsedProducts[p.prodcolor_slug].total += +p.orderItem_qty * +p
+                        .orderItem_productPrice;
+                    $scope.orderQty += +p.orderItem_qty;
                 });
             }
 
@@ -341,52 +292,6 @@
                     });
                 }, 'json');
             }
-
-            $scope.Confirmation = function(id) {
-                $('.loading-spinner-confirmation').show();
-                $.get('/ws_orders/get_confirmed/' + id, function(response) {
-                    $('.loading-spinner-confirmation').hide();
-                    $scope.$apply(function() {
-                        if (response) {
-                            toastr.success('Get Order Confirmation successfully');
-                        } else {
-                            toastr.error('Error In Order Confirmation ');
-                            console.log(response.message);
-                        }
-                    });
-                }, 'json');
-            }
-
-            $scope.proforma = function(id) {
-                $('.loading-spinner-proforma').show();
-                $.get('/ws_orders/get_proforma/' + id, function(response) {
-                    $('.loading-spinner-proforma').hide();
-                    $scope.$apply(function() {
-                        if (response) {
-                            toastr.success('Get Order Porforma successfully');
-                        } else {
-                            toastr.error('Error In Order Porforma');
-                            console.log(response.message);
-                        }
-                    });
-                }, 'json');
-            }
-
-            $scope.invoice = function(id) {
-                $('.loading-spinner-invoice').show();
-                $.get('/ws_orders/invoice/' + id, function(response) {
-                    $('.loading-spinner-invoice').hide();
-                    $scope.$apply(function() {
-                        if (response) {
-                            toastr.success('Get invoice successfully');
-                        } else {
-                            toastr.error('Error In invoice ');
-                            console.log(response.message);
-                        }
-                    });
-                }, 'json');
-            }
-
             $scope.parseProducts();
             scope = $scope;
         });

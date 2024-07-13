@@ -54,7 +54,7 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="roleFilter">Retailer Name</label>
+                            <label for="roleFilter">Customer Name</label>
                             <input type="text" class="form-control" id="filter-name">
                         </div>
 
@@ -76,9 +76,9 @@
                             </h5>
                             {{-- @csrf --}}
                             <div>
-                                <a href="/ws_orders/create" class="btn btn-outline-primary btn-circle bi bi-plus-lg"></a>
-                                <button type="button" id="exportData"
-                                    class="btn btn-outline-success btn-circle bi bi-filetype-xlsx"></button>
+                                <a href="/orders/create" class="btn btn-outline-primary btn-circle bi bi-plus-lg"></a>
+                                {{-- <button type="button" id="exportData"
+                                    class="btn btn-outline-success btn-circle bi bi-filetype-xlsx"></button> --}}
                                 @csrf
                                 <button type="button" class="btn btn-outline-dark btn-circle bi bi-arrow-repeat"
                                     data-ng-click="load(true)"></button>
@@ -88,10 +88,9 @@
                             <table class="table table-hover" id="example">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        {{-- <th></th> --}}
                                         <th class="text-center">Code</th>
-                                        <th class="text-center">Season</th>
-                                        <th class="text-center">Retailer</th>
+                                        <th class="text-center">customer</th>
                                         <th class="text-center">Placed</th>
                                         <th class="text-center">Total</th>
                                         <th class="text-center">Status</th>
@@ -100,26 +99,25 @@
                                 </thead>
                                 <tbody>
                                     <tr data-ng-repeat="order in list" ng-dblclick="view(order)">
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <input class="form-check-input order-checkbox" type="checkbox"
                                                 ng-value="order.order_id">
-                                        </td>
+                                        </td> --}}
                                         <td data-ng-bind="order.order_code"
                                             class="text-center small font-monospace text-uppercase">
                                         </td>
-                                        <td class="text-center" data-ng-bind="order.season_name">
-                                        <td class="text-center" data-ng-bind="order.retailer_fullName">
+                                        <td class="text-center" data-ng-bind="order.customer_name">
                                         </td>
                                         <td class="text-center">
-                                            <span ng-if="!order.order_placed"> --</span>
-                                            <span ng-if="order.order_placed" data-ng-bind="order.order_placed"></span>
+                                            <span ng-if="!order.order_approved"> --</span>
+                                            <span ng-if="order.order_approved" data-ng-bind="order.order_approved"></span>
                                         </td>
                                         <td data-ng-bind="order.order_subtotal" class="text-center font-monospace"></td>
                                         <td class="text-center">
                                             <span class="rounded-pill"><%statusObject.name[order.order_status]%></span>
                                         </td>
                                         <td class="col-fit">
-                                            <a href="/ws_orders/view/<%order.order_id%>" target="_blank"
+                                            <a href="/orders/view/<%order.order_id%>" target="_blank"
                                                 class="btn btn-outline-dark btn-circle bi bi-eye"></a>
                                         </td>
                                     </tr>
@@ -129,16 +127,6 @@
                         </div>
                         @include('layouts.loader')
                     </div>
-                    <script>
-                        $('#exportData').on('click', function() {
-
-                            var orderid = $('.order-checkbox:checked').map((i, e) => $(e).val()).get();
-                            console.log(orderid);
-                            window.open('/ws_orders/export?' + $.param({
-                                orderid: orderid
-                            }));
-                        });
-                    </script>
                 </div>
             </div>
         </div>
@@ -154,9 +142,8 @@
 
         app.controller('myCtrl', function($scope) {
             $scope.statusObject = {
-                name: ['Draft', 'Canceled', 'Placed',
-                    'Confirmed', 'Advance Payment Is Pending',
-                    'Balance Payment Is Pending', 'Shipped'
+                name: ['', 'Draft', 'Canceled', 'Placed',
+                    'APPROVED', 'DELIVERED'
                 ],
             };
             $('.loading-spinner').hide();
@@ -171,10 +158,7 @@
             $scope.orDe = [];
             $scope.last_id = 0;
             $scope.jsonParse = (str) => JSON.parse(str);
-            $scope.retailers = <?= json_encode($retailers) ?>;
-            $scope.seasons = <?= json_encode($seasons) ?>;
-            $scope.currencies = <?= json_encode($currencies) ?>;
-            $scope.locations = <?= json_encode($locations) ?>;
+            $scope.customers = <?= json_encode($customers) ?>;
             $scope.load = function(reload = false) {
                 if (reload) {
                     $scope.list = [];
@@ -195,7 +179,7 @@
                     _token: '{{ csrf_token() }}'
                 };
 
-                $.post("/ws_orders/load", request, function(data) {
+                $.post("/orders/load", request, function(data) {
                     $('.loading-spinner').hide();
                     var ln = data.length;
                     $scope.$apply(() => {
@@ -208,55 +192,15 @@
                     });
                 }, 'json');
             }
+
             $scope.setOrder = (indx) => {
                 $scope.updateOrders = indx;
                 $('#orderModal').modal('show');
             };
-            $scope.opt = function(indx, status) {
-                Swal.fire({
-                    text: "Do you want to change your student status?",
-                    icon: "info",
-                    showCancelButton: true,
-                }).then((result) => {
-                    if (!result.isConfirmed) return;
-                    $.post('/ws_orders/change_status', {
-                        id: $scope.list[indx].order_id,
-                        status: status,
-                        _token: "{{ csrf_token() }}",
-                    }, function(response) {
-                        if (response.status) {
-                            toastr.success(
-                                'The status of the request has been changed successfully');
-                            $('#set_deliverd').modal('hide');
-                            scope.$apply(() => {
-                                if (scope.updateOrders === false) {
-                                    scope.list.unshift(response.data);
-                                    scope.load(true);
-                                } else {
-                                    scope.list[scope.updateOrders] = response.data;
-                                }
-                            });
-                        } else toastr.error(response.message);
-                    }, 'json');
-                });
-            }
 
             $scope.view = function(order) {
-                window.open('/ws_orders/view/' + order.order_id);
+                window.open('/orders/view/' + order.order_id);
             }
-
-            // $scope.viewDetails = (order) => {
-            //     $.get("/orders/view/" + order.order_id, function(data) {
-            //         $('.perm').show();
-            //         scope.$apply(() => {
-
-            //             scope.orderDetails = data.items;
-            //             scope.orDe = data.order;
-            //             console.log(data)
-            //             $('#edit_disc').modal('show');
-            //         });
-            //     }, 'json');
-            // }
 
             $scope.delProduct = (index) => $scope.products.splice(index, 1);
 
@@ -280,21 +224,6 @@
                 e.preventDefault();
                 scope.$apply(() => scope.q = $(this).find('input').val());
                 scope.load(true);
-            });
-
-            $('#productItem').on('change', function() {
-                var val = $(this).val();
-                console.log(val)
-                var request = {
-                    product: val
-                };
-                $.get("/products/get_product/", request, function(data) {
-                    // $('.perm').show();
-                    scope.$apply(() => {
-                        scope.products = data;
-                        // console.log(data)
-                    });
-                }, 'json');
             });
         });
     </script>

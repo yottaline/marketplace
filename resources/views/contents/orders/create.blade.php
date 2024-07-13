@@ -38,12 +38,12 @@
             <div class="col-12 col-sm-4 col-lg-3">
                 <div class="card card-box mb-3">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold text-uppercase">Retailer Info</h5>
+                        <h5 class="card-title fw-semibold text-uppercase">customer Info</h5>
                         <div class="input-group mb-3">
-                            <select name="retailer" id="retailer" class="form-select">
-                                <option value="defalt">-- SELECT RETAILER NAME --</option>
-                                <option ng-repeat="retailer in retailers" ng-value="retailer.retailer_id"
-                                    ng-bind="retailer.retailer_fullName"></option>
+                            <select name="customer" id="customer" class="form-select">
+                                <option value="defalt">-- SELECT customer NAME --</option>
+                                <option ng-repeat="customer in customers" ng-value="customer.customer_id"
+                                    ng-bind="customer.customer_name"></option>
                             </select>
                             <button data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
                                 aria-controls="collapseExample" class="btn btn-outline-dark bi bi-plus"
@@ -52,43 +52,26 @@
 
                         <div class="collapse" id="collapseExample">
                             <div class="mb-3">
-                                <label for="retailerEmail">Email<b class="text-danger">&ast;</b></label>
-                                <input type="email" class="form-control form-control-sm retailer-field" id="retailerEmail"
+                                <label for="customerName">Name<b class="text-danger">&ast;</b></label>
+                                <input type="text" class="form-control form-control-sm customer-field" id="customerName"
                                     ng-disabled="submitting">
                             </div>
+
                             <div class="mb-3">
-                                <label for="retailerName">Name<b class="text-danger">&ast;</b></label>
-                                <input type="text" class="form-control form-control-sm retailer-field" id="retailerName"
+                                <label for="customerEmail">Email<b class="text-danger">&ast;</b></label>
+                                <input type="email" class="form-control form-control-sm customer-field" id="customerEmail"
                                     ng-disabled="submitting">
                             </div>
+
                             <div class="mb-3">
-                                <label for="retailerBusiness">Business<b class="text-danger">&ast;</b></label>
-                                <input type="text" class="form-control form-control-sm retailer-field"
-                                    id="retailerBusiness" ng-disabled="submitting">
+                                <label for="customerPhone">Phone</label>
+                                <input type="tel" class="form-control form-control-sm customer-field font-monospcae"
+                                    id="customerPhone" ng-disabled="submitting">
                             </div>
+
                             <div class="mb-3">
-                                <label for="retailerPhone">Phone</label>
-                                <input type="tel" class="form-control form-control-sm retailer-field font-monospcae"
-                                    id="retailerPhone" ng-disabled="submitting">
-                            </div>
-                            <div class="mb-3">
-                                <label for="retailerCountry">Country<b class="text-danger">&ast;</b></label>
-                                <select class="form-select form-select-sm font-monospcae retailer-field select2"
-                                    id="retailerCountry" ng-disabled="submitting">
-                                    <option value=""></option>
-                                    @foreach ($countries as $c)
-                                        <option value="{{ $c->location_id }}">{{ $c->location_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="retailerCity">City</label>
-                                <input type="text" class="form-control form-control-sm retailer-field font-monospcae"
-                                    id="retailerCity" ng-disabled="submitting">
-                            </div>
-                            <div class="mb-3">
-                                <label for="retailerAddress">Address</label>
-                                <textarea rows="3" class="form-control form-control-sm retailer-field font-monospcae" id="retailerAddress"
+                                <label for="customerAddress">Address</label>
+                                <textarea rows="3" class="form-control form-control-sm customer-field font-monospcae" id="customerAddress"
                                     ng-disabled="submitting"></textarea>
                             </div>
                         </div>
@@ -120,10 +103,9 @@
                                                     <td ng-bind="s.info.prodcolor_name"></td>
                                                     <td width="40" class="text-center" ng-bind="s.info.size_name"></td>
                                                     <td width="40" class="font-monospace text-center"
-                                                        ng-bind="s.info.prodsize_wsp">
+                                                        ng-bind="s.info.prodsize_sellprice">
                                                     </td>
-                                                    <td width="30" class="font-monospace text-center"
-                                                        ng-bind="s.qty">
+                                                    <td width="30" class="font-monospace text-center" ng-bind="s.qty">
                                                     </td>
                                                     <td width="60" class="px-2 font-monospace text-center"
                                                         ng-bind="fn.toFixed(s.total, 2)">
@@ -146,17 +128,20 @@
                                 <span class="fw-bold me-auto">Total</span>
                                 <span class="fw-bold font-monospace" ng-bind="fn.toFixed(orderTotal, 2)">0.00</span>
                             </div>
+
                             <div class="px-2 d-flex">
                                 <span class="fw-bold me-auto">Qty</span>
                                 <span class="fw-bold font-monospace" ng-bind="orderQty">0</span>
                             </div>
                             <div class="mt-3">
+                                <label for="orderDiscount">Discount</label>
+                                <input type="text" name="discount" id="orderDiscount"
+                                    class="form-control form-control-sm">
+                            </div>
+                            <div class="mt-3">
                                 <label for="orderNote">Note</label>
                                 <textarea id="orderNote" class="form-control form-control-sm" rows="2"></textarea>
                             </div>
-                            <p ng-if="+orderTotal < 2000" class="m-0 mt-3 text-danger">
-                                <i class="bi bi-info-circle me-1"></i>MOA EUR 2000
-                            </p>
                             <button class="btn btn-outline-dark w-100 btn-sm mt-3" ng-click="placeOrder()"
                                 ng-disabled="!fn.objectLen(order) || submitting">
                                 <span ng-if="submitting" class="spinner-border spinner-border-sm me-2"
@@ -197,10 +182,7 @@
             <div ng-if="selectedProduct !== false" class="offcanvas-body">
                 <div ng-if="list[selectedProduct].prodcolor_media == null" class="product-img rounded"
                     style="background-image: url(/assets/img/default_product_image.png)"></div>
-                <a href="{{ asset('media/product/') }}/<% list[selectedProduct].product_id %>/<% list[selectedProduct].media_file %>"
-                    ng-if="list[selectedProduct].prodcolor_media" class="product-img rounded d-block" target="_blank"
-                    style="background-image: url({{ asset('media/product/') }}/<% list[selectedProduct].product_id %>/<% list[selectedProduct].media_file %>)">
-                </a>
+
                 <h6 class="fw-bold" ng-bind="list[selectedProduct].product_name"></h6>
                 <h6 class="text-secondary small" ng-bind="list[selectedProduct].season_name"></h6>
                 <div class="py-4">
@@ -214,15 +196,16 @@
                                 <tbody>
                                     <tr class="small" ng-repeat="(sk, s) in c.sizes">
                                         <td class="me-auto px-2" ng-bind="s.size_name"></td>
-                                        <td width="70" class="font-monospace text-center" ng-bind="s.prodsize_wsp">
+                                        <td width="70" class="font-monospace text-center"
+                                            ng-bind="s.prodsize_sellprice">
                                         </td>
                                         <td width="60">
                                             <input class="font-monospace text-center w-100 small prodsize-qty"
-                                                data-wsp="<% s.prodsize_wsp %>" data-size="<% ck+','+sk %>"
+                                                data-wsp="<% s.prodsize_sellprice %>" data-size="<% ck+','+sk %>"
                                                 ng-model="s.qty" ng-change="calProductTotal()">
                                         </td>
                                         <td width="100" class="px-2 font-monospace text-center"
-                                            ng-bind="fn.toFixed(s.qty * s.prodsize_wsp, 2)">
+                                            ng-bind="fn.toFixed(s.qty * s.prodsize_sellprice, 2)">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -259,7 +242,7 @@
             $scope.submitting = false;
             $scope.list = [];
             $scope.offset = 0;
-            $scope.retailers = <?= json_encode($retailers) ?>;
+            $scope.customers = <?= json_encode($customers) ?>;
             $scope.load = function(reload = false) {
                 if (reload) {
                     $scope.list = [];
@@ -270,7 +253,7 @@
                 if ($scope.noMore) return;
                 $scope.loading = true;
 
-                $.post("/ws_products/load", {
+                $.post("/products/load", {
                     offset: $scope.offset,
                     limit: limit,
                     _token: '{{ csrf_token() }}'
@@ -287,7 +270,6 @@
                 }, 'json');
             }
 
-            // order = {prod_ref: {info: {}, sizes: [{info: {}, qty: n, total: n},], qty: n, total: n},}
             $scope.order = {};
             $scope.orderQty = 0;
             $scope.orderTotal = 0;
@@ -305,13 +287,13 @@
                     var colors = {};
                     $scope.sizes = data;
                     $.map(data, function(item) {
-                        if (typeof colors[item.prodcolor_ref] == 'undefined')
-                            colors[item.prodcolor_ref] = {
+                        if (typeof colors[item.prodcolor_code] == 'undefined')
+                            colors[item.prodcolor_code] = {
                                 info: item,
                                 sizes: [],
                             };
                         item.qty = 0;
-                        colors[item.prodcolor_ref].sizes.push(item);
+                        colors[item.prodcolor_code].sizes.push(item);
                     });
                     scope.$apply(() => scope.colors = colors);
                     scope.$evalAsync(() => {
@@ -336,7 +318,7 @@
             }
 
             $scope.addToOrder = function() {
-                var product_ref, totalQty = 0,
+                var prodcolor_code, totalQty = 0,
                     totalAmount = 0,
                     sizes = [];
 
@@ -346,11 +328,11 @@
                         sk = keys[1],
                         size = $scope.colors[ck].sizes[sk],
                         qty = +$(e).val(),
-                        amount = qty * size.prodsize_wsp;
+                        amount = qty * size.prodsize_sellprice;
 
                     totalQty += qty;
                     totalAmount += amount;
-                    product_ref = size.product_ref;
+                    prodcolor_code = size.prodcolor_code;
 
                     if (qty) sizes.push({
                         info: size,
@@ -360,14 +342,14 @@
                 });
 
                 if (totalQty) {
-                    $scope.order[product_ref] = {
-                        info: $scope.list.find(o => o.product_ref == product_ref),
+                    $scope.order[prodcolor_code] = {
+                        info: $scope.list.find(o => o.prodcolor_code == prodcolor_code),
                         sizes: sizes,
                         qty: totalQty,
                         total: totalAmount,
                     };
-                } else if (Object.keys($scope.order).includes(product_ref))
-                    delete($scope.order[product_ref]);
+                } else if (Object.keys($scope.order).includes(prodcolor_code))
+                    delete($scope.order[prodcolor_code]);
                 productCanvas.hide();
                 $scope.calOrderTotal();
             }
@@ -396,52 +378,44 @@
             }
 
             $scope.placeOrder = function() {
-                var email = $('#retailerEmail').val(),
-                    name = $.trim($('#retailerName').val()),
-                    biz = $.trim($('#retailerBusiness').val()),
-                    phone = $.trim($('#retailerPhone').val()),
-                    country = +$('#retailerCountry').val(),
-                    city = $.trim($('#retailerCity').val()),
-                    address = $.trim($('#retailerAddress').val()),
+                var email = $('#customerEmail').val(),
+                    name = $.trim($('#customerName').val()),
+                    phone = $.trim($('#customerPhone').val()),
+                    address = $.trim($('#customerAddress').val()),
                     note = $.trim($('#orderNote').val()),
+                    discount = $.trim($('#orderDiscount').val()),
                     obj = Object.values(scope.order),
                     qty = $(obj).map((n, e) => $(e.sizes).map((x, y) => y.qty).get()).get().join(),
                     sizes = $(obj).map((n, e) => $(e.sizes).map((x, y) => y.info.prodsize_id).get()).get()
                     .join();
-                if (!email || !validateEmail(email)) {
-                    $('#retailerEmail').focus();
-                    return;
-                }
-                if (!name) {
-                    $('#retailerName').focus();
-                    return;
-                }
-                if (!biz) {
-                    $('#retailerBusiness').focus();
-                    return;
-                }
-                if (!country) {
-                    $('#retailerCountry').focus();
-                    return;
-                }
+                // if (!email || !validateEmail(email)) {
+                //     $('#customerEmail').focus();
+                //     return;
+                // }
+                // if (!name) {
+                //     $('#customerName').focus();
+                //     return;
+                // }
+                // if (!address) {
+                //     $('#customerAddress').focus();
+                //     return;
+                // }
                 $scope.submitting = true;
-                $.post('/ws_orders/submit', {
+                $.post('/orders/submit', {
                     qty: qty,
                     sizes: sizes,
                     email: email,
                     name: name,
-                    biz: biz,
-                    country: country,
-                    city: city,
                     phone: phone,
                     address: address,
                     note: note,
+                    disc: discount,
                     _token: '{{ csrf_token() }}',
                 }, function(response) {
                     scope.$apply(() => {
                         $scope.submitting = false;
                         if (response.status) {
-                            $('.retailer-field').val(null).prop('readonly', false);;
+                            $('.customer-field').val(null).prop('readonly', false);;
                             $scope.order = {};
                             toastr.success('Order placed');
                         }
@@ -458,15 +432,14 @@
                 var idState = this.value;
                 console.log(idState);
                 $.ajax({
-                    url: '/ws_orders/get_retailer/' + idState,
+                    url: '/orders/get_retailer/' + idState,
                     type: 'GET',
                     dataType: 'json',
                     success: function(res) {
                         $('#retailerEmail').val(res.retailer_email).prop('readonly', true);
                         $('#retailerName').val(res.retailer_fullName).prop('readonly', true);
-                        $('#retailerBusiness').val(res.retailer_company).prop('readonly', true);
+                        $('#customerAddress').val(res.retailer_company).prop('readonly', true);
                         $('#retailerPhone').val(res.retailer_phone).prop('readonly', true);
-                        $('#retailerCountry').val(res.retailer_country).prop('readonly', true);
                     }
                 });
             });
