@@ -43,10 +43,9 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th>Full Name</th>
-                                        <th class="text-center">Stroe</th>
                                         <th class="text-center">Address</th>
-                                        <th class="text-center">Apperoved Date</th>
-                                        <th class="text-center">Status</th>
+                                        {{-- <th class="text-center">Apperoved Date</th>
+                                        <th class="text-center">Status</th> --}}
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -67,26 +66,25 @@
                                                 <span ng-bind="customer.customer_email" class="fw-normal"></span>
                                             </small>
                                         </td>
-                                        <td class="text-center" ng-bind="customer.customer_store"></td>
                                         <td class="text-center" ng-bind="customer.customer_address"></td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <span ng-if="customer.customer_approved == null">Not Approved</span>
                                             <span ng-if="customer.customer_approved != null"
                                                 ng-bind="customer.customer_approved"></span>
-                                        </td>
+                                        </td> --}}
 
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <span
                                                 class="badge bg-<%statusObject.color[customer.customer_status]%> rounded-pill font-monospace p-2"><%statusObject.name[customer.customer_status]%></span>
 
-                                        </td>
+                                        </td> --}}
                                         <td class="col-fit">
 
                                             <button class="btn btn-outline-primary btn-circle bi bi-pencil-square"
                                                 ng-click="setCustomer($index)"></button>
-                                            <button ng-if="customer.customer_approved == null"
+                                            {{-- <button ng-if="customer.customer_approved == null"
                                                 class="btn btn-outline-dark btn-circle bi bi-shield-fill-check"
-                                                ng-click="editApproved($index)"></button>
+                                                ng-click="editApproved($index)"></button> --}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -222,19 +220,6 @@
                         $('#email').val('');
                         $('#password').val('');
                         $('#phone').val('');
-                        $('#company').val('');
-                        $('#logo').val('');
-                        $('#website').val('');
-                        $('#desc').val('');
-                        $('#province').val('');
-                        $('#Payment').val('');
-                        $('#currency').val('');
-                        $('#city').val('');
-                        $('#shipAdd').val('');
-                        $('#billAdd').val('');
-                        $('#zipCode').val('');
-                        $('#streetN').val('');
-                        $('#streetN').val('');
                         $('#address').val('');
                     }
                 </script>

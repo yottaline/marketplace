@@ -34,7 +34,7 @@ class Order extends Model
     public static function fetch($id = 0, $params = null, $limit = null, $lastId = null)
     {
         $orders = self::join('customers', 'order_customer', 'customer_id')
-            ->join('users', 'order_create_by', 'id');
+            ->join('users', 'order_create_by', 'id')->where('order_create_by', auth()->user()->id);
 
         if ($lastId) $orders->where('order_id', '<', $lastId);
 

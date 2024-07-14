@@ -252,7 +252,7 @@
                                             scope.list.unshift(response
                                                 .data);
                                             scope.load(true);
-                                            categoyreClsForm()
+                                            retailerClsForm()
                                         } else {
                                             scope.list[scope
                                                 .updateRetailer] = response.data;
@@ -265,25 +265,15 @@
                         })
                     });
 
-                    function categoyreClsForm() {
+                    function retailerClsForm() {
                         $('#retailer_id').val('');
                         $('#retailerName').val('');
                         $('#email').val('');
                         $('#password').val('');
                         $('#phone').val('');
-                        $('#company').val('');
+                        $('#storeName').val('');
+                        $('#storeMobile').val('');
                         $('#logo').val('');
-                        $('#website').val('');
-                        $('#desc').val('');
-                        $('#province').val('');
-                        $('#Payment').val('');
-                        $('#currency').val('');
-                        $('#city').val('');
-                        $('#shipAdd').val('');
-                        $('#billAdd').val('');
-                        $('#zipCode').val('');
-                        $('#streetN').val('');
-                        $('#streetN').val('');
                         $('#address').val('');
                     }
                 </script>
