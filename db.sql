@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`id`),
     UNIQUE (`user_code`),
     UNIQUE (`user_email`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS
     `admin_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`admin_id`),
     FOREIGN KEY (`admin_user`) REFERENCES `users` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS
     `retailer_login` DATETIME DEFAULT NULL,
     PRIMARY KEY (`retailer_id`),
     FOREIGN KEY (`retailer_user`) REFERENCES `users` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS
     PRIMARY KEY (`customer_id`),
     UNIQUE (`customer_code`),
     UNIQUE (`customer_email`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS
     `brand_name` VARCHAR(120) NOT NULL,
     `brand_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`brand_id`),
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS
     `category_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`category_id`),
     FOREIGN KEY (`category_brand`) REFERENCES `brands` (`brand_id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS
     `subcategory_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`subcategory_id`),
     FOREIGN KEY (`subcategory_category`) REFERENCES `categories` (`category_id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS
     `size_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`brand_id`),
     FOREIGN KEY (`size_subcategory`) REFERENCES `subcategories` (`subcategory_id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS
     FOREIGN KEY (`product_category`) REFERENCES `categories` (`category_id`),
     FOREIGN KEY (`product_subcategory`) REFERENCES `subcategories` (`subcategory_id`),
     FOREIGN KEY (`product_created_by`) REFERENCES `retailers` (`retailer_id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS
     `prodcolor_maxqty` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'MAX ORDER QUANTITY',
     `prodcolor_status` BOOLEAN NOT NULL DEFAULT '1' PRIMARY KEY (`prodcolor_id`),
     FOREIGN KEY (`prodcolor_product`) REFERENCES `products` (`product_id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS
     `prodsize_status` BOOLEAN NOT NULL DEFAULT '1' PRIMARY KEY (`prodsize_id`),
     FOREIGN KEY (`prodsize_product`) REFERENCES `products` (`product_id`),
     FOREIGN KEY (`prodsize_color`) REFERENCES `products_colors` (`prodcolor_code`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS
     UNIQUE (`order_code`),
     FOREIGN KEY (`order_customer`) REFERENCES `customers` (`customer_id`),
     FOREIGN KEY (`order_create_by`) REFERENCES `retailers` (`retailer_id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- --------------------------------------
 CREATE TABLE
@@ -198,4 +198,4 @@ CREATE TABLE
     FOREIGN KEY (`orderItem_order`) REFERENCES `orders` (`orders_id`),
     FOREIGN KEY (`orderItem_product`) REFERENCES `products` (`product_id`),
     FOREIGN KEY (`orderItem_size`) REFERENCES `products_sizes` (`prodsize_id`),
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
