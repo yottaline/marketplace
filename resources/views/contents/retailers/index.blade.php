@@ -118,7 +118,7 @@
                             <input ng-if="updateRetailer !== false" type="hidden" name="_method" value="put">
                             <input type="hidden" name="retailer_id" id="retailer_id"
                                 ng-value="list[updateRetailer].retailer_id">
-                            <input type="hidden" name="id" id="retailer_id" ng-value="list[updateRetailer].id">
+                            <input type="hidden" name="id" id="id" ng-value="list[updateRetailer].id">
                             <div class="row">
 
                                 <div class="col-6">
@@ -156,50 +156,35 @@
                                     </div>
                                 </div>
 
-                                <div>
-                                    <p class="d-inline-flex gap-1">
-                                        <a class="btn btn-light" data-bs-toggle="collapse" href="#collapseExample"
-                                            role="button" aria-expanded="false" aria-controls="collapseExample">
-                                            IS STORE
-                                        </a>
-                                    </p>
-                                    <div class="collapse" id="collapseExample">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="storeName">
-                                                        Store Name</label>
-                                                    <input type="text" class="form-control" name="store_name"
-                                                        ng-value="list[updateRetailer].retailer_storeName"
-                                                        id="storeName" />
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="storeMobile">
-                                                        Stroe Mobiler</label>
-                                                    <input type="text" class="form-control" name="store_mobile"
-                                                        ng-value="list[updateRetailer].retailer_mobile"
-                                                        id="storeMobile" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="mb-3">
-                                                    <label for="logo">
-                                                        Logo</label>
-                                                    <input type="file" class="form-control" name="logo"
-                                                        ng-value="list[updateRetailer].retailer_logo" id="logo" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="storeName">
+                                            Store Name <b class="text-danger">&ast;</b></label>
+                                        <input type="text" class="form-control" name="store_name"
+                                            ng-value="list[updateRetailer].retailer_storeName" id="storeName" />
                                     </div>
                                 </div>
-
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="storeMobile">
+                                            Store Mobile</label>
+                                        <input type="text" class="form-control" name="store_mobile"
+                                            ng-value="list[updateRetailer].retailer_mobile" id="storeMobile" />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="logo">
+                                            Logo</label>
+                                        <input type="file" class="form-control" name="logo"
+                                            ng-value="list[updateRetailer].retailer_logo" id="logo" />
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="address">
-                                            Address</label>
+                                            Address <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="address"
                                             ng-value="list[updateRetailer].retailer_address" id="address" />
                                     </div>
@@ -210,19 +195,19 @@
                                         <input class="form-check-input" type="checkbox" role="switch" name="vat"
                                             value="1" ng-checked="+list[updateRetailer].retailer_vat"
                                             id="retailerVat">
-                                        <label class="form-check-label" for="retailerVat">Owns Value added tax</label>
+                                        <label class="form-check-label" for="retailerVat">Has VAT</label>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="modal-footer d-flex">
-                            <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="modalForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">Submit</button>
-                            <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
-                                ng-if="submitting"></span>
-                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-outline-secondary me-auto"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="modalForm" class="btn btn-outline-primary"
+                            ng-disabled="submitting">Submit</button>
+                        <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
+                            ng-if="submitting"></span>
                     </div>
                 </div>
                 <script>
