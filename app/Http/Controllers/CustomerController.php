@@ -53,9 +53,9 @@ class CustomerController extends Controller
         ];
 
         if(!$id){
-            $param['customer_code']     = uniqidReal(8);
-            $param['customer_password'] = Hash::make($request->password);
-            $param['customer_created']  = Carbon::now();
+            $params['customer_code']     = uniqidReal(8);
+            $params['customer_password'] = Hash::make($request->password);
+            $params['customer_created']  = Carbon::now();
         }
 
         $result = Customer::submit($params, $id);

@@ -161,7 +161,7 @@
                                         <label for="storeName">
                                             Store Name <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="store_name"
-                                            ng-value="list[updateRetailer].retailer_storeName" id="storeName" />
+                                            ng-value="list[updateRetailer].retailer_store" id="storeName" />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -176,8 +176,7 @@
                                     <div class="mb-3">
                                         <label for="logo">
                                             Logo</label>
-                                        <input type="file" class="form-control" name="logo"
-                                            ng-value="list[updateRetailer].retailer_logo" id="logo" />
+                                        <input type="file" class="form-control" name="logo" id="logo" />
                                     </div>
                                 </div>
 

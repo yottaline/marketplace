@@ -48,6 +48,6 @@ class Customer extends Model
     {
         if($id) return self::where('customer_id', $id)->update($param) ? $id : false;
         $status = self::create($param);
-        return $status ? $status->customer_id : false;
+        return $status ? $status->id : false;
     }
 }

@@ -34,7 +34,6 @@ class RetailerController extends Controller
 
     function submit(Request $request)
     {
-
         $id    = $request->retailer_id;
         $user_id = $request->id;
         $email = $request->email;

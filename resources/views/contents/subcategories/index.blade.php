@@ -116,14 +116,14 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="modal-footer d-flex">
-                            <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="subcategoryForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">Submit</button>
-                            <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
-                                ng-if="submitting"></span>
-                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-outline-secondary me-auto"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="subcategoryForm" class="btn btn-outline-primary"
+                            ng-disabled="submitting">Submit</button>
+                        <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
+                            ng-if="submitting"></span>
                     </div>
                 </div>
 
@@ -131,11 +131,8 @@
                     $(function() {
                         $('#subcategoryForm').on('submit', e => e.preventDefault()).validate({
                             rules: {
-                                password: {
-                                    password: true
-                                },
-                                password_confirm: {
-                                    equalTo: "#password"
+                                fullName: {
+                                    required: true
                                 }
                             },
                             submitHandler: function(form) {
