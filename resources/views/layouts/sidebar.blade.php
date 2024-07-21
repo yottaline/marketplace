@@ -79,6 +79,12 @@
                          <i class="bi bi-person-video text-secondary me-2"></i><b>Customers</b>
                      </a>
                  </li>
+
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/settings/">
+                         <i class="bi bi-gear text-secondary me-2"></i><b>Settings</b>
+                     </a>
+                 </li>
              @endhasrole
 
              @hasrole('retailer')

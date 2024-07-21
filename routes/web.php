@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
         Route::match(['post', 'put'], 'submit', 'RetailerController@submit');
     });
 
+    Route::get('settings', 'BrandController@page');
+
     Route::prefix('brands')->group(function () {
         Route::get('/', 'BrandController@index');
         Route::post('load', 'BrandController@load');
@@ -98,6 +100,8 @@ Route::middleware('auth')->group(function () {
         Route::post('update_qty', 'OrderController@updateQty');
         Route::post('del_size', 'OrderController@delSize');
     });
+
+
 });
 
 
