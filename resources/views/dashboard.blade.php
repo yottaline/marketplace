@@ -2,13 +2,16 @@
 @section('title', 'Dashboard')
 @section('content')
     <div class="container-fluid">
+        <a href="lang/en">EN</a>
+        <a href="lang/es">ES</a>
+        <a href="lang/ar">AR</a>
         @hasrole('admin')
             <div class="row">
                 <div class="col-sm-3">
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-person-lines-fill text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">Retailers</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('Retailers') }}</b>
 
                             </h5>
                             <p class="card-text fs-3 fw-bold">{{ DB::table('retailers')->count() }}</p>
@@ -35,7 +38,7 @@
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-box-seam text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">PRODUCTS</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('PRODUCTS') }}</b>
 
                             </h5>
                             <p class="card-text fs-3 fw-bold">

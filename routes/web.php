@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('lang/{locale}','LanguageController@swap');
+
 Route::middleware('auth')->group(function () {
 
     Route::prefix('admins')->group(function () {
