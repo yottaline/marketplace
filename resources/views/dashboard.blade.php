@@ -21,7 +21,7 @@
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-slack text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">Brands</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('Brands') }}</b>
                             </h5>
                             <p class="card-text fs-3 fw-bold">{{ DB::table('brands')->count() }}</p>
                         </div>

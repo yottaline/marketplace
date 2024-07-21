@@ -11,8 +11,8 @@
                         <div class="list-box border p-3">
                             <div class="d-flex">
                                 <h5 class="card-title fw-semibold pt-1 me-auto mb-3">
-                                    <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                        role="status"></span><span>BRANDS</span>
+                                    <span class="loading-spinner-brand spinner-border spinner-border-sm text-warning me-2"
+                                        role="status"></span><span>{{ __('BRANDS') }}</span>
                                 </h5>
                                 <div>
                                     <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -28,8 +28,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th class="text-center">Status</th>
+                                            <th>{{ __('brand Name') }}</th>
+                                            <th class="text-center">{{ __('Status') }}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,7 +55,7 @@
 
                             <div data-ng-if="!brands.length" class="text-center py-5 text-secondary">
                                 <i class="bi bi-exclamation-circle  display-4"></i>
-                                <h5>No records</h5>
+                                <h5>{{ __('No Data') }}</h5>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,8 @@
                                         <div class="row">
                                             <div class="col-12 col-md-12">
                                                 <div class="mb-3">
-                                                    <label for="fullName">brand Name<b class="text-danger">&ast;</b></label>
+                                                    <label for="fullName">{{ __('brand Name') }}<b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input id="fullName" name="name" class="form-control"
                                                         maxlength="120" ng-value="brands[updatebrand].brand_name" required>
                                                 </div>
@@ -85,7 +86,8 @@
                                                     <input class="form-check-input" type="checkbox" role="switch"
                                                         name="status" value="1"
                                                         ng-checked="+brands[updatebrand].brand_status" id="brandStatus">
-                                                    <label class="form-check-label" for="brandStatus">Status</label>
+                                                    <label class="form-check-label"
+                                                        for="brandStatus">{{ __('Status') }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,9 +95,9 @@
                                 </div>
                                 <div class="modal-footer d-flex">
                                     <button type="button" class="btn btn-outline-secondary me-auto"
-                                        data-bs-dismiss="modal">Close</button>
+                                        data-bs-dismiss="modal">{{ __('Close') }}</button>
                                     <button type="submit" form="brandForm" class="btn btn-outline-primary"
-                                        ng-disabled="submitting">Submit</button>
+                                        ng-disabled="submitting">{{ __('Submit') }}</button>
                                     <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                         ng-if="submitting"></span>
                                 </div>
@@ -156,8 +158,9 @@
                         <div class="brands-box border p-3">
                             <div class="d-flex">
                                 <h5 class="card-title fw-semibold pt-1 me-auto mb-3">
-                                    <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                        role="status"></span><span>CATEGORIES</span>
+                                    <span
+                                        class="loading-spinner-categories spinner-border spinner-border-sm text-warning me-2"
+                                        role="status"></span><span>{{ __('CATEGORIES') }}</span>
                                 </h5>
                                 <div>
                                     <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -172,9 +175,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="text-center">Category Name</th>
-                                            <th class="text-center">Brand Name</th>
-                                            <th class="text-center">Status</th>
+                                            <th class="text-center">{{ __('Category Name') }}</th>
+                                            <th class="text-center">{{ __('brand Name') }}</th>
+                                            <th class="text-center">{{ __('Status') }}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -203,7 +206,7 @@
 
                             <div data-ng-if="!categories.length" class="text-center py-5 text-secondary">
                                 <i class="bi bi-exclamation-circle  display-4"></i>
-                                <h5>No records</h5>
+                                <h5>{{ __('No Data') }}</h5>
                             </div>
                         </div>
                         {{--  --}}
@@ -221,7 +224,7 @@
                                             <div class="row">
                                                 <div class="col-12 col-md-12">
                                                     <div class="mb-3">
-                                                        <label for="fullName">category Name<b
+                                                        <label for="fullName">{{ __('Category Name') }}<b
                                                                 class="text-danger">&ast;</b></label>
                                                         <input id="fullName" name="name" class="form-control"
                                                             maxlength="120"
@@ -232,11 +235,11 @@
                                                 <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="brand">
-                                                            Brand <b class="text-danger">&ast;</b></label>
+                                                            {{ __('Brand') }} <b class="text-danger">&ast;</b></label>
                                                         <select name="brand" id="brand" class="form-select"
                                                             required>
                                                             <option value="default">--
-                                                                SELECT BRAND NAME --</option>
+                                                                {{ __('SELECT BRAND NAME') }} --</option>
                                                             <option ng-repeat="b in brands" ng-value="b.brand_id"
                                                                 ng-bind="b.brand_name">
                                                             </option>
@@ -252,7 +255,7 @@
                                                             ng-checked="+categories[updatecategory].category_status"
                                                             id="categoryStatus">
                                                         <label class="form-check-label"
-                                                            for="categoryStatus">Status</label>
+                                                            for="categoryStatus">{{ __('Status') }}</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -260,9 +263,9 @@
                                     </div>
                                     <div class="modal-footer d-flex">
                                         <button type="button" class="btn btn-outline-secondary me-auto"
-                                            data-bs-dismiss="modal">Close</button>
+                                            data-bs-dismiss="modal">{{ __('Close') }}</button>
                                         <button type="submit" form="categoryForm" class="btn btn-outline-primary"
-                                            ng-disabled="submitting">Submit</button>
+                                            ng-disabled="submitting">{{ __('Submit') }}</button>
                                         <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                             ng-if="submitting"></span>
                                     </div>
@@ -335,8 +338,9 @@
                         <div class="brands-box border p-3">
                             <div class="d-flex">
                                 <h5 class="card-title fw-semibold pt-1 me-auto mb-3">
-                                    <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                        role="status"></span><span>SUBCATEGORIES</span>
+                                    <span
+                                        class="loading-spinner-subcategories spinner-border spinner-border-sm text-warning me-2"
+                                        role="status"></span><span>{{ __('SUBCATEGORIES') }}</span>
                                 </h5>
                                 <div>
                                     <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -351,9 +355,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="text-center">Subcategory Name</th>
-                                            <th class="text-center">Category Name</th>
-                                            <th class="text-center">Status</th>
+                                            <th class="text-center">{{ __('Subcategory Name') }}</th>
+                                            <th class="text-center">{{ __('Category Name') }}</th>
+                                            <th class="text-center">{{ __('Status') }}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -382,7 +386,7 @@
 
                             <div data-ng-if="!subcategoires.length" class="text-center py-5 text-secondary">
                                 <i class="bi bi-exclamation-circle display-4"></i>
-                                <h5>No records</h5>
+                                <h5>{{ __('No Data') }}</h5>
                             </div>
                         </div>
                     </div>
@@ -401,7 +405,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-12">
                                                 <div class="mb-3">
-                                                    <label for="fullName">Subcategory Name<b
+                                                    <label for="fullName">{{ __('Subcategory Name') }}<b
                                                             class="text-danger">&ast;</b></label>
                                                     <input id="fullName" name="name" class="form-control"
                                                         maxlength="120"
@@ -413,10 +417,10 @@
                                             <div class="col-12">
                                                 <div class="mb-3">
                                                     <label for="category">
-                                                        Category <b class="text-danger">&ast;</b></label>
+                                                        {{ __('Category') }} <b class="text-danger">&ast;</b></label>
                                                     <select name="category" id="category" class="form-select" required>
                                                         <option value="default">--
-                                                            SELECT CATEGORY NAME --</option>
+                                                            {{ __('SELECT CATEGORY NAME') }} --</option>
                                                         <option ng-repeat="c in categories" ng-value="c.category_id"
                                                             ng-bind="c.category_name">
                                                         </option>
@@ -431,7 +435,8 @@
                                                         name="status" value="1"
                                                         ng-checked="+subcategoires[updatesubcategory].subcategory_status"
                                                         id="subcategoryStatus">
-                                                    <label class="form-check-label" for="subcategoryStatus">Status</label>
+                                                    <label class="form-check-label"
+                                                        for="subcategoryStatus">{{ __('Status') }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -439,9 +444,9 @@
                                 </div>
                                 <div class="modal-footer d-flex">
                                     <button type="button" class="btn btn-outline-secondary me-auto"
-                                        data-bs-dismiss="modal">Close</button>
+                                        data-bs-dismiss="modal">{{ __('Close') }}</button>
                                     <button type="submit" form="subcategoryForm" class="btn btn-outline-primary"
-                                        ng-disabled="submitting">Submit</button>
+                                        ng-disabled="submitting">{{ __('Submit') }}</button>
                                     <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                         ng-if="submitting"></span>
                                 </div>
@@ -504,8 +509,8 @@
                         <div class="list-box border p-3">
                             <div class="d-flex">
                                 <h5 class="card-title fw-semibold pt-1 me-auto mb-3">
-                                    <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                        role="status"></span><span>SIZES</span>
+                                    <span class="loading-spinner-size spinner-border spinner-border-sm text-warning me-2"
+                                        role="status"></span><span>{{ __('SIZES') }}</span>
                                 </h5>
                                 <div>
                                     <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -520,9 +525,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="text-center">Size Name</th>
-                                            <th class="text-center">Subcategory Name</th>
-                                            <th class="text-center">Status</th>
+                                            <th class="text-center">{{ __('Name') }}</th>
+                                            <th class="text-center">{{ __('Subcategory Name') }}</th>
+                                            <th class="text-center">{{ __('Status') }}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -550,7 +555,7 @@
 
                             <div data-ng-if="!sizes.length" class="text-center py-5 text-secondary">
                                 <i class="bi bi-exclamation-circle display-4"></i>
-                                <h5>No records</h5>
+                                <h5>{{ __('No Data') }}</h5>
                             </div>
                         </div>
                     </div>
@@ -568,7 +573,8 @@
                                     <div class="row">
                                         <div class="col-12 col-md-6">
                                             <div class="mb-3">
-                                                <label for="name">Size Name<b class="text-danger">&ast;</b></label>
+                                                <label for="name">{{ __('Size Name') }}<b
+                                                        class="text-danger">&ast;</b></label>
                                                 <input id="name" name="name" class="form-control"
                                                     maxlength="120" ng-value="sizes[updatesize].size_name" required>
                                             </div>
@@ -576,7 +582,7 @@
 
                                         <div class="col-12 col-md-6">
                                             <div class="mb-3">
-                                                <label for="sign">Size sign </label>
+                                                <label for="sign">{{ __('Size sign') }} </label>
                                                 <input id="sign" name="sign" class="form-control"
                                                     ng-value="sizes[updatesize].size_sign">
                                             </div>
@@ -585,10 +591,10 @@
                                         <div class="col-12">
                                             <div class="mb-3">
                                                 <label for="subcategory">
-                                                    Subcategory <b class="text-danger">&ast;</b></label>
+                                                    {{ __('Subcategory') }} <b class="text-danger">&ast;</b></label>
                                                 <select name="subcategory" id="subcategory" class="form-select" required>
                                                     <option value="default">--
-                                                        SELECT SUBCATEGORY NAME --</option>
+                                                        {{ __('SELECT SUBCATEGORY NAME') }} --</option>
                                                     <option ng-repeat="c in subcategoires" ng-value="c.subcategory_id"
                                                         ng-bind="c.subcategory_name">
                                                     </option>
@@ -602,7 +608,8 @@
                                                 <input class="form-check-input" type="checkbox" role="switch"
                                                     name="status" value="1"
                                                     ng-checked="+sizes[updatesize].size_status" id="sizeStatus">
-                                                <label class="form-check-label" for="sizeStatus">Status</label>
+                                                <label class="form-check-label"
+                                                    for="sizeStatus">{{ __('Status') }}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -610,9 +617,9 @@
                             </div>
                             <div class="modal-footer d-flex">
                                 <button type="button" class="btn btn-outline-secondary me-auto"
-                                    data-bs-dismiss="modal">Close</button>
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
                                 <button type="submit" form="sizeForm" class="btn btn-outline-primary"
-                                    ng-disabled="submitting">Submit</button>
+                                    ng-disabled="submitting">{{ __('Submit') }}</button>
                                 <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                     ng-if="submitting"></span>
                             </div>
@@ -690,7 +697,10 @@
                 name: ['Un Available', 'Available'],
                 color: ['danger', 'success']
             };
-            $('.loading-spinner').hide();
+            $('.loading-spinner-brand').hide();
+            $('.loading-spinner-categories').hide();
+            $('.loading-spinner-subcategories').hide();
+            $('.loading-spinner-size').hide();
 
             // brands
             $scope.updatebrand = false;
@@ -717,7 +727,7 @@
 
 
             $scope.loadBrandsData = function(reload = false) {
-                $('.loading-spinner').show();
+                $('.loading-spinner-brand').show();
                 if (reload) {
                     $scope.page = 1;
                 }
@@ -725,7 +735,7 @@
                     limit: 24,
                     _token: '{{ csrf_token() }}'
                 }, function(data) {
-                    $('.loading-spinner').hide();
+                    $('.loading-spinner-brand').hide();
                     $scope.$apply(() => {
                         $scope.brands = data;
                     });
@@ -738,7 +748,7 @@
             };
 
             $scope.fetchCategories = function(reload = false) {
-                $('.loading-spinner').show();
+                $('.loading-spinner-categories').show();
                 if (reload) {
                     $scope.page = 1;
                 }
@@ -746,7 +756,7 @@
                     page: $scope.page,
                     _token: '{{ csrf_token() }}'
                 }, function(data) {
-                    $('.loading-spinner').hide();
+                    $('.loading-spinner-categories').hide();
                     $scope.$apply(() => {
                         $scope.categories = data;
                         $scope.page++;
@@ -760,7 +770,7 @@
             };
 
             $scope.fetchSubsubcategory = function(reload = false) {
-                $('.loading-spinner').show();
+                $('.loading-spinner-subcategories').show();
                 if (reload) {
                     $scope.page = 1;
                 }
@@ -768,7 +778,7 @@
                     limit: 24,
                     _token: '{{ csrf_token() }}'
                 }, function(data) {
-                    $('.loading-spinner').hide();
+                    $('.loading-spinner-subcategories').hide();
                     $scope.$apply(() => {
                         $scope.subcategoires = data;
                         $scope.page++;
@@ -777,14 +787,14 @@
             }
 
             $scope.fetchSizes = function(reload = false) {
-                $('.loading-spinner').show();
+                $('.loading-spinner-size').show();
                 if (reload) {
                     $scope.page = 1;
                 }
                 $.post("/sizes/load/", {
                     _token: '{{ csrf_token() }}'
                 }, function(data) {
-                    $('.loading-spinner').hide();
+                    $('.loading-spinner-size').hide();
                     $scope.$apply(() => {
                         $scope.sizes = data;
                         // $scope.page++;
