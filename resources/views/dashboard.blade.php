@@ -2,9 +2,7 @@
 @section('title', 'Dashboard')
 @section('content')
     <div class="container-fluid">
-        <a href="lang/en">EN</a>
-        <a href="lang/es">ES</a>
-        <a href="lang/ar">AR</a>
+
         @hasrole('admin')
             <div class="row">
                 <div class="col-sm-3">
