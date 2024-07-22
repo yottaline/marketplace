@@ -1,6 +1,6 @@
 @extends('index')
 @section('title')
-    Product #{{ $product->product_code }}
+    {{ __('Product') }} #{{ $product->product_code }}
 @endsection
 @section('search')
     <form id="nvSearch" role="search">
@@ -64,7 +64,7 @@
                                 <div class="col-3">
                                     <div class="mb-3">
                                         <label for="productName">
-                                            Product Name <b class="text-danger">&ast;</b></label>
+                                            {{ __('Product Name') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="name"
                                             ng-value="product.product_name" id="productName" />
                                     </div>
@@ -73,7 +73,7 @@
                                 <div class="col-3">
                                     <div class="mb-3">
                                         <label for="productCode">
-                                            Product Code <b class="text-danger">&ast;</b></label>
+                                            {{ __('Product Code') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="code"
                                             ng-value="product.product_code" id="productCode" />
                                     </div>
@@ -82,7 +82,7 @@
                                 <div class="col-3">
                                     <div class="mb-3">
                                         <label for="category">
-                                            Category <b class="text-danger">&ast;</b></label>
+                                            {{ __('Category') }} <b class="text-danger">&ast;</b></label>
                                         <select name="category" id="category" class="form-select" required>
                                             <option ng-value="product.category_id" ng-bind="product.category_name">
                                             </option>
@@ -96,7 +96,7 @@
                                 <div class="col-3">
                                     <div class="mb-3">
                                         <label for="subcategory">
-                                            Subcategory <b class="text-danger">&ast;</b></label>
+                                            {{ __('Subcategory') }} <b class="text-danger">&ast;</b></label>
                                         <select name="subcategory" id="subcategory" class="form-select" required>
                                             <option ng-value="product.subcategory_id" ng-bind="product.subcategory_name">
                                             </option>
@@ -108,7 +108,7 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="desc">
-                                            Product Description </label>
+                                            {{ __('Product Description') }} </label>
                                         <textarea class="form-control" name="description" id="desc" cols="30" rows="7"><%product.product_desc%></textarea>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                 <div class="d-flex mt-2">
                                     <div class="me-auto">
                                     </div>
-                                    <button type="submit" class="btn btn-outline-primary">Update</button>
+                                    <button type="submit" class="btn btn-outline-primary">{{ __('Update') }}</button>
                                 </div>
                         </form>
                         <script>
@@ -204,7 +204,7 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">
                                 <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                    role="status"></span><span>SIZES</span>
+                                    role="status"></span><span>{{ __('SIZES') }}</span>
                             </h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -219,15 +219,15 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th class="text-center">Size Name</th>
-                                        <th class="text-center">Color Name</th>
-                                        <th class="text-center">Cost</th>
-                                        <th class="text-center">Mai</th>
-                                        <th class="text-center">Max</th>
-                                        <th class="text-center">Sell price</th>
-                                        <th class="text-center">Price</th>
-                                        <th class="text-center">Qty </th>
-                                        <th class="text-center">Status</th>
+                                        <th class="text-center">{{ __('Size Name') }}</th>
+                                        <th class="text-center">{{ __('Color Name') }}</th>
+                                        <th class="text-center">{{ __('Cost') }}</th>
+                                        <th class="text-center">{{ __('Min order') }}</th>
+                                        <th class="text-center">{{ __('Max order') }}</th>
+                                        <th class="text-center">{{ __('Sell price') }}</th>
+                                        <th class="text-center">{{ __('Price') }}</th>
+                                        <th class="text-center">{{ __('Qty') }} </th>
+                                        <th class="text-center">{{ __('Status') }}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -263,7 +263,7 @@
                         </div>
                         <div ng-if="!siezs.length" class="py-5 text-center text-secondary">
                             <i class="bi bi-exclamation-circle display-3"></i>
-                            <h5>No Data</h5>
+                            <h5>{{ __('No Data') }}</h5>
                         </div>
                     </div>
 
@@ -283,7 +283,7 @@
 
                                             <div class="col-12 col-sm-12">
                                                 <div class="mb-3">
-                                                    <label for="colorName">Color Name<b
+                                                    <label for="colorName">{{ __('Color Name') }}<b
                                                             class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="name"
                                                         id="colorName">
@@ -292,7 +292,8 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="cost">Cost <b class="text-danger">&ast;</b></label>
+                                                    <label for="cost">{{ __('Cost') }} <b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="cost"
                                                         id="cost">
                                                 </div>
@@ -300,7 +301,8 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="Qty">QTY <b class="text-danger">&ast;</b></label>
+                                                    <label for="Qty">{{ __('QTY') }} <b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="qty"
                                                         id="Qty">
                                                 </div>
@@ -308,7 +310,8 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="price">Priec <b class="text-danger">&ast;</b></label>
+                                                    <label for="price">{{ __('Price') }} <b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="price"
                                                         id="price">
                                                 </div>
@@ -316,7 +319,7 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="sell">Sell Price <b
+                                                    <label for="sell">{{ __('Sell price') }} <b
                                                             class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="sell"
                                                         id="sell">
@@ -326,7 +329,7 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="min"> Min Order QTY</label>
+                                                    <label for="min">{{ __('Min order') }}</label>
                                                     <input type="text" class="form-control" name="min"
                                                         id="min">
                                                 </div>
@@ -334,7 +337,7 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="max">Max Order QTY</label>
+                                                    <label for="max">{{ __('Max order') }}</label>
                                                     <input type="text" class="form-control" name="max"
                                                         id="max">
                                                 </div>
@@ -342,7 +345,7 @@
 
                                             <div class="col-12 col-sm-12">
                                                 <div class="mb-3">
-                                                    <label for="discount">Discount</label>
+                                                    <label for="discount">{{ __('Discount') }}</label>
                                                     <input type="text" class="form-control" name="discount"
                                                         id="discount">
                                                 </div>
@@ -351,21 +354,22 @@
 
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3">
-                                                    <label>Discount Start</label>
+                                                    <label>{{ __('Discount Start') }}</label>
                                                     <input id="subStart" type="text" class="form-control text-center"
                                                         name="start" />
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3">
-                                                    <label>Discount End</label>
+                                                    <label>{{ __('Discount End') }}</label>
                                                     <input id="subEnd" type="text" class="form-control text-center"
                                                         name="end">
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-sm-12">
-                                                <label for="size">Sizes<b class="text-danger">&ast;</b></label>
+                                                <label for="size">{{ __('SIZES') }}<b
+                                                        class="text-danger">&ast;</b></label>
                                                 <div class="form-check form-switch mb-5" style="display: inline-block"
                                                     ng-repeat="s in subcatesizes">
                                                     <input type="checkbox" name="size[]" ng-value="s.size_id">
@@ -380,9 +384,9 @@
                                 </form>
                                 <div class="modal-footer d-flex">
                                     <button type="button" class="btn btn-outline-secondary me-auto"
-                                        data-bs-dismiss="modal">Close</button>
+                                        data-bs-dismiss="modal">{{ __('Close') }}</button>
                                     <button type="submit" form="sizeForm" class="btn btn-outline-primary"
-                                        ng-disabled="submitting">Submit</button>
+                                        ng-disabled="submitting">{{ __('Submit') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -484,7 +488,8 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="cost">Cost <b class="text-danger">&ast;</b></label>
+                                                    <label for="cost">{{ __('Cost') }} <b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="cost"
                                                         ng-value="siezs[updateSize].prodsize_cost" id="cost">
                                                 </div>
@@ -492,7 +497,8 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="Qty">QTY <b class="text-danger">&ast;</b></label>
+                                                    <label for="Qty">{{ __('QTY') }} <b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="qty"
                                                         ng-value="siezs[updateSize].prodsize_qty" id="Qty">
                                                 </div>
@@ -500,7 +506,8 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="price">Priec <b class="text-danger">&ast;</b></label>
+                                                    <label for="price">{{ __('Price') }} <b
+                                                            class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="price"
                                                         ng-value="siezs[updateSize].prodsize_price" id="price">
                                                 </div>
@@ -508,7 +515,7 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="sell">Sell Price <b
+                                                    <label for="sell">{{ __('Sell price') }} <b
                                                             class="text-danger">&ast;</b></label>
                                                     <input type="text" class="form-control" name="sell"
                                                         id="sell" ng-value="siezs[updateSize].prodsize_sellprice">
@@ -517,7 +524,7 @@
 
                                             <div class="col-12 col-sm-12">
                                                 <div class="mb-3">
-                                                    <label for="discount">Discount</label>
+                                                    <label for="discount">{{ __('Discount') }}</label>
                                                     <input type="text" class="form-control" name="discount"
                                                         id="discount" ng-value="siezs[updateSize].prodsize_discount">
                                                 </div>
@@ -526,7 +533,7 @@
 
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3">
-                                                    <label>Discount Start</label>
+                                                    <label>{{ __('Discount Start') }}</label>
                                                     <input id="subStart" type="text" class="form-control text-center"
                                                         name="start"
                                                         ng-value="siezs[updateSize].prodsize_discount_start" />
@@ -534,7 +541,7 @@
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="mb-3">
-                                                    <label>Discount End</label>
+                                                    <label>{{ __('Discount End') }}</label>
                                                     <input id="subEnd" type="text" class="form-control text-center"
                                                         name="end" ng-value="siezs[updateSize].prodsize_discount_end">
                                                 </div>
@@ -545,7 +552,7 @@
                                                     <input class="form-check-input" type="checkbox" role="switch"
                                                         name="status" value="1"
                                                         ng-checked="+siezs[updateSize].prodsize_status">
-                                                    <label class="form-check-label">product status </label>
+                                                    <label class="form-check-label">{{ __('product status') }} </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -554,9 +561,9 @@
                                 </form>
                                 <div class="modal-footer d-flex">
                                     <button type="button" class="btn btn-outline-secondary me-auto"
-                                        data-bs-dismiss="modal">Close</button>
+                                        data-bs-dismiss="modal">{{ __('Close') }}</button>
                                     <button type="submit" form="sizeFormedit" class="btn btn-outline-primary"
-                                        ng-disabled="submitting">Submit</button>
+                                        ng-disabled="submitting">{{ __('Submit') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -624,7 +631,7 @@
             <div class="card card-box">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">MEDIAS</h5>
+                        <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('MEDIAS') }}</h5>
                         <div>
                             <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
                                 data-bs-toggle="modal" data-bs-target="#mediaModal"></button>
@@ -652,7 +659,7 @@
                     </div>
                     <div ng-if="!medails.length" class="py-5 text-center text-secondary">
                         <i class="bi bi-exclamation-circle display-3"></i>
-                        <h5>No Data</h5>
+                        <h5>{{ __('No Data') }}</h5>
                     </div>
                 </div>
             </div>
@@ -668,7 +675,7 @@
 
                             <div class="col-12 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="media">Media<b class="text-danger">&ast;</b></label>
+                                    <label for="media">{{ __('Media') }}<b class="text-danger">&ast;</b></label>
                                     <input type="file" class="form-control dropify" name="media[]" multiple
                                         id="media">
                                 </div>
@@ -677,9 +684,9 @@
                         </form>
                         <div class="modal-footer d-flex">
                             <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">Close</button>
+                                data-bs-dismiss="modal">{{ __('Close') }}</button>
                             <button type="submit" form="mediaForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">Submit</button>
+                                ng-disabled="submitting">{{ __('Submit') }}</button>
                         </div>
                     </div>
                 </div>

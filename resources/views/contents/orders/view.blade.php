@@ -1,5 +1,5 @@
 @extends('index')
-@section('title', 'View order')
+@section('title', __('Order details'))
 
 @section('style')
     <style>
@@ -40,11 +40,11 @@
                                 <table class="table table-hover sizes-table">
                                     <thead>
                                         <tr class="text-center small">
-                                            <th class="text-start">Color</th>
-                                            <th>Size</th>
-                                            <th>Price</th>
-                                            <th>Qty</th>
-                                            <th>Total</th>
+                                            <th class="text-start">{{ __('Color') }}</th>
+                                            <th>{{ __('Size') }}</th>
+                                            <th>{{ __('Price') }}</th>
+                                            <th>{{ __('Qty') }}</th>
+                                            <th>{{ __('Total') }}</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -71,9 +71,9 @@
                                     <tfoot>
                                         <tr class="text-center font-monospace small">
                                             <td colspan="3"></td>
-                                            <td ng-bind="p.qty">qty</td>
-                                            <td ng-if="s.order_status > 2">qty</td>
-                                            <td ng-bind="fn.sepNumber(p.total)">total</td>
+                                            <td ng-bind="p.qty">{{ _('Qty') }}</td>
+                                            <td ng-if="s.order_status > 2">{{ __('Qty') }}</td>
+                                            <td ng-bind="fn.sepNumber(p.total)">{{ __('Total') }}</td>
                                             <td></td>
                                         </tr>
                                     </tfoot>
@@ -91,12 +91,12 @@
                             <span>ORDER</span> <span><%order.order_code%></span>
                         </h6>
                         <span class="text-primary"><%statusObject.name[order.order_status]%></span>
-                        <p class="text-secondary mb-0 small">created: <span class="font-monospace"
+                        <p class="text-secondary mb-0 small">{{ __('created') }}: <span class="font-monospace"
                                 ng-bind="fn.slice(order.order_created, 0, 16)"></span></p>
-                        <p class="text-secondary mb-0 small" ng-if="order.order_placed">placed: <span class="font-monospace"
-                                ng-bind="fn.slice(order.order_placed, 0, 16)"></span></p>
+                        <p class="text-secondary mb-0 small" ng-if="order.order_placed">{{ __('placed') }}: <span
+                                class="font-monospace" ng-bind="fn.slice(order.order_placed, 0, 16)"></span></p>
                         <hr>
-                        <h6 class="fw-semibold text-uppercase">customer info</h6>
+                        <h6 class="fw-semibold text-uppercase">{{ __('customer Info') }}</h6>
                         <p class="mb-0 small font-monospace text-seconday"><% customer.customer_code %></p>
                         <p class="mb-0 small"><% customer.customer_name %></p>
                         <p class="mb-0 small"><% customer.customer_email %></p>
@@ -104,39 +104,39 @@
                         <table class="table small">
                             <tbody>
                                 <tr ng-if="+order.order_discount">
-                                    <td class="col-fit">Subtotal</td>
+                                    <td class="col-fit">{{ __('Subtotal') }}</td>
                                     <td class="text-end font-monospace">
                                         <span ng-bind="fn.sepNumber(order.order_subtotal)"></span>
                                     </td>
                                 </tr>
                                 <tr ng-if="+order.order_discount">
-                                    <td class="col-fit">Discount</td>
+                                    <td class="col-fit">{{ __('Discount') }}</td>
                                     <td class="text-end font-monospace">
                                         <span ng-bind="fn.sepNumber(order.order_discount)"></span>
                                     </td>
                                 </tr>
                                 <tr class="fw-bold">
-                                    <td class="col-fit">Total</td>
+                                    <td class="col-fit">{{ __('Total') }}</td>
                                     <td class="text-end font-monospace">
                                         <span ng-bind="fn.sepNumber(order.order_total)"></span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <h6 class="font-monospace small">Qty: <span ng-bind="orderQty"></span></h6>
+                        <h6 class="font-monospace small">{{ __('Qty') }}: <span ng-bind="orderQty"></span></h6>
                         <div class="mt-4">
                             <form action="/orders/change_status" id="statusForm" method="post">
                                 <input type="hidden" name="id" ng-value="order.order_id">
                                 @csrf
-                                <label for="orderStatus">Status</label>
+                                <label for="orderStatus">{{ __('Status') }}</label>
                                 <div class="input-group mb-3">
                                     <select id="orderStatus" name="status" class="form-select"
                                         ng-value="order.order_status">
-                                        <option value="1">DRAFT</option>
-                                        <option value="2">CANCELLED</option>
-                                        <option value="3">PLACED</option>
-                                        <option value="4">APPROVED</option>
-                                        <option value="5">DELIVERED</option>
+                                        <option value="1">{{ __('DRAFT') }}</option>
+                                        <option value="2">{{ __('CANCELLED') }}</option>
+                                        <option value="3">{{ __('PLACED') }}</option>
+                                        <option value="4">{{ __('APPROVED') }}</option>
+                                        <option value="5">{{ __('DELIVERED') }}</option>
                                     </select>
                                     <button type="submit" class="btn btn-outline-dark bi bi-arrow-right"></button>
                                 </div>

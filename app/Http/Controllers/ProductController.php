@@ -24,7 +24,6 @@ class ProductController extends Controller
     {
         $params = $request->q ? ['q' => $request->q] : [];
         $params[] = ['product_created_by', auth()->user()->id];
-        if ($request->subcategory) $params[] = ['product_subcategory', $request->subcategory];
         if ($request->category) $params[] = ['product_category', $request->category];
         echo json_encode(Product::fetch(0, $params, $request->limit, $request->offset));
     }

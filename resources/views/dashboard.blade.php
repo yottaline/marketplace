@@ -49,7 +49,7 @@
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-cart4 text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">ORDERS</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{__('ORDERS')}}</b>
                             </h5>
                             <p class="card-text fs-3 fw-bold">
                                 {{ DB::table('orders')->where('order_create_by', auth()->user()->id)->count() }}</p>

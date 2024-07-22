@@ -1,5 +1,5 @@
 @extends('index')
-@section('title', 'Create new orders')
+@section('title', __('Create new orders'))
 @section('style')
     <style>
         :root {
@@ -38,10 +38,10 @@
             <div class="col-12 col-sm-4 col-lg-3">
                 <div class="card card-box mb-3">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold text-uppercase">customer Info</h5>
+                        <h5 class="card-title fw-semibold text-uppercase">{{ __('customer Info') }}</h5>
                         <div class="input-group mb-3">
                             <select name="customer" id="customer" class="form-select">
-                                <option value="defalt">-- SELECT customer NAME --</option>
+                                <option value="defalt">-- {{ __('SELECT customer NAME') }} --</option>
                                 <option ng-repeat="customer in customers" ng-value="customer.customer_id"
                                     ng-bind="customer.customer_name"></option>
                             </select>
@@ -52,25 +52,25 @@
 
                         <div class="collapse" id="collapseExample">
                             <div class="mb-3">
-                                <label for="customerName">Name<b class="text-danger">&ast;</b></label>
+                                <label for="customerName">{{ __('Name') }}<b class="text-danger">&ast;</b></label>
                                 <input type="text" class="form-control form-control-sm customer-field" id="customerName"
                                     ng-disabled="submitting">
                             </div>
 
                             <div class="mb-3">
-                                <label for="customerEmail">Email<b class="text-danger">&ast;</b></label>
+                                <label for="customerEmail">{{ __('Email') }}<b class="text-danger">&ast;</b></label>
                                 <input type="email" class="form-control form-control-sm customer-field" id="customerEmail"
                                     ng-disabled="submitting">
                             </div>
 
                             <div class="mb-3">
-                                <label for="customerPhone">Phone</label>
+                                <label for="customerPhone">{{ __('Phone') }}</label>
                                 <input type="tel" class="form-control form-control-sm customer-field font-monospcae"
                                     id="customerPhone" ng-disabled="submitting">
                             </div>
 
                             <div class="mb-3">
-                                <label for="customerAddress">Address</label>
+                                <label for="customerAddress">{{ __('Address') }}</label>
                                 <textarea rows="3" class="form-control form-control-sm customer-field font-monospcae" id="customerAddress"
                                     ng-disabled="submitting"></textarea>
                             </div>
@@ -80,8 +80,8 @@
 
                 <div class="card card-box">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold text-uppercase">Rtailer Order</h5>
-                        <div ng-if="!fn.objectLen(order)" class="py-5 text-center">The list is empty</div>
+                        <h5 class="card-title fw-semibold text-uppercase">{{ __('Customer Order') }}</h5>
+                        <div ng-if="!fn.objectLen(order)" class="py-5 text-center">{{ __('The list is empty') }}</div>
                         <div ng-if="fn.objectLen(order)">
                             <div ng-repeat="(ok, o) in order" class="mb-3 border-bottom">
                                 <div class="d-flex">
@@ -119,33 +119,35 @@
                                     </div>
                                 </div>
                                 <div class="font-monospace small text-end py-2">
-                                    <div class="me-3 d-inline-block">Qty: <span ng-bind="o.qty"></span></div>
-                                    <div class="d-inline-block">Total: <span ng-bind="fn.toFixed(o.total, 2)"></span>
+                                    <div class="me-3 d-inline-block">{{ __('Qty') }}: <span ng-bind="o.qty"></span>
+                                    </div>
+                                    <div class="d-inline-block">{{ __('Total') }}: <span
+                                            ng-bind="fn.toFixed(o.total, 2)"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="px-2 d-flex">
-                                <span class="fw-bold me-auto">Total</span>
+                                <span class="fw-bold me-auto">{{ __('Total') }}</span>
                                 <span class="fw-bold font-monospace" ng-bind="fn.toFixed(orderTotal, 2)">0.00</span>
                             </div>
 
                             <div class="px-2 d-flex">
-                                <span class="fw-bold me-auto">Qty</span>
+                                <span class="fw-bold me-auto">{{ __('Qty') }}</span>
                                 <span class="fw-bold font-monospace" ng-bind="orderQty">0</span>
                             </div>
                             <div class="mt-3">
-                                <label for="orderDiscount">Discount</label>
+                                <label for="orderDiscount">{{ __('Discount') }}</label>
                                 <input type="text" name="discount" id="orderDiscount"
                                     class="form-control form-control-sm">
                             </div>
                             <div class="mt-3">
-                                <label for="orderNote">Note</label>
+                                <label for="orderNote">{{ __('Note') }}</label>
                                 <textarea id="orderNote" class="form-control form-control-sm" rows="2"></textarea>
                             </div>
                             <button class="btn btn-outline-dark w-100 btn-sm mt-3" ng-click="placeOrder()"
                                 ng-disabled="!fn.objectLen(order) || submitting">
                                 <span ng-if="submitting" class="spinner-border spinner-border-sm me-2"
-                                    role="status"></span>Place Order</button>
+                                    role="status"></span>{{ __('Place Order') }}</button>
                         </div>
                     </div>
                 </div>
@@ -186,8 +188,8 @@
                 <h6 class="fw-bold" ng-bind="list[selectedProduct].product_name"></h6>
                 <h6 class="text-secondary small" ng-bind="list[selectedProduct].season_name"></h6>
                 <div class="py-4">
-                    <h6 class="fw-bold">Sizes</h6>
-                    <div ng-if="colors === false" class="py-5 text-center">Loading...</div>
+                    <h6 class="fw-bold">{{ __('SIZES') }}</h6>
+                    <div ng-if="colors === false" class="py-5 text-center">{{ __('Loading...') }}</div>
                     <div ng-if="colors !== false" class="table-responsive">
                         <div ng-repeat="(ck, c) in colors">
                             <div class="fw-bold text-danger bg-muted-2 px-2" ng-bind="c.info.prodcolor_name">
@@ -212,14 +214,15 @@
                             </table>
                         </div>
                         <div class="px-2 d-flex">
-                            <span class="fw-bold me-auto">Total</span>
+                            <span class="fw-bold me-auto">{{ __('Total') }}</span>
                             <span class="fw-bold font-monospace" id="totalAmount">0.00</span>
                         </div>
                         <div class="px-2 d-flex">
-                            <span class="fw-bold me-auto">Qty</span>
+                            <span class="fw-bold me-auto">{{ __('Qty') }}</span>
                             <span class="fw-bold font-monospace" id="totalQty">0</span>
                         </div>
-                        <button class="btn btn-outline-dark w-100 btn-sm mt-4" ng-click="addToOrder()">Order</button>
+                        <button class="btn btn-outline-dark w-100 btn-sm mt-4"
+                            ng-click="addToOrder()">{{ __('Order') }}</button>
                     </div>
                 </div>
             </div>

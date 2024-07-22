@@ -14,15 +14,15 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="subcategory-filter">subcategories Name</label>
-                            <select class="form-select" id="subcategory-filter">
-                                <option value="0">-- SELECT NAME --</option>
-                                <option ng-repeat="c in subcategories" ng-value="c.subcategory_id"
-                                    ng-bind="c.subcategory_name"></option>
+                            <label for="category-filter">{{ __('Category') }}<b class="text-danger">&ast;</b></label>
+                            <select name="category" id="category-filter" class="form-select" required>
+                                <option value="default">-- {{ __('SELECT CATEGORY NAME') }} --</option>
+                                <option ng-repeat="c in categories" ng-bind="c.category_name" ng-value="c.category_id">
+                                </option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="product-filter">Product Name</label>
+                            <label for="product-filter">{{ __('Product Name') }}</label>
                             <input type="text" class="form-control" id="product-filter">
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="d-flex">
-                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">PRODUCT</h5>
+                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('PRODUCTS') }}</h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
                                     data-bs-toggle="modal" data-bs-target="#formModal"></button>
@@ -77,22 +77,22 @@
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
-                                        <label for="productCode">Code<b class="text-danger">&ast;</b></label>
+                                        <label for="productCode">{{ __('Code') }}<b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control font-monospace" name="code"
                                             id="productCode">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
-                                        <label for="productName">Name<b class="text-danger">&ast;</b></label>
+                                        <label for="productName">{{ __('Name') }}<b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="name" id="productName">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
-                                        <label for="category">Category<b class="text-danger">&ast;</b></label>
+                                        <label for="category">{{ __('Category') }}<b class="text-danger">&ast;</b></label>
                                         <select name="category" id="category" class="form-select" required>
-                                            <option value="default">-- SELECT CATEGORY NAME --</option>
+                                            <option value="default">-- {{ __('SELECT CATEGORY NAME') }} --</option>
                                             <option ng-repeat="c in categories" ng-bind="c.category_name"
                                                 ng-value="c.category_id"></option>
                                         </select>
@@ -101,7 +101,8 @@
 
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
-                                        <label for="subcategory">Subcategory<b class="text-danger">&ast;</b></label>
+                                        <label for="subcategory">{{ __('Subcategory') }}<b
+                                                class="text-danger">&ast;</b></label>
                                         <select name="subcategory" id="subcategory" class="form-select" required>
 
                                         </select>
@@ -113,12 +114,12 @@
                     <div class="modal-footer d-flex">
                         <div class="me-auto">
                             <button type="submit" form="modalForm" class="btn btn-outline-primary btn-sm"
-                                ng-disabled="submitting">Submit</button>
+                                ng-disabled="submitting">{{ __('Submit') }}</button>
                             <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                 ng-if="submitting"></span>
                         </div>
                         <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal"
-                            ng-disabled="submitting">Close</button>
+                            ng-disabled="submitting">{{ __('Close') }}</button>
                     </div>
                 </div>
             </div>
@@ -195,7 +196,7 @@
                     q: $scope.q,
                     offset: $scope.offset,
                     limit: limit,
-                    subcategoy: $('#subcategoy-filter').val(),
+                    categoy: $('#categoy-filter').val(),
                     p_name: $('#product-filter').val(),
                     _token: '{{ csrf_token() }}'
                 };
