@@ -4,7 +4,7 @@
 
     <div class="d-flex h-100 w-100 justify-content-center py-5">
         <div id="cards-container">
-            <h3 class="text-center">Parket Place</h3>
+            <h3 class="text-center">Market Place</h3>
 
             <div id="login-card" class="card mt-5">
                 <div class="card-body">
