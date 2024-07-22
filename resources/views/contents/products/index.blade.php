@@ -46,10 +46,10 @@
                             <div ng-repeat="p in list" class="col-6 col-sm-4 col-md-3 col-xl-2" id="swapDemo">
                                 <div class="mb-3 text-center" id="items">
                                     <a href="/products/view/<% p.product_code %>" class="card">
-                                        <img ng-if="p.prodcolor_media == null" src="/assets/img/default_product_image.png"
+                                        <img ng-if="p.media_id == null" src="/assets/img/default_product_image.png"
                                             alt="" class="card-img-top">
-                                        <img ng-if="p.prodcolor_media"
-                                            src="{{ asset('media/product/') }}/<% p.product_id %>/<% p.media_file %>"
+                                        <img ng-if="p.media_id"
+                                            src="{{ asset('media/product/') }}/<% p.product_id %>/<% p.media_url %>"
                                             alt="" class="card-img-top">
                                         <div class="card-body">
                                             <h6 class="card-title" ng-bind="p.product_name"></h6>
