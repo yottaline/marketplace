@@ -53,7 +53,7 @@ class ProductMediaController extends Controller
                     $constraint->aspectRatio();
                 })->save($thumbnailPath. '/' .$name);
 
-                $img->resizeCanvas(200, 200,'top-left');
+                $img->resizeCanvas(300, 300);
                 $img->save($thumbnailPath. '/' .$name);
             }
 
