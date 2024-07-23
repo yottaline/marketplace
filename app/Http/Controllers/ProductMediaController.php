@@ -49,11 +49,11 @@ class ProductMediaController extends Controller
         $width = $img->width();
         $height = $img->height();
             if($width !== 200 || $height !== 200){
-                $img->resize(200, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($thumbnailPath. '/' .$name);
+                // $img->resize(300, 300, function ($constraint) {
+                //     $constraint->aspectRatio();
+                // })->save($thumbnailPath. '/' .$name);
 
-                $img->resizeCanvas(300, 300);
+                $img->resize(300, 300);
                 $img->save($thumbnailPath. '/' .$name);
             }
 
