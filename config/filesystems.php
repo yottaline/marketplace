@@ -36,6 +36,13 @@ return [
             'throw' => false,
         ],
 
+        'external' => [
+            'driver' => 'local',
+            'root' => 'C:/Users/Hp/Desktop/media', // Adjust this path as needed
+            'throw' => false,
+        ],
+
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -31,35 +31,35 @@ class ProductMediaController extends Controller
 
         $media = $request->file('media');
 
-        if (count($media) > 0) {
-            foreach ($media as $image) {
+        foreach ($media as $image) {
+            $imagesPath = public_path('images');
+            $thumbnailPath = public_path('media/product/'. $request->product_id );
+            $name = uniqidReal(8) . '.' . $image->getClientOriginalExtension();
+            $img = Image::make($image->getRealPath());
 
-                $imagesPath = public_path('images');
-                $thumbnailPath = public_path('media/product/'. $request->product_id );
-                $name = uniqidReal(8) . '.' . $image->getClientOriginalExtension();
-                $img = Image::make($image->getRealPath());
-
-                     // Create the directory if it does not exist
-                     if (!file_exists($thumbnailPath)) {
-                        mkdir($thumbnailPath, 0755, true);
-                    }
-                    if (!file_exists($imagesPath)) {
-                        mkdir($imagesPath, 0755, true);
-                    }
-
-                if($img->filesize() > 200){
-                    $img->resize(200, 200, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save($thumbnailPath. '/' .$name);
-
-                    $destinationPath = public_path('/images');
-                    $image->move($destinationPath, $name);
-                    $param['media_url'] = $name;
-                    $result = Product_media::submit($param, $id);
+                 // Create the directory if it does not exist
+                 if (!file_exists($thumbnailPath)) {
+                    mkdir($thumbnailPath, 0755, true);
                 }
-            }
-        }
+                if (!file_exists($imagesPath)) {
+                    mkdir($imagesPath, 0755, true);
+                }
 
+                 // Get image dimensions
+        $width = $img->width();
+        $height = $img->height();
+            if($width !== 200 || $height !== 200){
+                $img->resize(200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($thumbnailPath. '/' .$name);
+
+                $img->resizeCanvas(200, 200,'top-left');
+                $img->save($thumbnailPath. '/' .$name);
+            }
+
+            $param['media_url'] = $name;
+            $result = Product_media::submit($param, $id);
+        }
         echo json_encode([
             'status' => boolval($result),
             'data' => $result ? Product_media::fetch(0, [['media_id', $result],['product_id', $request->product_id]]) : []
