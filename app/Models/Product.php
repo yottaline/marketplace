@@ -23,7 +23,8 @@ class Product extends Model
     static function fetch($id = 0, $param = null, $limit = 24, $offset = 0)
     {
         $products = self::join('categories', 'product_category', 'category_id')->join('subcategories', 'product_subcategory', 'subcategory_id')
-        ->limit($limit)->offset($offset)->orderBy('product_id', 'DESC');
+        ->leftJoin('product_media', 'product_id', 'media_product')
+        ->limit($limit)->offset($offset)->groupBy('product_id');
 
         if($param) $products->where($param);
 

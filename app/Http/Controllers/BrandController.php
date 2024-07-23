@@ -12,6 +12,11 @@ class BrandController extends Controller
         $this->middleware('auth');
     }
 
+    function page()
+    {
+        return view('contents.settings.index');
+    }
+
     function index()
     {
         return view('contents.brands.index');

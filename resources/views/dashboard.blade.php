@@ -2,13 +2,14 @@
 @section('title', 'Dashboard')
 @section('content')
     <div class="container-fluid">
+
         @hasrole('admin')
             <div class="row">
                 <div class="col-sm-3">
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-person-lines-fill text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">Retailers</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('Retailers') }}</b>
 
                             </h5>
                             <p class="card-text fs-3 fw-bold">{{ DB::table('retailers')->count() }}</p>
@@ -20,7 +21,7 @@
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-slack text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">Brands</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('Brands') }}</b>
                             </h5>
                             <p class="card-text fs-3 fw-bold">{{ DB::table('brands')->count() }}</p>
                         </div>
@@ -35,7 +36,7 @@
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-box-seam text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">PRODUCTS</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('PRODUCTS') }}</b>
 
                             </h5>
                             <p class="card-text fs-3 fw-bold">
@@ -48,7 +49,7 @@
                     <div class="card ">
                         <div class="card-body">
                             <h5 class="card-title"><i class="bi bi-cart4 text-secondary me-2"></i><b
-                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">ORDERS</b>
+                                    class="fw-semibold pt-1 me-auto mb-3 text-uppercase">{{__('ORDERS')}}</b>
                             </h5>
                             <p class="card-text fs-3 fw-bold">
                                 {{ DB::table('orders')->where('order_create_by', auth()->user()->id)->count() }}</p>

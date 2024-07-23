@@ -13,18 +13,18 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">
-                                <span class="text-warning" role="status"></span><span>FILTERS</span>
+                                <span class="text-warning" role="status"></span><span>{{ __('FILTERS') }}</span>
                             </h5>
                             <div>
                                 <button type="button" class="btn btn-outline-dark btn-circle bi bi-funnel"></button>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="statusFilter">Retailer status</label>
+                            <label for="statusFilter">{{ __('Retailer status') }}</label>
                             <select class="form-select" id="status-filter">
-                                <option value="0">-- SELECT STATUS --</option>
-                                <option value="1">Not Approved</option>
-                                <option value="2">Approved</option>
+                                <option value="0">-- {{ __('SELECT STATUS') }} --</option>
+                                <option value="1">{{ __('Not Approved') }}</option>
+                                <option value="2">{{ __('Approved') }}</option>
                             </select>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="d-flex">
-                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">RETAILERS</h5>
+                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('RETAILERS') }}</h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
                                     ng-click="setRetailer(false)"></button>
@@ -49,11 +49,11 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th>Full Name</th>
-                                        <th class="text-center">Stroe</th>
-                                        <th class="text-center">Address</th>
-                                        <th class="text-center">Apperoved Date</th>
-                                        <th class="text-center">Status</th>
+                                        <th>{{ __('Full Name') }}</th>
+                                        <th class="text-center">{{ __('Store Name') }}</th>
+                                        <th class="text-center">{{ __('Address') }}</th>
+                                        <th class="text-center">{{ __('Apperoved Date') }}</th>
+                                        <th class="text-center">{{ __('Status') }}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -77,7 +77,8 @@
                                         <td class="text-center" ng-bind="retailer.retailer_store"></td>
                                         <td class="text-center" ng-bind="retailer.retailer_address"></td>
                                         <td class="text-center">
-                                            <span ng-if="retailer.retailer_approved == null">Not Approved</span>
+                                            <span
+                                                ng-if="retailer.retailer_approved == null">{{ __('Not Approved') }}</span>
                                             <span ng-if="retailer.retailer_approved != null"
                                                 ng-bind="retailer.retailer_approved"></span>
                                         </td>
@@ -118,13 +119,13 @@
                             <input ng-if="updateRetailer !== false" type="hidden" name="_method" value="put">
                             <input type="hidden" name="retailer_id" id="retailer_id"
                                 ng-value="list[updateRetailer].retailer_id">
-                            <input type="hidden" name="id" id="retailer_id" ng-value="list[updateRetailer].id">
+                            <input type="hidden" name="id" id="id" ng-value="list[updateRetailer].id">
                             <div class="row">
 
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="retailerName">
-                                            Full Name <b class="text-danger">&ast;</b></label>
+                                            {{ __('Full Name') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="name" required
                                             ng-value="list[updateRetailer].user_name" id="retailerName" />
                                     </div>
@@ -133,7 +134,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="email">
-                                            Email <b class="text-danger">&ast;</b></label>
+                                            {{ __('Email') }} <b class="text-danger">&ast;</b></label>
                                         <input type="email" class="form-control" name="email" required
                                             ng-value="list[updateRetailer].user_email" id="email" />
                                     </div>
@@ -142,7 +143,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="password">
-                                            Password <b class="text-danger">&ast;</b></label>
+                                            {{ __('Password') }} <b class="text-danger">&ast;</b></label>
                                         <input type="password" class="form-control" name="password" id="password" />
                                     </div>
                                 </div>
@@ -150,56 +151,40 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="phone">
-                                            Phone <b class="text-danger">&ast;</b></label>
+                                            {{ __('Phone') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="phone"
                                             ng-value="list[updateRetailer].retailer_phone" id="phone" />
                                     </div>
                                 </div>
 
-                                <div>
-                                    <p class="d-inline-flex gap-1">
-                                        <a class="btn btn-light" data-bs-toggle="collapse" href="#collapseExample"
-                                            role="button" aria-expanded="false" aria-controls="collapseExample">
-                                            IS STORE
-                                        </a>
-                                    </p>
-                                    <div class="collapse" id="collapseExample">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="storeName">
-                                                        Store Name</label>
-                                                    <input type="text" class="form-control" name="store_name"
-                                                        ng-value="list[updateRetailer].retailer_storeName"
-                                                        id="storeName" />
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="mb-3">
-                                                    <label for="storeMobile">
-                                                        Stroe Mobiler</label>
-                                                    <input type="text" class="form-control" name="store_mobile"
-                                                        ng-value="list[updateRetailer].retailer_mobile"
-                                                        id="storeMobile" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="mb-3">
-                                                    <label for="logo">
-                                                        Logo</label>
-                                                    <input type="file" class="form-control" name="logo"
-                                                        ng-value="list[updateRetailer].retailer_logo" id="logo" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="storeName">
+                                            {{ __('Store Name') }} <b class="text-danger">&ast;</b></label>
+                                        <input type="text" class="form-control" name="store_name"
+                                            ng-value="list[updateRetailer].retailer_store" id="storeName" />
                                     </div>
                                 </div>
-
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="storeMobile">
+                                            {{ __('Store Phone') }}</label>
+                                        <input type="text" class="form-control" name="store_mobile"
+                                            ng-value="list[updateRetailer].retailer_mobile" id="storeMobile" />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="logo">
+                                            {{ __('Logo') }}</label>
+                                        <input type="file" class="form-control" name="logo" id="logo" />
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="address">
-                                            Address</label>
+                                            {{ __('Address') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="address"
                                             ng-value="list[updateRetailer].retailer_address" id="address" />
                                     </div>
@@ -210,19 +195,19 @@
                                         <input class="form-check-input" type="checkbox" role="switch" name="vat"
                                             value="1" ng-checked="+list[updateRetailer].retailer_vat"
                                             id="retailerVat">
-                                        <label class="form-check-label" for="retailerVat">Owns Value added tax</label>
+                                        <label class="form-check-label" for="retailerVat">{{ __('Has VAT') }}</label>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="modal-footer d-flex">
-                            <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="modalForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">Submit</button>
-                            <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
-                                ng-if="submitting"></span>
-                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-outline-secondary me-auto"
+                            data-bs-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="submit" form="modalForm" class="btn btn-outline-primary"
+                            ng-disabled="submitting">{{ __('Submit') }}</button>
+                        <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
+                            ng-if="submitting"></span>
                     </div>
                 </div>
                 <script>
@@ -293,7 +278,7 @@
 
         app.controller('ngCtrl', function($scope, $timeout) {
             $scope.statusObject = {
-                name: ['Available', 'Blacked'],
+                name: ['Available', 'Blocked'],
                 color: ['success', 'danger']
             };
 

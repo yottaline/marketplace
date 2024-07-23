@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('lang/{locale}','LanguageController@swap');
+
 Route::middleware('auth')->group(function () {
 
     Route::prefix('admins')->group(function () {
@@ -33,6 +35,8 @@ Route::middleware('auth')->group(function () {
         Route::post('load', 'RetailerController@load');
         Route::match(['post', 'put'], 'submit', 'RetailerController@submit');
     });
+
+    Route::get('settings', 'BrandController@page');
 
     Route::prefix('brands')->group(function () {
         Route::get('/', 'BrandController@index');
@@ -96,6 +100,8 @@ Route::middleware('auth')->group(function () {
         Route::post('update_qty', 'OrderController@updateQty');
         Route::post('del_size', 'OrderController@delSize');
     });
+
+
 });
 
 

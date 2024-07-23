@@ -28,7 +28,7 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="d-flex">
-                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">CUSTOMERS</h5>
+                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('CUSTOMERS') }}</h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
                                     ng-click="setCustomer(false)"></button>
@@ -42,10 +42,9 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th>Full Name</th>
-                                        <th class="text-center">Address</th>
-                                        {{-- <th class="text-center">Apperoved Date</th>
-                                        <th class="text-center">Status</th> --}}
+                                        <th>{{ __('Full Name') }}</th>
+                                        <th class="text-center">{{ __('Address') }}</th>
+
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -67,24 +66,10 @@
                                             </small>
                                         </td>
                                         <td class="text-center" ng-bind="customer.customer_address"></td>
-                                        {{-- <td class="text-center">
-                                            <span ng-if="customer.customer_approved == null">Not Approved</span>
-                                            <span ng-if="customer.customer_approved != null"
-                                                ng-bind="customer.customer_approved"></span>
-                                        </td> --}}
 
-                                        {{-- <td class="text-center">
-                                            <span
-                                                class="badge bg-<%statusObject.color[customer.customer_status]%> rounded-pill font-monospace p-2"><%statusObject.name[customer.customer_status]%></span>
-
-                                        </td> --}}
                                         <td class="col-fit">
-
                                             <button class="btn btn-outline-primary btn-circle bi bi-pencil-square"
                                                 ng-click="setCustomer($index)"></button>
-                                            {{-- <button ng-if="customer.customer_approved == null"
-                                                class="btn btn-outline-dark btn-circle bi bi-shield-fill-check"
-                                                ng-click="editApproved($index)"></button> --}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -113,7 +98,7 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="customerName">
-                                            Full Name <b class="text-danger">&ast;</b></label>
+                                            {{ __('Full Name') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="name" required
                                             ng-value="list[updatecustomer].customer_name" id="customerName" />
                                     </div>
@@ -122,7 +107,7 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="email">
-                                            Email <b class="text-danger">&ast;</b></label>
+                                            {{ __('Email') }} <b class="text-danger">&ast;</b></label>
                                         <input type="email" class="form-control" name="email" required
                                             ng-value="list[updatecustomer].customer_email" id="email" />
                                     </div>
@@ -131,7 +116,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="password">
-                                            Password <b class="text-danger">&ast;</b></label>
+                                            {{ __('Password') }} <b class="text-danger">&ast;</b></label>
                                         <input type="password" class="form-control" name="password" id="password" />
                                     </div>
                                 </div>
@@ -139,7 +124,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="phone">
-                                            Phone <b class="text-danger">&ast;</b></label>
+                                            {{ __('Phone') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="phone"
                                             ng-value="list[updatecustomer].customer_phone" id="phone" />
                                     </div>
@@ -148,7 +133,7 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="address">
-                                            Address</label>
+                                            {{ __('Address') }}</label>
                                         <input type="text" class="form-control" name="address"
                                             ng-value="list[updatecustomer].customer_address" id="address" />
                                     </div>
@@ -159,19 +144,19 @@
                                         <input class="form-check-input" type="checkbox" role="switch" name="status"
                                             value="1" ng-checked="+list[updatecustomer].customer_status"
                                             id="customerstatus">
-                                        <label class="form-check-label" for="customerstatus">Status</label>
+                                        <label class="form-check-label" for="customerstatus">{{ __('Status') }}</label>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="modal-footer d-flex">
-                            <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="modalForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">Submit</button>
-                            <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
-                                ng-if="submitting"></span>
-                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-outline-secondary me-auto"
+                            data-bs-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="submit" form="modalForm" class="btn btn-outline-primary"
+                            ng-disabled="submitting">{{ __('Submit') }}</button>
+                        <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
+                            ng-if="submitting"></span>
                     </div>
                 </div>
                 <script>

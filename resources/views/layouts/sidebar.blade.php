@@ -10,19 +10,19 @@
              <li class="list-group-item nav-dashboard">
 
                  <a class="link-dark d-block" href="/">
-                     <i class="bi bi-speedometer text-secondary me-2"></i><b>Dashboard</b>
+                     <i class="bi bi-speedometer text-secondary me-2"></i><b>{{ __('Dashboard') }}</b>
                  </a>
              </li>
              @hasrole('admin')
                  <li class="list-group-item nav-support">
                      <a class="link-dark d-block" href="/retailers/">
-                         <i class="bi bi-person-lines-fill text-secondary me-2"></i><b>Retailers</b>
+                         <i class="bi bi-person-lines-fill text-secondary me-2"></i><b>{{ __('Retailers') }}</b>
                      </a>
                  </li>
 
-                 <li class="list-group-item nav-support">
+                 {{-- <li class="list-group-item nav-support">
                      <a class="link-dark d-block" href="/brands/">
-                         <i class="bi bi-slack text-secondary me-2"></i><b>Brands</b>
+                         <i class="bi bi-slack text-secondary me-2"></i><b>{{ __('Brands') }}</b>
                      </a>
                  </li>
 
@@ -42,18 +42,18 @@
                      <a class="link-dark d-block" href="/sizes/">
                          <i class="bi bi-aspect-ratio text-secondary me-2"></i><b>Sizes</b>
                      </a>
-                 </li>
+                 </li> --}}
 
                  <li class="list-group-item">
                      <a class="link-dark d-block" data-bs-toggle="collapse" href="#userCollapse" role="button"
                          aria-expanded="false" aria-controls="userCollapse">
-                         <i class="bi bi-people-fill text-secondary me-2"></i><b>Users</b>
+                         <i class="bi bi-people-fill text-secondary me-2"></i><b>{{ __('Users') }}</b>
                      </a>
                      <div class="collapse" id="userCollapse">
                          <ul class="list-group list-group-flush">
                              <li class="list-group-item nav-users">
                                  <a class="link-dark d-block" href="/admins/">
-                                     <i class="bi bi-person-lines-fill text-secondary me-2"></i><b>List</b>
+                                     <i class="bi bi-person-lines-fill text-secondary me-2"></i><b>{{ __('List') }}</b>
                                  </a>
                              </li>
 
@@ -76,7 +76,13 @@
 
                  <li class="list-group-item nav-support">
                      <a class="link-dark d-block" href="/customers/">
-                         <i class="bi bi-person-video text-secondary me-2"></i><b>Customers</b>
+                         <i class="bi bi-person-video text-secondary me-2"></i><b>{{ __('Customers') }}</b>
+                     </a>
+                 </li>
+
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/settings/">
+                         <i class="bi bi-gear text-secondary me-2"></i><b>{{ __('Settings') }}</b>
                      </a>
                  </li>
              @endhasrole
@@ -84,13 +90,13 @@
              @hasrole('retailer')
                  <li class="list-group-item nav-support">
                      <a class="link-dark d-block" href="/products/">
-                         <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>Products</b>
+                         <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>{{ __('Products') }}</b>
                      </a>
                  </li>
 
                  <li class="list-group-item nav-support">
                      <a class="link-dark d-block" href="/orders/">
-                         <i class="bi bi-cart4 text-secondary me-2"></i><b>Orders</b>
+                         <i class="bi bi-cart4 text-secondary me-2"></i><b>{{ __('Orders') }}</b>
                      </a>
                  </li>
              @endhasrole

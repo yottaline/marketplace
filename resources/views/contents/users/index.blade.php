@@ -20,7 +20,7 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="d-flex">
-                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">USERS</h5>
+                            <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('USERS') }}</h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
                                     ng-click="setUser(false)"></button>
@@ -34,8 +34,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>User Name</th>
-                                        <td class="text-center">Status</td>
+                                        <th>{{ __('User Name') }}</th>
+                                        <td class="text-center">{{ __('Status') }}</td>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -86,7 +86,7 @@
                                 {{-- name --}}
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3">
-                                        <label for="fullName">User Name<b class="text-danger">&ast;</b></label>
+                                        <label for="fullName">{{ __('User Name') }}<b class="text-danger">&ast;</b></label>
                                         <input id="fullName" name="name" class="form-control" maxlength="120"
                                             ng-value="list[updateUser].user_name" required>
                                     </div>
@@ -94,7 +94,7 @@
 
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1">Email</label>
+                                        <label for="exampleInputEmail1">{{ __('Email') }}</label>
                                         <input type="email" class="form-control" name="email" id="exampleInputEmail1"
                                             ng-value="list[updateUser].user_email">
                                     </div>
@@ -102,21 +102,21 @@
 
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="password">Passowrd</label>
+                                        <label for="password">{{ __('Passowrd') }}</label>
                                         <input type="password" class="form-control" name="password" minlength="4"
                                             maxlength="24" id="password">
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="modal-footer d-flex">
-                            <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="submit" form="userForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">Submit</button>
-                            <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
-                                ng-if="submitting"></span>
-                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-outline-secondary me-auto"
+                            data-bs-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="submit" form="userForm" class="btn btn-outline-primary"
+                            ng-disabled="submitting">{{ __('Submit') }}</button>
+                        <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
+                            ng-if="submitting"></span>
                     </div>
                 </div>
 
@@ -124,11 +124,8 @@
                     $(function() {
                         $('#userForm').on('submit', e => e.preventDefault()).validate({
                             rules: {
-                                password: {
-                                    password: true
-                                },
-                                password_confirm: {
-                                    equalTo: "#password"
+                                fullName: {
+                                    required: true
                                 }
                             },
                             submitHandler: function(form) {
@@ -179,8 +176,8 @@
 
         app.controller('ngCtrl', function($scope) {
             $scope.statusObject = {
-                name: ['Blacked', 'Available'],
-                color: ['danger', 'success']
+                name: ['Available', 'Blacked'],
+                color: ['success', 'danger']
             };
 
             $scope.submitting = false;

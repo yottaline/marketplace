@@ -1,5 +1,5 @@
 @extends('index')
-@section('title', 'Orders')
+@section('title', __('Orders'))
 @section('search')
     <form id="nvSearch" role="search">
         <input type="search" name="q" class="form-control my-3 my-md-0 rounded-pill" placeholder="Search...">
@@ -54,12 +54,12 @@
                 <div class="card card-box">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="roleFilter">Customer Name</label>
+                            <label for="roleFilter">{{ __('Customer Name') }}</label>
                             <input type="text" class="form-control" id="filter-name">
                         </div>
 
                         <div class="mb-3">
-                            <label for="roleFilter">Order Date</label>
+                            <label for="roleFilter">{{ __('Order Date') }}</label>
                             <input type="text" id="filterOrderDate" class="form-control text-center text-monospace">
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto  text-uppercase">
                                 <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                    role="status"></span><span>ORDERS</span>
+                                    role="status"></span><span>{{ __('ORDERS') }}</span>
                             </h5>
                             {{-- @csrf --}}
                             <div>
@@ -89,11 +89,11 @@
                                 <thead>
                                     <tr>
                                         {{-- <th></th> --}}
-                                        <th class="text-center">Code</th>
-                                        <th class="text-center">customer</th>
-                                        <th class="text-center">Placed</th>
-                                        <th class="text-center">Total</th>
-                                        <th class="text-center">Status</th>
+                                        <th class="text-center">{{ __('Code') }}</th>
+                                        <th class="text-center">{{ __('Customer Name') }}</th>
+                                        <th class="text-center">{{ __('Placed') }}</th>
+                                        <th class="text-center">{{ __('Total') }}</th>
+                                        <th class="text-center">{{ __('Status') }}</th>
                                         <th></th>
                                     </tr>
                                 </thead>

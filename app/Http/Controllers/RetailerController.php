@@ -7,6 +7,7 @@ use App\Models\Retailer;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class RetailerController extends Controller
 {
@@ -33,7 +34,6 @@ class RetailerController extends Controller
 
     function submit(Request $request)
     {
-
         $id    = $request->retailer_id;
         $user_id = $request->id;
         $email = $request->email;
@@ -61,7 +61,7 @@ class RetailerController extends Controller
 
         $retailerParam = [
             'retailer_phone'   => $phone,
-            'retailer_store'   => $request?->store_name,
+            'retailer_store'   => $request->store_name,
             'retailer_mobile'  => $request?->store_mobile,
             'retailer_note'    => '',
             'retailer_address' => $request->address,
@@ -69,6 +69,21 @@ class RetailerController extends Controller
             'retailer_approved' => Carbon::now(),
             'retailer_approved_by' =>  auth()->user()->id,
         ];
+
+        $photo = $request->file('photo');
+        if ($photo) {
+            $photoName = uniqidReal(7);
+            $photo->move('retailer/logos/', $photoName);
+            $param['retailer_logo'] = $photoName;
+        }
+
+        $id = $request->model_id;
+        if($id){
+            $record = Retailer::fetch($id);
+            if ($photo && $record->retailer_logo) {
+                File::delete('retailer/logos/' . $record->retailer_logo);
+            }
+        }
 
         $result = Retailer::submit($id, $user_id,$userParam, $retailerParam);
         echo json_encode([
