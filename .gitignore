@@ -1,3 +1,5 @@
+.DS_Store
+
 /Dashboard/.phpunit.cache
 /Dashboard/node_modules
 /Dashboard/public/build
