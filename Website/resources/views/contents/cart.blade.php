@@ -32,7 +32,8 @@
                                     <td class="text-center" ng-bind="c.product_code"></td>
                                     <td class="text-center">
                                         <div>
-                                            <img src="https://marketplace.yottaline.com/media/product/<%c.product_id%>/<%c.media_url%>"
+
+                                            <img src="http://127.0.0.1:8001/media/product/<%c.product_id%>/<%c.media_url%>"
                                                 class="card-img-top" style="width: 60px;" />
                                         </div>
                                     </td>
@@ -49,7 +50,10 @@
                                     </td>
                                     <td class="text-center" id="subTotal" ng-bind="toFixed(c.qty*c.prodsize_sellprice)">
                                     </td>
-                                    <td></td>
+                                    <td class="col-fit">
+                                        <button class="btn btn-outline-danger btn-circle bi bi-x"
+                                            ng-click="removeProduct($index)"></button>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -148,9 +152,10 @@
                         }, 'Json')
                     }
 
-                    // $('#submit').on('click', function(e) {
-
-                    // });
+                    $scope.removeProduct = function(i) {
+                        $scope.cart.splice(i, 1)
+                        localStorage.setItem('cart', JSON.stringify(carts))
+                    }
 
 
                     $scope.toFixed = (num) => num.toFixed(2);

@@ -116,7 +116,7 @@
                                 <div id="carouselExample" class="carousel slide">
                                     <div class="carousel-inner">
                                         <div class="carousel-item active" data-ng-repeat="m in media">
-                                            <img src="http://127.0.0.1:8001/media/product/<%product.product_id%>/<%m.media_url%>"
+                                            <img src="https://marketplace.yottaline.com/media/product/<%product.product_id%>/<%m.media_url%>"
                                                 class="d-block w-100" alt="...">
                                         </div>
                                     </div>
