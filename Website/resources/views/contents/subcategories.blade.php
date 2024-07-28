@@ -60,7 +60,7 @@
                                     الكمية في المخزن</button>
                             </div>
                             <img class="m-3"
-                                src="http://127.0.0.1:8001/media/product/<%product.product_id%>/<%product.media_url%>">
+                                src="https://marketplace.yottaline.com/media/product/<%product.product_id%>/<%product.media_url%>">
                             <div class="card-body">
                                 <h5 class="card-title text-center" ng-bind="product.product_name"></h5>
                                 <p class="card-text" ng-bind="product.product_desc"></p>
