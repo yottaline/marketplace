@@ -52,9 +52,13 @@
             </div>
 
             <div class="col-12 col-sm-8 col-lg-10">
-                <div class="row"  ng-if="products.length">
+                <div class="row" ng-if="products.length">
                     <div class="col-lg-2 col-dm-6" data-ng-repeat="product in products">
                         <div class="card">
+                            <div class="card-footer position-relative bg-transparent" ng-if="!product.prodsize_qty">
+                                <button class="position-absolute top-0 start-0 btn text-warning">نفدت
+                                    الكمية في المخزن</button>
+                            </div>
                             <img class="m-3"
                                 src="http://127.0.0.1:8001/media/product/<%product.product_id%>/<%product.media_url%>">
                             <div class="card-body">

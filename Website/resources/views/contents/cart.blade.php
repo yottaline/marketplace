@@ -32,6 +32,7 @@
                                     <td class="text-center" ng-bind="c.product_code"></td>
                                     <td class="text-center">
                                         <div>
+                                            {{-- https://marketplace.yottaline.com/public/ --}}
                                             <img src="http://127.0.0.1:8001/media/product/<%c.product_id%>/<%c.media_url%>"
                                                 class="card-img-top" style="width: 60px;" />
                                         </div>
@@ -157,6 +158,12 @@
 
                     $scope.qty = function(index, op) {
                         var i = $scope.cart[index].qty + op;
+                        if (i > $scope.cart[index].prodcolor_maxqty) {
+                            toastr.info($scope.cart[index].prodcolor_maxqty +
+                                ' هو الكمية القصوى لطلب ');
+                            i = $scope.cart[index].prodcolor_maxqty;
+                        }
+
                         $scope.cart[index].qty = i < 0 ? 0 : i;
                     }
 

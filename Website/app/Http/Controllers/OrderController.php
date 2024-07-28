@@ -22,6 +22,8 @@ class OrderController extends Controller
         foreach ($products as $p) {
             $indx = array_search($p->prodsize_id, $ids);
             if ($indx !== false) {
+                $request_qty = ($p->prodsize_qty - $qty[$indx]);
+                Product_size::updateSize($p->prodsize_id, ['prodsize_qty' => $request_qty]);
                 $subtotal = $qty[$indx] * $p->prodsize_sellprice;
                 $total    = $subtotal * $disc / 100;
                 $orderProductParam[] = [
