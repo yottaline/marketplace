@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
   `categories` (
     `category_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `category_code` VARCHAR(8) NOT NULL,
     `category_name` VARCHAR(120) NOT NULL,
     `category_brand` INT UNSIGNED NOT NULL,
     `category_status` BOOLEAN NOT NULL DEFAULT '1',
@@ -84,9 +83,17 @@ CREATE TABLE IF NOT EXISTS
 
 -- --------------------------------------
 CREATE TABLE IF NOT EXISTS
+  `brands_cats` (
+    `bc_brand` INT UNSIGNED NOT NULL,
+    `bc_category` INT UNSIGNED NOT NULL,
+    FOREIGN KEY (`bc_brand`) REFERENCES `brands` (`brand_id`),
+    FOREIGN KEY (`bc_category`) REFERENCES `categories` (`category_id`)
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+-- --------------------------------------
+CREATE TABLE IF NOT EXISTS
   `subcategories` (
     `subcategory_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `subcategory_code` VARCHAR(8) NOT NULL,
     `subcategory_name` VARCHAR(120) NOT NULL,
     `subcategory_category` INT UNSIGNED NOT NULL,
     `subcategory_status` BOOLEAN NOT NULL DEFAULT '1',
@@ -98,10 +105,10 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
   `sizes` (
     `size_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `size_code` VARCHAR(8) NOT NULL,
     `size_name` VARCHAR(120) NOT NULL,
     `size_subcategory` INT UNSIGNED NOT NULL,
     `size_sign` VARCHAR(20) DEFAULT NULL,
+    `size_order` TINYINT NOT NULL,
     `size_status` BOOLEAN NOT NULL DEFAULT '1',
     PRIMARY KEY (`brand_id`),
     FOREIGN KEY (`size_subcategory`) REFERENCES `subcategories` (`subcategory_id`)
@@ -134,7 +141,8 @@ CREATE TABLE IF NOT EXISTS
     `prodcolor_media` INT UNSIGNED DEFAULT NULL,
     `prodcolor_minqty` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'MIN ORDER QUANTITY',
     `prodcolor_maxqty` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'MAX ORDER QUANTITY',
-    `prodcolor_status` BOOLEAN NOT NULL DEFAULT '1' PRIMARY KEY (`prodcolor_id`),
+    `prodcolor_status` BOOLEAN NOT NULL DEFAULT '1',
+    PRIMARY KEY (`prodcolor_id`),
     FOREIGN KEY (`prodcolor_product`) REFERENCES `products` (`product_id`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
@@ -146,9 +154,8 @@ CREATE TABLE IF NOT EXISTS
     `prodsize_size` INT UNSIGNED NOT NULL,
     `prodsize_color` VARCHAR(24) NOT NULL,
     `prodsize_code` VARCHAR(8) NOT NULL,
-    `prodsize_cost` DECIMAL(9, 2) DEFAULT '0.00',
-    `prodsize_sellprice` DECIMAL(9, 2) DEFAULT '0.00',
-    `prodsize_price` DECIMAL(9, 2) DEFAULT '0.00',
+    `prodsize_cost` DECIMAL(12, 2) DEFAULT '0.00',
+    `prodsize_price` DECIMAL(12, 2) DEFAULT '0.00',
     `prodsize_qty` INT UNSIGNED NOT NULL DEFAULT '0',
     `prodsize_discount` TINYINT UNSIGNED NOT NULL DEFAULT '0',
     `prodsize_discount_start` DATETIME DEFAULT NULL,
