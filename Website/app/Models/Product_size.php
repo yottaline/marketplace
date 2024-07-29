@@ -37,4 +37,9 @@ class Product_size extends Model
 
         return $id ? $ws_products_sizes->first() : $ws_products_sizes->get();
     }
+
+    static function updateSize($id, $params)
+    {
+        return self::where('prodsize_size', $id)->update($params) ? $id : false;
+    }
 }

@@ -31,7 +31,7 @@
     <script>
         toastr.options.closeButton = true;
         toastr.options.progressBar = true;
-        toastr.options.positionClass = "toast-bottom-left";
+        toastr.options.positionClass = "toast-top-right";
         toastr.options.timeOut = 5000;
         toastr.options.preventDuplicates = true;
     </script>
