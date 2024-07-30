@@ -4,7 +4,9 @@
     <div class="container-fluid" ng-app="ngApp" ng-controller="ngCtrl">
         <div class="cart">
             <div class="card card-box">
+
                 <div class="card-body">
+
                     <div class="d-flex">
                         <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">
                             <span class="spinner-border-sm text-warning me-2" role="status"></span><span>العربة</span>
@@ -13,7 +15,6 @@
                             <button class="btn btn-outline-primary btn-circle bi bi-cart3"></button>
                         </div>
                     </div>
-                    <div class="alert alert-success mb-3" role="alert" style="display: none"></div>
                     <div data-ng-if="cart.length" class="table-responsive">
                         <table class="table table-hover" id="example">
                             <thead>
@@ -70,34 +71,28 @@
                                 </tr>
                             </tfoot>
                         </table>
-
+                        <div class="d-flex">
+                            <div class="" style="width: 90%;"></div>
+                            <div class="p-2 flex-shrink-2" data-ng-if="user"><button
+                                    class="d-flex justify-content-end btn btn-outline-primary" type="submit" id="submit"
+                                    ng-click="create()">ارسال الطلب</button></div>
+                            <div class="p-2 flex-shrink-2" data-ng-if="!user">
+                                <p class="text-body-tertiary">لا تمتلك حساب الارجاء انشاء حساب <a
+                                        href="\account\">ان
+                                        نشاء حساب</a></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex">
-                        <div class="" style="width: 90%;"></div>
-                        <div class="p-2 flex-shrink-2" data-ng-if="user"><button
-                                class="d-flex justify-content-end btn btn-outline-primary" type="submit" id="submit"
-                                ng-click="create()">ارسال الطلب</button></div>
-                        <div class="p-2 flex-shrink-2" data-ng-if="!user">
-                            <p class="text-body-tertiary">لا تمتلك حساب الارجاء انشاء حساب <a
-                                    href="\account\">ان
-                                    نشاء حساب</a></p>
+                    <div class="text-center
+                                        text-secondary py-5" data-ng-if="!cart.length">
+                                        <i class="bi bi-exclamation-circle display-3"></i>
+                                        <h5 class="">لا توجد طلبات</h5>
 
+                            </div>
                         </div>
 
                     </div>
                 </div>
-
-
-                <div data-ng-if="!cart.length"
-                                    class="text-center text-secondary py-5">
-                                    <i class="bi bi-exclamation-circle display-3"></i>
-                                    <h5 class="">لا توجد طلبات</h5>
-                        </div>
-                        <!-- </form> -->
-
-                    </div>
-                </div>
-
             </div>
         @endsection
 
