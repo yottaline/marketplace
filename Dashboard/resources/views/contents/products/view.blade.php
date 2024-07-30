@@ -204,7 +204,7 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">
                                 <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                    role="status"></span><span>{{ __('SIZES') }}</span>
+                                    role="status"></span><span>{{ __('SIZES & COLORS') }}</span>
                             </h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -631,7 +631,7 @@
             <div class="card card-box">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('MEDIAS') }}</h5>
+                        <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('MEDIA') }}</h5>
                         <div>
                             <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
                                 data-bs-toggle="modal" data-bs-target="#mediaModal"></button>
