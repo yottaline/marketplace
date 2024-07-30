@@ -35,8 +35,10 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('PRODUCTS') }}</h5>
                             <div>
-                                <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
-                                    data-bs-toggle="modal" data-bs-target="#formModal"></button>
+                                @role('retailer')
+                                    <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
+                                        data-bs-toggle="modal" data-bs-target="#formModal"></button>
+                                @endrole
                                 <button type="button" class="btn btn-outline-dark btn-circle bi bi-arrow-repeat"
                                     ng-click="load(true)"></button>
                             </div>

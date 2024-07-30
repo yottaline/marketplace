@@ -62,20 +62,20 @@
                      </a>
                  </li>
              @endhasrole
+             {{--
+             @hasrole('retailer') --}}
+             <li class="list-group-item nav-support">
+                 <a class="link-dark d-block" href="/products/">
+                     <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>{{ __('Products') }}</b>
+                 </a>
+             </li>
 
-             @hasrole('retailer')
-                 <li class="list-group-item nav-support">
-                     <a class="link-dark d-block" href="/products/">
-                         <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>{{ __('Products') }}</b>
-                     </a>
-                 </li>
-
-                 <li class="list-group-item nav-support">
-                     <a class="link-dark d-block" href="/orders/">
-                         <i class="bi bi-cart4 text-secondary me-2"></i><b>{{ __('Orders') }}</b>
-                     </a>
-                 </li>
-             @endhasrole
+             <li class="list-group-item nav-support">
+                 <a class="link-dark d-block" href="/orders/">
+                     <i class="bi bi-cart4 text-secondary me-2"></i><b>{{ __('Orders') }}</b>
+                 </a>
+             </li>
+             {{-- @endhasrole --}}
 
 
          </ul>
