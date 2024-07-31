@@ -43,9 +43,14 @@ class ProductController extends Controller
     function submit(Request $request)
     {
         $id = $request->id;
+        $names = json_encode([
+            'en' => $request->name_en,
+            'ar' => $request->name_ar,
+        ], JSON_UNESCAPED_UNICODE);
+
         $params = [
-            'product_code'         => $request->code,
-            'product_name'         => $request->name,
+            'product_code'         => uniqidReal(8),
+            'product_name'         => $names,
             'product_desc'         => $request?->context,
             'product_category'     => $request->category,
             'product_subcategory'  => $request->subcategory,

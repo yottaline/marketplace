@@ -54,7 +54,8 @@
                                             src="{{ asset('media/product/') }}/<% p.product_id %>/<% p.media_url %>"
                                             alt="" class="card-img-top">
                                         <div class="card-body">
-                                            <h6 class="card-title" ng-bind="p.product_name"></h6>
+                                            <h6 class="card-title"
+                                                ng-bind="jsonParse(p.product_name).{{ app()->getLocale() }}"></h6>
                                             <h6 class="small font-monospace" ng-bind="p.product_code"></h6>
                                             <h6 class="small font-monospace" ng-bind="p.prodcolor_name"></h6>
                                         </div>
@@ -86,8 +87,16 @@
                                 </div> --}}
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
-                                        <label for="productName">{{ __('Name') }}<b class="text-danger">&ast;</b></label>
-                                        <input type="text" class="form-control" name="name" id="productName">
+                                        <label for="productNameAr">{{ __('Name AR') }}<b
+                                                class="text-danger">&ast;</b></label>
+                                        <input type="text" class="form-control" name="name_ar" id="productNameAr">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="productNameEn">{{ __('Name EN') }}<b
+                                                class="text-danger">&ast;</b></label>
+                                        <input type="text" class="form-control" name="name_en" id="productNameEn">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -110,7 +119,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-12">
                                     <div class="mb-3">
                                         <label for="subcategory">{{ __('Subcategory') }}<b
                                                 class="text-danger">&ast;</b></label>
@@ -124,8 +133,8 @@
                     </div>
                     <div class="modal-footer d-flex">
                         <div class="me-auto">
-                            <button type="submit" form="modalForm" class="btn btn-outline-primary btn-sm"
-                                ng-disabled="submitting">{{ __('Submit') }}</button>
+                            <button type="submit" form="modalForm"
+                                class="btn btn-outline-primary btn-sm">{{ __('Submit') }}</button>
                             <span class="spinner-border spinner-border-sm text-warning ms-2" role="status"
                                 ng-if="submitting"></span>
                         </div>
@@ -167,8 +176,8 @@
 
 
                 function productClsForm() {
-                    $('#productName').val('');
-                    $('#productCode').val('');
+                    $('#productNameEn').val('');
+                    $('#productNameAr').val('');
                 }
             </script>
         </div>
