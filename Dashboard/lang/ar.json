@@ -71,6 +71,8 @@
     "Product Description" : "وصف المنتج",
     "Update" : "تحديث",
     "Color Name" : "اسم اللون",
+    "Color Name AR" : "اسم اللون باللغة العربية",
+    "Color Name EN" : "اسم اللون باللغة الانجليزية",
     "Cost" : "التكلفة",
     "Min order" : "الحد الأدنى للطلب",
     "Max order" : "الحد الأقصى للطلب",

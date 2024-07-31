@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product_color;
 use App\Models\Product_size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductSizeController extends Controller
 {
@@ -20,22 +21,29 @@ class ProductSizeController extends Controller
 
     function submit(Request $request)
     {
+
         $color_name = explode(',', $request->name);
         $sizes      = $request->size;
+
+        $names = json_encode([
+            'en' => $request->name_en,
+            'ar' => $request->name_ar,
+        ], JSON_UNESCAPED_UNICODE);
 
         $colorParam = [];
         $sizeParam  = [];
 
-        $color_name = array_values(array_filter($color_name, function ($e) {
-            $e = trim($e);
-            return !empty($e);
-        }));
+        // $color_name = array_values(array_filter($color_name, function ($e) {
+        //     $e = trim($e);
+        //     return !empty($e);
+        // }));
 
         $color_ref = uniqidReal(8);
         if (count($color_name) > 1) {
             foreach ($color_name as $color) {
+
                 $colorParam[] = [
-                    'prodcolor_name'        => $color,
+                    'prodcolor_name'        => $names,
                     'prodcolor_code'        => $color_ref,
                     'prodcolor_minqty'      => $request->min,
                     'prodcolor_maxqty'      => $request->max,
@@ -61,34 +69,54 @@ class ProductSizeController extends Controller
             }
         } else {
 
-                $colorParam[] = [
-                    'prodcolor_code'         => $color_ref,
-                    'prodcolor_name'        => $request->name,
-                    'prodcolor_minqty'      => $request->min,
-                    'prodcolor_maxqty'      => $request->max,
-                    'prodcolor_media'       => 0,
-                    'prodcolor_product'     => $request->p_id,
-                ];
+            $colorParam[] = [
+                'prodcolor_code'         => $color_ref,
+                'prodcolor_name'        => $names,
+                'prodcolor_minqty'      => $request->min,
+                'prodcolor_maxqty'      => $request->max,
+                'prodcolor_media'       => 0,
+                'prodcolor_product'     => $request->p_id,
+            ];
 
-                foreach ($sizes as $size) {
+                if(count($sizes) > 1){
+
+                    foreach ($sizes as $size) {
+                        $sizeParam[] = [
+                            'prodsize_size'            => $size,
+                            'prodsize_code'           => uniqidReal(8),
+                            'prodsize_product'         => $request->p_id,
+                            'prodsize_color'           =>  $color_ref,
+                            'prodsize_cost'            => $request->cost,
+                            'prodsize_sellprice'       => $request->sell,
+                            'prodsize_price'           => $request->price,
+                            'prodsize_qty'             => $request->qty,
+                            'prodsize_discount'        => $request->discount ?? 0,
+                            'prodsize_discount_start'  => $request->start,
+                            'prodsize_discount_end'    => $request->end,
+                            'prodsize_status'          => 1,
+                        ];
+                    };
+
+                }else{
+
                     $sizeParam[] = [
-                        'prodsize_size'            => $size,
+                        'prodsize_size'           => implode($request->size),
                         'prodsize_code'           => uniqidReal(8),
                         'prodsize_product'         => $request->p_id,
                         'prodsize_color'           =>  $color_ref,
                         'prodsize_cost'            => $request->cost,
-                        'prodsize_sellprice'       => $request->sell,
+                        'prodsize_sellprice'       => 0,
                         'prodsize_price'           => $request->price,
                         'prodsize_qty'             => $request->qty,
                         'prodsize_discount'        => $request->discount ?? 0,
                         'prodsize_discount_start'  => $request->start,
-                        'prodsize_discount_end'    => $request->end
+                        'prodsize_discount_end'    => $request->end,
+                        'prodsize_status'          => 1,
                     ];
-                };
+                }
         }
 
         $result = Product_color::createProduct($colorParam, $sizeParam);
-
         echo json_encode([
             'status' => boolval($result),
             'data'   => $result ?  Product_size::fetch($result, [['prodsize_product', $request->p_id]]) : []

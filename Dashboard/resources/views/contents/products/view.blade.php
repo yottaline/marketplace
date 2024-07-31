@@ -61,16 +61,25 @@
                             <input type="hidden" name="_method" value="put">
                             <input type="hidden" name="id" id="product_id" ng-value="product.product_id">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-6">
                                     <div class="mb-3">
                                         <label for="productName">
-                                            {{ __('Product Name') }} <b class="text-danger">&ast;</b></label>
+                                            {{ __('Name EN') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="name"
-                                            ng-value="product.product_name" id="productName" />
+                                            ng-value="jsonParse(product.product_name).en" id="productName" />
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="productName">
+                                            {{ __('Name AR') }} <b class="text-danger">&ast;</b></label>
+                                        <input type="text" class="form-control" name="name"
+                                            ng-value="jsonParse(product.product_name).ar" id="productName" />
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
                                     <div class="mb-3">
                                         <label for="productCode">
                                             {{ __('Product Code') }} <b class="text-danger">&ast;</b></label>
@@ -79,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-4">
                                     <div class="mb-3">
                                         <label for="category">
                                             {{ __('Category') }} <b class="text-danger">&ast;</b></label>
@@ -93,7 +102,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-4">
                                     <div class="mb-3">
                                         <label for="subcategory">
                                             {{ __('Subcategory') }} <b class="text-danger">&ast;</b></label>
@@ -229,7 +238,8 @@
                                         {{-- <td ng-bind="si.prodcolor_code"
                                             class="text-center small font-monospace text-uppercase"></td> --}}
                                         <td class="text-center" ng-bind="si.size_name"></td>
-                                        <td class="text-center" ng-bind="si.prodcolor_name"></td>
+                                        <td class="text-center"
+                                            ng-bind="jsonParse(si.prodcolor_name).{{ app()->getLocale() }}"></td>
                                         <td class="text-center" ng-bind="si.prodsize_cost"></td>
                                         <td class="text-center" ng-bind="si.prodcolor_minqty"></td>
                                         <td class="text-center" ng-bind="si.prodcolor_maxqty"></td>
@@ -272,12 +282,21 @@
                                             <input type="hidden" name="id" id="prodsizeId"
                                                 ng-value="siezs[updateSize].prodsize_id">
 
-                                            <div class="col-12 col-sm-12">
+                                            <div class="col-6 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="colorName">{{ __('Color Name') }}<b
+                                                    <label for="colorNameAr">{{ __('Color Name AR') }}<b
                                                             class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="name"
-                                                        id="colorName">
+                                                    <input type="text" class="form-control" name="name_ar"
+                                                        id="colorNameAr">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="colorNameEn">{{ __('Color Name EN') }}<b
+                                                            class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="name_en"
+                                                        id="colorNameEn">
                                                 </div>
                                             </div>
 
@@ -311,8 +330,8 @@
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="min">{{ __('Min order') }}</label>
-                                                    <input type="text" class="form-control" name="min"
-                                                        id="min">
+                                                    <input type="text" class="form-control" value="1"
+                                                        name="min" id="min">
                                                 </div>
                                             </div>
 
@@ -324,7 +343,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 col-sm-12">
+                                            <div class="col-6 col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="discount">{{ __('Discount') }}</label>
                                                     <input type="text" class="form-control" name="discount"
@@ -430,7 +449,8 @@
 
                         function sClsForm() {
                             $('#prodsizeId').val('');
-                            $('#colorName').val('');
+                            $('#colorNameAr').val('');
+                            $('#colorNameEn').val('');
                             $('#cost').val('');
                             $('#Qty').val('0');
                             $('#price').val('');
@@ -490,7 +510,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 col-sm-12">
+                                            <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="discount">{{ __('Discount') }}</label>
                                                     <input type="text" class="form-control" name="discount"
@@ -616,7 +636,8 @@
                                     <input type="hidden" name="c_id" ng-value="m.prodcolor_id">
                                     <input type="hidden" name="m_id" ng-value="m.media_id">
                                     <input type="hidden" name="s" ng-value="m.prodcolor_media">
-                                    <h6 class="card-title" ng-bind="m.prodcolor_name"></h6>
+                                    <h6 class="card-title"
+                                        ng-bind="jsonParse(m.prodcolor_name).{{ app()->getLocale() }}"></h6>
 
                                 </div>
                             </div>
@@ -643,7 +664,7 @@
                                         {{ __('Color') }} <b class="text-danger">&ast;</b></label>
                                     <select name="color" id="color" class="form-select" required>
                                         <option ng-repeat="color in siezs" ng-value="color.prodcolor_id"
-                                            ng-bind="color.prodcolor_name">
+                                            ng-bind="jsonParse(color.prodcolor_name).{{ app()->getLocale() }}">
                                         </option>
                                     </select>
                                 </div>
@@ -728,9 +749,10 @@
 
             $scope.jsonParse = (str) => JSON.parse(str);
             $scope.product = <?= json_encode($product) ?>;
-            console.log($scope.data);
+
             $scope.load = function(reload = false) {
                 $('.loading-spinner').show();
+
                 var request = {
                     q: $scope.q,
                     product_id: $scope.product.product_id,
@@ -750,7 +772,6 @@
                         $scope.loading = false;
                         if (ln) {
                             $scope.siezs = data;
-                            console.log(data);
                         }
                     });
                 }, 'json');
