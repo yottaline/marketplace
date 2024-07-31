@@ -13,14 +13,14 @@
             <div class="col-12 col-sm-4 col-lg-3 col-xl-2">
                 <div class="card card-box">
                     <div class="card-body">
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="category-filter">{{ __('Category') }}<b class="text-danger">&ast;</b></label>
                             <select name="category" id="category-filter" class="form-select" required>
                                 <option value="default">-- {{ __('SELECT CATEGORY NAME') }} --</option>
                                 <option ng-repeat="c in categories" ng-bind="c.category_name" ng-value="c.category_id">
                                 </option>
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label for="product-filter">{{ __('Product Name') }}</label>
                             <input type="text" class="form-control" id="product-filter">
@@ -35,10 +35,10 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('PRODUCTS') }}</h5>
                             <div>
-                                @role('retailer')
-                                    <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
-                                        data-bs-toggle="modal" data-bs-target="#formModal"></button>
-                                @endrole
+                                {{-- @role('retailer') --}}
+                                <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
+                                    data-bs-toggle="modal" data-bs-target="#formModal"></button>
+                                {{-- @endrole --}}
                                 <button type="button" class="btn btn-outline-dark btn-circle bi bi-arrow-repeat"
                                     ng-click="load(true)"></button>
                             </div>
@@ -77,13 +77,13 @@
                         <form method="post" id="modalForm" action="/products/submit">
                             @csrf
                             <div class="row">
-                                <div class="col-12 col-sm-6">
+                                {{-- <div class="col-12 col-sm-6">
                                     <div class="mb-3">
                                         <label for="productCode">{{ __('Code') }}<b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control font-monospace" name="code"
                                             id="productCode">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
                                         <label for="productName">{{ __('Name') }}<b class="text-danger">&ast;</b></label>
@@ -92,11 +92,20 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3">
+                                        <label for="brand">{{ __('Brand') }}<b class="text-danger">&ast;</b></label>
+                                        <select name="brand" id="brand" class="form-select" required>
+                                            <option value="default">-- {{ __('SELECT BRAND NAME') }} --</option>
+                                            <option ng-repeat="b in brands" ng-bind="b.brand_name" ng-value="b.brand_id">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="mb-3">
                                         <label for="category">{{ __('Category') }}<b class="text-danger">&ast;</b></label>
                                         <select name="category" id="category" class="form-select" required>
-                                            <option value="default">-- {{ __('SELECT CATEGORY NAME') }} --</option>
-                                            <option ng-repeat="c in categories" ng-bind="c.category_name"
-                                                ng-value="c.category_id"></option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -183,7 +192,8 @@
             $scope.offset = 0;
 
             $scope.jsonParse = (str) => JSON.parse(str);
-            $scope.categories = <?= json_encode($categories) ?>;
+            // $scope.categories = <?= json_encode($categories) ?>;
+            $scope.brands = <?= json_encode($brands) ?>;
             $scope.load = function(reload = false) {
                 if (reload) {
                     $scope.list = [];
@@ -224,6 +234,23 @@
             e.preventDefault();
             scope.$apply(() => scope.q = $(this).find('input').val());
             scope.load(true);
+        });
+
+        $('#brand').on('change', function() {
+            var idState = this.value;
+            $('#category').html('');
+            $.ajax({
+                url: '/products/category/' + idState,
+                type: 'GET',
+                dataType: 'json',
+                success: function(res) {
+                    $.each(res, function(key, value) {
+                        $('#category').append('<option id="class" value="' + value
+                            .category_id +
+                            '">' + value.category_name + '</option>');
+                    });
+                }
+            });
         });
 
         $('#category').on('change', function() {

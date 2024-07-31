@@ -16,7 +16,6 @@ class Product_size extends Model
         'prodsize_color',
         'prodsize_code',
         'prodsize_cost',
-        'prodsize_sellprice',
         'prodsize_price',
         'prodsize_qty',
         'prodsize_discount',
