@@ -73,8 +73,11 @@
     <script src="{{ asset('assets/dropify-master/dist/js/dropify.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css?v=1.0.0') }}">
-    <script src="{{ asset('/assets/js/custom_functions.js?v=1.0.0') }}"></script>
-    <script src="{{ asset('/assets/js/ng_functions.js?v=1.0.0') }}"></script>
+    {{-- <script src="{{ asset('/assets/js/custom_functions.js?v=1.0.0') }}"></script> --}}
+    {{-- <script src="{{ asset('/assets/js/ng_functions.js?v=1.0.0') }}"></script> --}}
+
+    <script src="https://cdn.jsdelivr.net/gh/yottaline/helpers/js/custom_functions.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/yottaline/helpers/js/ng_functions.min.js "></script>
 
     @yield('style')
     <script>

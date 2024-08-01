@@ -55,7 +55,7 @@
                                             alt="" class="card-img-top">
                                         <div class="card-body">
                                             <h6 class="card-title"
-                                                ng-bind="jsonParse(p.product_name).{{ app()->getLocale() }}"></h6>
+                                                ng-bind="fn.jsonParse(p.product_name).{{ app()->getLocale() }}"></h6>
                                             <h6 class="small font-monospace" ng-bind="p.product_code"></h6>
                                             <h6 class="small font-monospace" ng-bind="p.prodcolor_name"></h6>
                                         </div>
@@ -193,6 +193,8 @@
             });
 
         ngApp.controller('ngCtrl', function($scope) {
+            $scope.fn = NgFunctions;
+
             $scope.noMore = false;
             $scope.loading = false;
             $scope.q = '';
@@ -200,7 +202,6 @@
             $scope.list = [];
             $scope.offset = 0;
 
-            $scope.jsonParse = (str) => JSON.parse(str);
             // $scope.categories = <?= json_encode($categories) ?>;
             $scope.brands = <?= json_encode($brands) ?>;
             $scope.load = function(reload = false) {
