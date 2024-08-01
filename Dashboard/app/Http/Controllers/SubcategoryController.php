@@ -33,11 +33,10 @@ class SubcategoryController extends Controller
     function submit(Request $request)
     {
         $id = $request->id;
-
         $params = [
             'subcategory_name'     => $request->name,
             'subcategory_category' => $request->category,
-            'subcategory_status'   => intval($request->status)
+            'subcategory_status'   => $request->status ? $request->status : 1
         ];
         if(!$id) $params['subcategory_code'] = uniqidReal(8);
 

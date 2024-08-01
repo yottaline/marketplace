@@ -36,7 +36,7 @@ class CategoryController extends Controller
         $params = [
             'category_name'   => $request->name,
             'category_brand'  => $request->brand,
-            'category_status' => intval($request->status)
+            'category_status' => $request->status ? $request->status : 1
         ];
 
         if(!$id) $params['category_code'] = uniqidReal(8);

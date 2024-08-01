@@ -236,14 +236,21 @@
                                                     <div class="mb-3">
                                                         <label for="brand">
                                                             {{ __('Brand') }} <b class="text-danger">&ast;</b></label>
-                                                        <select name="brand" id="brand" class="form-select"
+                                                        <div class="form-check form-switch" style="display: inline-block"
+                                                            ng-repeat="b in brands">
+                                                            <input type="checkbox" name="brand" ng-value="b.brand_id">
+                                                            <label for="brand" ng-bind="b.brand_name">Size<b
+                                                                    class="text-danger">&ast;</b></label>
+                                                        </div>
+
+                                                        {{-- <select name="brand" id="brand" class="form-select"
                                                             required>
                                                             <option value="default">--
                                                                 {{ __('SELECT BRAND NAME') }} --</option>
                                                             <option ng-repeat="b in brands" ng-value="b.brand_id"
                                                                 ng-bind="b.brand_name">
                                                             </option>
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
 
