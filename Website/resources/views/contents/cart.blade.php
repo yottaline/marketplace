@@ -38,7 +38,8 @@
                                                 class="card-img-top" style="width: 60px;" />
                                         </div>
                                     </td>
-                                    <td class="text-center" ng-bind="c.product_name"></td>
+                                    <td class="text-center" ng-bind="jsonParse(c.product_name).{{ app()->getLocale() }}">
+                                    </td>
                                     <td class="text-center">
                                         <a href="" class="bi bi-dash-circle" ng-click="qty($index, -1)"></a>
                                         <input type="text" step="1" min="0" ng-model="c.qty"
@@ -47,9 +48,9 @@
                                             ng-class="c.product_code" name="qty" id="qty" style="width: 60px;">
                                         <a href="" class="bi bi-plus-circle" ng-click="qty($index, 1)"></a>
                                     </td>
-                                    <td class="text-center" ng-bind="c.prodsize_sellprice"></td>
+                                    <td class="text-center" ng-bind="c.prodsize_price"></td>
                                     </td>
-                                    <td class="text-center" id="subTotal" ng-bind="toFixed(c.qty*c.prodsize_sellprice)">
+                                    <td class="text-center" id="subTotal" ng-bind="toFixed(c.qty*c.prodsize_price)">
                                     </td>
                                     <td class="col-fit">
                                         <button class="btn btn-outline-danger btn-circle bi bi-x"
@@ -123,7 +124,7 @@
                         carts.map(e => {
                             $scope.req.id.push(e.prodsize_id);
                             $scope.req.qty.push(e.qty);
-                            $scope.req.price.push(e.prodsize_sellprice);
+                            $scope.req.price.push(e.prodsize_price);
                             $scope.req.disc.push(e.product_disc);
                         });
                         $.post('/create', {
@@ -169,7 +170,7 @@
                     $scope.getTotal = function() {
                         $scope.total = 0;
                         $scope.cart.map(c => {
-                            $scope.total += +(c.qty * c.prodsize_sellprice).toFixed(2);
+                            $scope.total += +(c.qty * c.prodsize_price).toFixed(2);
                         });
                         return $scope.total.toFixed(2);
                     }

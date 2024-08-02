@@ -25,8 +25,12 @@ class ProductController extends Controller
     function load(Request $request)
     {
         $params = $request->q ? ['q' => $request->q] : [];
+        if(auth()->user()->user_type == 2){
         $params[] = ['product_created_by', auth()->user()->id];
-        if ($request->category) $params[] = ['product_category', $request->category];
+        if($request->category) $params[] = ['product_category', $request->category];
+
+        }
+
         echo json_encode(Product::fetch(0, $params, $request->limit, $request->offset));
     }
 

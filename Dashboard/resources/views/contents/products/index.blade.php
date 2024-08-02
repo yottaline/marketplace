@@ -35,10 +35,10 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('PRODUCTS') }}</h5>
                             <div>
-                                {{-- @role('retailer') --}}
-                                <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
-                                    data-bs-toggle="modal" data-bs-target="#formModal"></button>
-                                {{-- @endrole --}}
+                                @role('retailer')
+                                    <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
+                                        data-bs-toggle="modal" data-bs-target="#formModal"></button>
+                                @endrole
                                 <button type="button" class="btn btn-outline-dark btn-circle bi bi-arrow-repeat"
                                     ng-click="load(true)"></button>
                             </div>
@@ -114,6 +114,7 @@
                                     <div class="mb-3">
                                         <label for="category">{{ __('Category') }}<b class="text-danger">&ast;</b></label>
                                         <select name="category" id="category" class="form-select" required>
+                                            <option value="default">-- {{ __('SELECT BRAND NAME') }} --</option>
 
                                         </select>
                                     </div>
@@ -124,6 +125,7 @@
                                         <label for="subcategory">{{ __('Subcategory') }}<b
                                                 class="text-danger">&ast;</b></label>
                                         <select name="subcategory" id="subcategory" class="form-select" required>
+                                            <option value="default">-- {{ __('SELECT BRAND NAME') }} --</option>
 
                                         </select>
                                     </div>
@@ -222,7 +224,6 @@
                     p_name: $('#product-filter').val(),
                     _token: '{{ csrf_token() }}'
                 };
-
                 $.post("/products/load", request, function(data) {
                     var ln = data.length;
                     $scope.$apply(() => {
@@ -263,7 +264,7 @@
             });
         });
 
-        $('#category').on('change', function() {
+        $('#category').on('click', function() {
             var idState = this.value;
             $('#subcategory').html('');
             $.ajax({
