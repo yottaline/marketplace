@@ -163,14 +163,12 @@
                 var request = {
                     q: $scope.q,
                     last_id: $scope.last_id,
-                    sub: 0,
                     limit: limit,
                     code: $('#code-filter').val(),
                     _token: '{{ csrf_token() }}'
                 };
 
-                $.post("/products/fetch", request, function(data) {
-
+                $.post("/products/best_seller", request, function(data) {
                     var ln = data.length;
                     $scope.$apply(() => {
                         $scope.loading = false;

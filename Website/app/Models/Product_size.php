@@ -16,7 +16,7 @@ class Product_size extends Model
         'prodsize_color',
         'prodsize_code',
         'prodsize_cost',
-        'prodsize_sellprice',
+        'prodsize_count_purchased',
         'prodsize_price',
         'prodsize_qty',
         'prodsize_discount',
@@ -26,7 +26,7 @@ class Product_size extends Model
     ];
 
 
-    static function fetch($id = 0, $params = null, $ids = null)
+    static function fetch($id = 0, $params = null, $ids = null, $lastId = null)
     {
         $ws_products_sizes = self::join('products', 'prodsize_product', 'product_id')
             ->join('sizes', 'prodsize_size', 'size_id')->join('product_colors', 'prodsize_color', 'prodcolor_code')->join('product_media', 'prodsize_product', 'media_product')->groupBy('prodsize_id');
@@ -34,6 +34,7 @@ class Product_size extends Model
         if ($params) $ws_products_sizes->where($params);
         if ($id) $ws_products_sizes->where('prodsize_id', $id);
         if ($ids) $ws_products_sizes->whereIn('prodsize_id', $ids);
+        if ($lastId) $ws_products_sizes->where('prodsize_id', '>', $lastId);
 
         return $id ? $ws_products_sizes->first() : $ws_products_sizes->get();
     }
