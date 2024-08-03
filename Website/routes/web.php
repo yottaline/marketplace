@@ -29,6 +29,7 @@ Route::get('/dashboard', function () {
 
 Route::get('subcategories/{category_code}', [SubcategoryController::class, 'index']);
 Route::post('products/fetch', [ProductController::class, 'fetch']);
+Route::post('products/best_seller',[ProductController::class, 'bestSeller']);
 Route::get('get_medias/{id}', [ProductMediaController::class, 'fetch']);
 Route::get('cart', [ProductController::class, 'cart']);
 Route::get('account', [ProfileController::class, 'createAccount']);

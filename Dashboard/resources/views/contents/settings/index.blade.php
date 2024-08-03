@@ -174,7 +174,7 @@
                                 <table class="table table-hover" id="example">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            {{-- <th>#</th> --}}
                                             <th class="text-center">{{ __('Category Name') }}</th>
                                             <th class="text-center">{{ __('brand Name') }}</th>
                                             <th class="text-center">{{ __('Status') }}</th>
@@ -183,9 +183,9 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="category in categories track by $index">
-                                            <td ng-bind="category.category_code"
+                                            {{-- <td ng-bind="category.category_code"
                                                 class="small font-monospace text-uppercase">
-                                            </td>
+                                            </td> --}}
                                             <td ng-bind="category.category_name" class="text-center">
                                             </td>
                                             <td ng-bind="category.brand_name" class="text-center">
@@ -236,14 +236,21 @@
                                                     <div class="mb-3">
                                                         <label for="brand">
                                                             {{ __('Brand') }} <b class="text-danger">&ast;</b></label>
-                                                        <select name="brand" id="brand" class="form-select"
+                                                        <div class="form-check form-switch" style="display: inline-block"
+                                                            ng-repeat="b in brands">
+                                                            <input type="checkbox" name="brand" ng-value="b.brand_id">
+                                                            <label for="brand" ng-bind="b.brand_name">Size<b
+                                                                    class="text-danger">&ast;</b></label>
+                                                        </div>
+
+                                                        {{-- <select name="brand" id="brand" class="form-select"
                                                             required>
                                                             <option value="default">--
                                                                 {{ __('SELECT BRAND NAME') }} --</option>
                                                             <option ng-repeat="b in brands" ng-value="b.brand_id"
                                                                 ng-bind="b.brand_name">
                                                             </option>
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
 
@@ -354,7 +361,7 @@
                                 <table class="table table-hover" id="example">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            {{-- <th>#</th> --}}
                                             <th class="text-center">{{ __('Subcategory Name') }}</th>
                                             <th class="text-center">{{ __('Category Name') }}</th>
                                             <th class="text-center">{{ __('Status') }}</th>
@@ -363,9 +370,9 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="subcategory in subcategoires track by $index">
-                                            <td ng-bind="subcategory.subcategory_code"
+                                            {{-- <td ng-bind="subcategory.subcategory_code"
                                                 class="small font-monospace text-uppercase">
-                                            </td>
+                                            </td> --}}
                                             <td ng-bind="subcategory.subcategory_name" class="text-center">
                                             </td>
                                             <td ng-bind="subcategory.category_name" class="text-center">
@@ -524,7 +531,7 @@
                                 <table class="table table-hover" id="example">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            {{-- <th>#</th> --}}
                                             <th class="text-center">{{ __('Name') }}</th>
                                             <th class="text-center">{{ __('Subcategory Name') }}</th>
                                             <th class="text-center">{{ __('Status') }}</th>
@@ -533,8 +540,8 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="size in sizes track by $index">
-                                            <td ng-bind="size.size_code" class="small font-monospace text-uppercase">
-                                            </td>
+                                            {{-- <td ng-bind="size.size_code" class="small font-monospace text-uppercase">
+                                            </td> --}}
                                             <td ng-bind="size.size_name" class="text-center">
                                             </td>
                                             <td ng-bind="size.subcategory_name" class="text-center">

@@ -36,7 +36,9 @@ class OrderController extends Controller
         $lastId = $request->last_id;
         if ($request->date)   $param[] = ['order_created', 'like', '%' . $request->date . '%'];
         if ($request->r_name) $param[] = ['customer_name', 'like', '%' . $request->r_name . '%'];
-
+        if(auth()->user()->user_type == 2) {
+            $param[] = ['order_create_by', auth()->user()->id];
+        }
         echo json_encode(Order::fetch(0, $param, $limit, $lastId));
     }
 
@@ -68,12 +70,13 @@ class OrderController extends Controller
         foreach ($products as $p) {
             $indx = array_search($p->prodsize_id, $ids);
             if ($indx !== false) {
-                $subtotal = $qty[$indx] * $p->prodsize_sellprice;
+                Product_size::submit($p->prodsize_id, [['prodsize_qty' => $qty[$indx]], ['prodsize_count_purchased' => $p->prodsize_count_purchased +1]]);
+                $subtotal = $qty[$indx] * $p->prodsize_price;
                 $total    = $subtotal * $disc / 100;
                 $orderProductParam[] = [
                     'orderItem_product'       => $p->product_id,
                     'orderItem_size'          => $p->prodsize_id,
-                    'orderItem_productPrice'  => $p->prodsize_sellprice,
+                    'orderItem_productPrice'  => $p->prodsize_price,
                     'orderItem_qty'           => $qty[$indx],
                     'orderItem_subtotal'      => $subtotal,
                     'orderItem_total'         => $total,

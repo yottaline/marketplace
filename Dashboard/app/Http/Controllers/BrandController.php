@@ -38,7 +38,7 @@ class BrandController extends Controller
 
         $params = [
             'brand_name'   => $request->name,
-            'brand_status' => intval($request->status)
+            'brand_status' => $request->status ? $request->status : 1
         ];
 
         if(!$id) $params['brand_code'] = uniqidReal(8);

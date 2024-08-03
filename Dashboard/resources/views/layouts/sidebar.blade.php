@@ -44,34 +44,10 @@
                      </a>
                  </li> --}}
 
-                 <li class="list-group-item">
-                     <a class="link-dark d-block" data-bs-toggle="collapse" href="#userCollapse" role="button"
-                         aria-expanded="false" aria-controls="userCollapse">
+                 <li class="list-group-item nav-support">
+                     <a class="link-dark d-block" href="/admins/">
                          <i class="bi bi-people-fill text-secondary me-2"></i><b>{{ __('Users') }}</b>
                      </a>
-                     <div class="collapse" id="userCollapse">
-                         <ul class="list-group list-group-flush">
-                             <li class="list-group-item nav-users">
-                                 <a class="link-dark d-block" href="/admins/">
-                                     <i class="bi bi-person-lines-fill text-secondary me-2"></i><b>{{ __('List') }}</b>
-                                 </a>
-                             </li>
-
-                             {{-- <li class="list-group-item nav-premissions">
-                                 <a class="link-dark d-block" href="/currencies/">
-                                     <i class="bi bi-person-fill-check text-secondary me-2"></i><b>Currencies</b>
-                                 </a>
-                             </li> --}}
-
-                         </ul>
-                     </div>
-                     <script>
-                         const userCollapse = new bootstrap.Collapse('#userCollapse', {
-                             toggle: false
-                         });
-                         if (['users', 'premissions'].includes(navTarget))
-                             userCollapse.show();
-                     </script>
                  </li>
 
                  <li class="list-group-item nav-support">
@@ -86,20 +62,20 @@
                      </a>
                  </li>
              @endhasrole
+             {{--
+             @hasrole('retailer') --}}
+             <li class="list-group-item nav-support">
+                 <a class="link-dark d-block" href="/products/">
+                     <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>{{ __('Products') }}</b>
+                 </a>
+             </li>
 
-             @hasrole('retailer')
-                 <li class="list-group-item nav-support">
-                     <a class="link-dark d-block" href="/products/">
-                         <i class="bi bi-box-seam-fill text-secondary me-2"></i><b>{{ __('Products') }}</b>
-                     </a>
-                 </li>
-
-                 <li class="list-group-item nav-support">
-                     <a class="link-dark d-block" href="/orders/">
-                         <i class="bi bi-cart4 text-secondary me-2"></i><b>{{ __('Orders') }}</b>
-                     </a>
-                 </li>
-             @endhasrole
+             <li class="list-group-item nav-support">
+                 <a class="link-dark d-block" href="/orders/">
+                     <i class="bi bi-cart4 text-secondary me-2"></i><b>{{ __('Orders') }}</b>
+                 </a>
+             </li>
+             {{-- @endhasrole --}}
 
 
          </ul>

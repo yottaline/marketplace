@@ -55,16 +55,17 @@
                 <div class="row" ng-if="products.length">
                     <div class="col-lg-2 col-dm-6" data-ng-repeat="product in products">
                         <div class="card">
-                            <div class="card-footer position-relative bg-transparent" ng-if="!product.prodsize_qty">
+                            <div class="position-relative bg-transparent" ng-if="!product.prodsize_qty">
                                 <button class="position-absolute top-0 start-0 btn text-warning">نفدت
-                                    الكمية في المخزن</button>
+                                </button>
                             </div>
                             <img class="m-3"
                                 src="https://marketplace.yottaline.com/media/product/<%product.product_id%>/<%product.media_url%>">
                             <div class="card-body">
-                                <h5 class="card-title text-center" ng-bind="product.product_name"></h5>
+                                <h5 class="card-title text-center"
+                                    ng-bind="jsonParse(product.product_name).{{ app()->getLocale() }}"></h5>
                                 <p class="card-text" ng-bind="product.product_desc"></p>
-                                <p><%product.prodsize_sellprice%> <span ng-bind="product.prodsize_price"></span>
+                                <p><span ng-bind="product.prodsize_price" class="text-success-rgb"></span>
                                 </p>
 
                             </div>
@@ -90,7 +91,7 @@
                         <div class="row">
 
                             <div class="col-6">
-                                <h3 ng-bind="product.product_name" class="mt-3"></h3>
+                                <h3 ng-bind="jsonParse(product.product_name).{{ app()->getLocale() }}" class="mt-3"></h3>
                                 <p class="p-2 text-slate-600">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                     Quidem qui voluptates eos repellendus quam rerum est tempora ullam rem veniam a ratione
                                     in ab perferendis suscipit possimus corporis, explicabo deserunt.</p>

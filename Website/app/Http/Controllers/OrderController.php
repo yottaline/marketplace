@@ -23,13 +23,15 @@ class OrderController extends Controller
             $indx = array_search($p->prodsize_id, $ids);
             if ($indx !== false) {
                 $request_qty = ($p->prodsize_qty - $qty[$indx]);
-                Product_size::updateSize($p->prodsize_id, ['prodsize_qty' => $request_qty]);
-                $subtotal = $qty[$indx] * $p->prodsize_sellprice;
+
+                Product_size::updateSize($p->prodsize_id, ['prodsize_qty' => $request_qty, 'prodsize_count_purchased' => $p->prodsize_count_purchased +1]);
+
+                $subtotal = $qty[$indx] * $p->prodsize_price;
                 $total    = $subtotal * $disc / 100;
                 $orderProductParam[] = [
                     'orderItem_product'       => $p->product_id,
                     'orderItem_size'          => $p->prodsize_id,
-                    'orderItem_productPrice'  => $p->prodsize_sellprice,
+                    'orderItem_productPrice'  => $p->prodsize_price,
                     'orderItem_qty'           => $qty[$indx],
                     'orderItem_subtotal'      => $subtotal,
                     'orderItem_total'         => $total,
@@ -47,6 +49,7 @@ class OrderController extends Controller
             'order_discount'      => 0,
             'order_total'         => $ordTotal,
             'order_status'        =>  1,
+            'order_create_by'     => $p->product_created_by,
             'order_created'       => Carbon::now(),
         ];
 

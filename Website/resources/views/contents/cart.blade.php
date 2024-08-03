@@ -4,7 +4,9 @@
     <div class="container-fluid" ng-app="ngApp" ng-controller="ngCtrl">
         <div class="cart">
             <div class="card card-box">
+
                 <div class="card-body">
+
                     <div class="d-flex">
                         <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">
                             <span class="spinner-border-sm text-warning me-2" role="status"></span><span>العربة</span>
@@ -13,7 +15,6 @@
                             <button class="btn btn-outline-primary btn-circle bi bi-cart3"></button>
                         </div>
                     </div>
-                    <div class="alert alert-success mb-3" role="alert" style="display: none"></div>
                     <div data-ng-if="cart.length" class="table-responsive">
                         <table class="table table-hover" id="example">
                             <thead>
@@ -37,7 +38,8 @@
                                                 class="card-img-top" style="width: 60px;" />
                                         </div>
                                     </td>
-                                    <td class="text-center" ng-bind="c.product_name"></td>
+                                    <td class="text-center" ng-bind="jsonParse(c.product_name).{{ app()->getLocale() }}">
+                                    </td>
                                     <td class="text-center">
                                         <a href="" class="bi bi-dash-circle" ng-click="qty($index, -1)"></a>
                                         <input type="text" step="1" min="0" ng-model="c.qty"
@@ -46,9 +48,9 @@
                                             ng-class="c.product_code" name="qty" id="qty" style="width: 60px;">
                                         <a href="" class="bi bi-plus-circle" ng-click="qty($index, 1)"></a>
                                     </td>
-                                    <td class="text-center" ng-bind="c.prodsize_sellprice"></td>
+                                    <td class="text-center" ng-bind="c.prodsize_price"></td>
                                     </td>
-                                    <td class="text-center" id="subTotal" ng-bind="toFixed(c.qty*c.prodsize_sellprice)">
+                                    <td class="text-center" id="subTotal" ng-bind="toFixed(c.qty*c.prodsize_price)">
                                     </td>
                                     <td class="col-fit">
                                         <button class="btn btn-outline-danger btn-circle bi bi-x"
@@ -70,34 +72,28 @@
                                 </tr>
                             </tfoot>
                         </table>
-
+                        <div class="d-flex">
+                            <div class="" style="width: 90%;"></div>
+                            <div class="p-2 flex-shrink-2" data-ng-if="user"><button
+                                    class="d-flex justify-content-end btn btn-outline-primary" type="submit" id="submit"
+                                    ng-click="create()">ارسال الطلب</button></div>
+                            <div class="p-2 flex-shrink-2" data-ng-if="!user">
+                                <p class="text-body-tertiary">لا تمتلك حساب الارجاء انشاء حساب <a
+                                        href="\account\">ان
+                                        نشاء حساب</a></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex">
-                        <div class="" style="width: 90%;"></div>
-                        <div class="p-2 flex-shrink-2" data-ng-if="user"><button
-                                class="d-flex justify-content-end btn btn-outline-primary" type="submit" id="submit"
-                                ng-click="create()">ارسال الطلب</button></div>
-                        <div class="p-2 flex-shrink-2" data-ng-if="!user">
-                            <p class="text-body-tertiary">لا تمتلك حساب الارجاء انشاء حساب <a
-                                    href="\account\">ان
-                                    نشاء حساب</a></p>
+                    <div class="text-center
+                                        text-secondary py-5" data-ng-if="!cart.length">
+                                        <i class="bi bi-exclamation-circle display-3"></i>
+                                        <h5 class="">لا توجد طلبات</h5>
 
+                            </div>
                         </div>
 
                     </div>
                 </div>
-
-
-                <div data-ng-if="!cart.length"
-                                    class="text-center text-secondary py-5">
-                                    <i class="bi bi-exclamation-circle display-3"></i>
-                                    <h5 class="">لا توجد طلبات</h5>
-                        </div>
-                        <!-- </form> -->
-
-                    </div>
-                </div>
-
             </div>
         @endsection
 
@@ -128,7 +124,7 @@
                         carts.map(e => {
                             $scope.req.id.push(e.prodsize_id);
                             $scope.req.qty.push(e.qty);
-                            $scope.req.price.push(e.prodsize_sellprice);
+                            $scope.req.price.push(e.prodsize_price);
                             $scope.req.disc.push(e.product_disc);
                         });
                         $.post('/create', {
@@ -174,7 +170,7 @@
                     $scope.getTotal = function() {
                         $scope.total = 0;
                         $scope.cart.map(c => {
-                            $scope.total += +(c.qty * c.prodsize_sellprice).toFixed(2);
+                            $scope.total += +(c.qty * c.prodsize_price).toFixed(2);
                         });
                         return $scope.total.toFixed(2);
                     }

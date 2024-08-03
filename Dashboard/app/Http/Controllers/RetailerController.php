@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreateRetailerAccount;
 use Illuminate\Http\Request;
 use App\Models\Retailer;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class RetailerController extends Controller
 {
-    // function __construct()
-    // {
-    //     $this->middleware(['role:admin']);
-    // }
 
     function index()
     {
@@ -86,6 +84,7 @@ class RetailerController extends Controller
         }
 
         $result = Retailer::submit($id, $user_id,$userParam, $retailerParam);
+        Mail::to($email)->send(new CreateRetailerAccount($request->name, Carbon::now()));
         echo json_encode([
             'status' => boolval($result),
             'data'   => $result ? Retailer::fetch($result) : []

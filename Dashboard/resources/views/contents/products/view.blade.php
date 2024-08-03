@@ -61,16 +61,25 @@
                             <input type="hidden" name="_method" value="put">
                             <input type="hidden" name="id" id="product_id" ng-value="product.product_id">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-6">
                                     <div class="mb-3">
                                         <label for="productName">
-                                            {{ __('Product Name') }} <b class="text-danger">&ast;</b></label>
+                                            {{ __('Name EN') }} <b class="text-danger">&ast;</b></label>
                                         <input type="text" class="form-control" name="name"
-                                            ng-value="product.product_name" id="productName" />
+                                            ng-value="jsonParse(product.product_name).en" id="productName" />
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="productName">
+                                            {{ __('Name AR') }} <b class="text-danger">&ast;</b></label>
+                                        <input type="text" class="form-control" name="name"
+                                            ng-value="jsonParse(product.product_name).ar" id="productName" />
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
                                     <div class="mb-3">
                                         <label for="productCode">
                                             {{ __('Product Code') }} <b class="text-danger">&ast;</b></label>
@@ -79,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-4">
                                     <div class="mb-3">
                                         <label for="category">
                                             {{ __('Category') }} <b class="text-danger">&ast;</b></label>
@@ -93,7 +102,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-4">
                                     <div class="mb-3">
                                         <label for="subcategory">
                                             {{ __('Subcategory') }} <b class="text-danger">&ast;</b></label>
@@ -109,7 +118,8 @@
                                     <div class="mb-3">
                                         <label for="desc">
                                             {{ __('Product Description') }} </label>
-                                        <textarea class="form-control" name="description" id="desc" cols="30" rows="7"><%product.product_desc%></textarea>
+                                        <textarea name="context" class="d-none"></textarea>
+                                        <div id="editorContext" ng-bind-html="trustAsHtml(product.product_desc)"></div>
                                     </div>
                                 </div>
 
@@ -120,73 +130,64 @@
                                 </div>
                         </form>
                         <script>
-                            $('#wProductF').on('submit', e => e.preventDefault()).validate({
-                                rules: {
-                                    name: {
-                                        required: true
-                                    },
-                                    reference: {
-                                        required: true
-                                    },
-                                    season: {
-                                        required: true
-                                    },
-                                    category: {
-                                        required: true
-                                    },
-                                    order_type: {
-                                        required: true
-                                    }
-                                },
-                                submitHandler: function(form) {
-                                    console.log(form);
-                                    var formData = new FormData(form),
-                                        action = $(form).attr('action'),
-                                        method = $(form).attr('method');
+                            $(function() {
+                                $("#wProductF").on('submit', e => e.preventDefault()).validate({
+                                    submitHandler: function(form) {
+                                        var formData, action = $(form).attr('action'),
+                                            method = $(form).attr('method'),
+                                            spinner = $(form).find('.loading-spinner'),
+                                            controls = $(form).find('button');
+                                        spinner.show();
 
-                                    $(form).find('button').prop('disabled', true);
-                                    $.ajax({
-                                        url: action,
-                                        type: method,
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                    }).done(function(data, textStatus, jqXHR) {
-                                        var response = JSON.parse(data);
-                                        if (response.status) {
-                                            toastr.success('Data processed successfully');
-                                            scope.$apply(() => {
-                                                if (scope.updateWProduct === false) {
-                                                    scope.siezs.unshift(response
-                                                        .data);
-                                                } else {
-                                                    scope.siezs[scope
-                                                        .updateWProduct] = response.data;
-                                                }
-                                            });
-                                        } else toastr.error(response.message);
-                                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                                        console.log(textStatus)
-                                        toastr.error("error");
-                                    }).always(function() {
-                                        $(form).find('button').prop('disabled', false);
-                                    });
-                                }
-                            });
-                            $('#category').on('change', function() {
-                                var idState = this.value;
-                                $('#subcategory').html('');
-                                $.ajax({
-                                    url: '/products/subcategory/' + idState,
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    success: function(res) {
-                                        $.each(res, function(key, value) {
-                                            $('#subcategory').append('<option id="class" value="' + value
-                                                .subcategory_id +
-                                                '">' + value.subcategory_name + '</option>');
+                                        $(form).find('textarea[name=context]').val($('#editorContext').summernote('code'));
+                                        formData = new FormData(form);
+
+                                        controls.prop('disabled', true);
+                                        $.ajax({
+                                            url: action,
+                                            type: method,
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                        }).done(function(data, textStatus, jqXHR) {
+                                            var response = JSON.parse(data);
+                                            if (response.status) {
+                                                toastr.success('Data processed successfully');
+                                                scope.$apply(() => {
+                                                    if (scope.updateWProduct === false) {
+                                                        scope.siezs.unshift(response
+                                                            .data);
+                                                    } else {
+                                                        scope.siezs[scope
+                                                            .updateWProduct] = response.data;
+                                                    }
+                                                });
+                                            } else toastr.error(response.message);
+                                        }).fail(function(jqXHR, textStatus, errorThrown) {
+                                            console.log(textStatus)
+                                            toastr.error("error");
+                                        }).always(function() {
+                                            $(form).find('button').prop('disabled', false);
                                         });
-                                    }
+                                    },
+                                });
+
+                                $('#category').on('change', function() {
+                                    var idState = this.value;
+                                    $('#subcategory').html('');
+                                    $.ajax({
+                                        url: '/products/subcategory/' + idState,
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        success: function(res) {
+                                            $.each(res, function(key, value) {
+                                                $('#subcategory').append('<option id="class" value="' +
+                                                    value
+                                                    .subcategory_id +
+                                                    '">' + value.subcategory_name + '</option>');
+                                            });
+                                        }
+                                    });
                                 });
                             });
                         </script>
@@ -204,7 +205,7 @@
                         <div class="d-flex">
                             <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">
                                 <span class="loading-spinner spinner-border spinner-border-sm text-warning me-2"
-                                    role="status"></span><span>{{ __('SIZES') }}</span>
+                                    role="status"></span><span>{{ __('SIZES & COLORS') }}</span>
                             </h5>
                             <div>
                                 <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus-lg"
@@ -218,40 +219,40 @@
                             <table class="table table-hover" id="example">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">#</th>
+                                        <th></th>
                                         <th class="text-center">{{ __('Size Name') }}</th>
                                         <th class="text-center">{{ __('Color Name') }}</th>
                                         <th class="text-center">{{ __('Cost') }}</th>
                                         <th class="text-center">{{ __('Min order') }}</th>
                                         <th class="text-center">{{ __('Max order') }}</th>
-                                        <th class="text-center">{{ __('Sell price') }}</th>
                                         <th class="text-center">{{ __('Price') }}</th>
                                         <th class="text-center">{{ __('Qty') }} </th>
-                                        <th class="text-center">{{ __('Status') }}</th>
+                                        {{-- <th class="text-center">{{ __('Status') }}</th> --}}
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="si in siezs track by $index">
                                         <input type="hidden" ng-id="id" ng-value="si.size_id">
-                                        <td ng-bind="si.prodcolor_code"
-                                            class="text-center small font-monospace text-uppercase"></td>
+                                        <td></td>
+                                        {{-- <td ng-bind="si.prodcolor_code"
+                                            class="text-center small font-monospace text-uppercase"></td> --}}
                                         <td class="text-center" ng-bind="si.size_name"></td>
-                                        <td class="text-center" ng-bind="si.prodcolor_name"></td>
+                                        <td class="text-center"
+                                            ng-bind="jsonParse(si.prodcolor_name).{{ app()->getLocale() }}"></td>
                                         <td class="text-center" ng-bind="si.prodsize_cost"></td>
                                         <td class="text-center" ng-bind="si.prodcolor_minqty"></td>
                                         <td class="text-center" ng-bind="si.prodcolor_maxqty"></td>
                                         <td class="text-center" ng-bind="si.prodsize_price"></td>
-                                        <td class="text-center" ng-bind="si.prodsize_sellprice"></td>
                                         <td class="text-center" ng-bind="si.prodsize_qty"></td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <span
                                                 class="badge bg-<%statusObject.color[si.prodsize_status]%> rounded-pill font-monospace p-2"
                                                 data-ng-model="si.prodsize_status" data-ng-click="toggle(si)"
                                                 style="cursor: pointer">
                                                 <%statusObject.name[si.prodsize_status]%>
                                             </span>
-                                        </td>
+                                        </td> --}}
                                         <td class="col-fit">
                                             <button class="btn btn-outline-primary btn-circle bi bi-pencil-square"
                                                 ng-click="editSize($index)"></button>
@@ -281,12 +282,21 @@
                                             <input type="hidden" name="id" id="prodsizeId"
                                                 ng-value="siezs[updateSize].prodsize_id">
 
-                                            <div class="col-12 col-sm-12">
+                                            <div class="col-6 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="colorName">{{ __('Color Name') }}<b
+                                                    <label for="colorNameAr">{{ __('Color Name AR') }}<b
                                                             class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="name"
-                                                        id="colorName">
+                                                    <input type="text" class="form-control" name="name_ar"
+                                                        id="colorNameAr">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="colorNameEn">{{ __('Color Name EN') }}<b
+                                                            class="text-danger">&ast;</b></label>
+                                                    <input type="text" class="form-control" name="name_en"
+                                                        id="colorNameEn">
                                                 </div>
                                             </div>
 
@@ -319,19 +329,9 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="sell">{{ __('Sell price') }} <b
-                                                            class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="sell"
-                                                        id="sell">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="mb-3">
                                                     <label for="min">{{ __('Min order') }}</label>
-                                                    <input type="text" class="form-control" name="min"
-                                                        id="min">
+                                                    <input type="text" class="form-control" value="1"
+                                                        name="min" id="min">
                                                 </div>
                                             </div>
 
@@ -343,7 +343,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 col-sm-12">
+                                            <div class="col-6 col-sm-6">
                                                 <div class="mb-3">
                                                     <label for="discount">{{ __('Discount') }}</label>
                                                     <input type="text" class="form-control" name="discount"
@@ -404,9 +404,6 @@
                                     cost: {
                                         digits: true,
                                     },
-                                    sell: {
-                                        digits: true,
-                                    },
                                     price: {
                                         digits: true,
                                     },
@@ -452,11 +449,11 @@
 
                         function sClsForm() {
                             $('#prodsizeId').val('');
-                            $('#colorName').val('');
+                            $('#colorNameAr').val('');
+                            $('#colorNameEn').val('');
                             $('#cost').val('');
                             $('#Qty').val('0');
                             $('#price').val('');
-                            $('#sell').val('');
                             $('#max').val('');
                             $('#min').val('');
                         }
@@ -515,15 +512,6 @@
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="sell">{{ __('Sell price') }} <b
-                                                            class="text-danger">&ast;</b></label>
-                                                    <input type="text" class="form-control" name="sell"
-                                                        id="sell" ng-value="siezs[updateSize].prodsize_sellprice">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-12">
-                                                <div class="mb-3">
                                                     <label for="discount">{{ __('Discount') }}</label>
                                                     <input type="text" class="form-control" name="discount"
                                                         id="discount" ng-value="siezs[updateSize].prodsize_discount">
@@ -573,9 +561,6 @@
                             $('#sizeFormedit').on('submit', e => e.preventDefault()).validate({
                                 rules: {
                                     cost: {
-                                        digits: true,
-                                    },
-                                    sell: {
                                         digits: true,
                                     },
                                     price: {
@@ -631,7 +616,7 @@
             <div class="card card-box">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('MEDIAS') }}</h5>
+                        <h5 class="card-title fw-semibold pt-1 me-auto mb-3 text-uppercase">{{ __('MEDIA') }}</h5>
                         <div>
                             <button type="button" class="btn btn-outline-primary btn-circle bi bi-plus"
                                 data-bs-toggle="modal" data-bs-target="#mediaModal"></button>
@@ -651,7 +636,8 @@
                                     <input type="hidden" name="c_id" ng-value="m.prodcolor_id">
                                     <input type="hidden" name="m_id" ng-value="m.media_id">
                                     <input type="hidden" name="s" ng-value="m.prodcolor_media">
-                                    <h6 class="card-title" ng-bind="m.prodcolor_name"></h6>
+                                    <h6 class="card-title"
+                                        ng-bind="jsonParse(m.prodcolor_name).{{ app()->getLocale() }}"></h6>
 
                                 </div>
                             </div>
@@ -672,9 +658,19 @@
                         <form method="post" id="mediaForm" action="/medias/submit">
                             @csrf
                             <input type="hidden" name="product_id" ng-value="product.product_id">
-
                             <div class="col-12 col-sm-12">
                                 <div class="mb-3">
+                                    <label for="color">
+                                        {{ __('Color') }} <b class="text-danger">&ast;</b></label>
+                                    <select name="color" id="color" class="form-select" required>
+                                        <option ng-repeat="color in siezs" ng-value="color.prodcolor_id"
+                                            ng-bind="jsonParse(color.prodcolor_name).{{ app()->getLocale() }}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12">
+                                <div>
                                     <label for="media">{{ __('Media') }}<b class="text-danger">&ast;</b></label>
                                     <input type="file" class="form-control dropify" name="media[]" multiple
                                         id="media">
@@ -682,12 +678,12 @@
                             </div>
 
                         </form>
-                        <div class="modal-footer d-flex">
-                            <button type="button" class="btn btn-outline-secondary me-auto"
-                                data-bs-dismiss="modal">{{ __('Close') }}</button>
-                            <button type="submit" form="mediaForm" class="btn btn-outline-primary"
-                                ng-disabled="submitting">{{ __('Submit') }}</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer d-flex">
+                        <button type="button" class="btn btn-outline-secondary me-auto"
+                            data-bs-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="submit" form="mediaForm" class="btn btn-outline-primary"
+                            ng-disabled="submitting">{{ __('Submit') }}</button>
                     </div>
                 </div>
             </div>
@@ -735,10 +731,13 @@
                 $interpolateProvider.endSymbol('%>');
             });
 
-        app.controller('ngCtrl', function($scope) {
+        app.controller('ngCtrl', function($scope, $sce) {
             $scope.statusObject = {
                 name: ['Un visible', 'Visible'],
                 color: ['danger', 'success']
+            };
+            $scope.trustAsHtml = function(html) {
+                return $sce.trustAsHtml(html);
             };
             $('.loading-spinner').hide();
             $scope.q = '';
@@ -750,9 +749,10 @@
 
             $scope.jsonParse = (str) => JSON.parse(str);
             $scope.product = <?= json_encode($product) ?>;
-            console.log($scope.data);
+
             $scope.load = function(reload = false) {
                 $('.loading-spinner').show();
+
                 var request = {
                     q: $scope.q,
                     product_id: $scope.product.product_id,
@@ -772,7 +772,6 @@
                         $scope.loading = false;
                         if (ln) {
                             $scope.siezs = data;
-                            console.log(data)
                         }
                     });
                 }, 'json');
@@ -883,6 +882,12 @@
             e.preventDefault();
             scope.$apply(() => scope.q = $(this).find('input').val());
             scope.load(true);
+        });
+        $(document).ready(function() {
+            $('#editorContext').summernote({
+                tabsize: 2,
+                height: 300
+            })
         });
     </script>
 @endsection

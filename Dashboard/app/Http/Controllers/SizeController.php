@@ -37,7 +37,7 @@ class SizeController extends Controller
             'size_name'        => $request->name,
             'size_sign'        => $request->sign,
             'size_subcategory' => $request->subcategory,
-            'size_status'      => intval($request->status)
+            'size_status'      => $request->status ? $request->status : 1
         ];
         if(!$id) $params['size_code'] = uniqidReal(8);
 

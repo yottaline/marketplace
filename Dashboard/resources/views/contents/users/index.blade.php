@@ -35,7 +35,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>{{ __('User Name') }}</th>
-                                        <td class="text-center">{{ __('Status') }}</td>
+                                        {{-- <td class="text-center">{{ __('Status') }}</td> --}}
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -51,11 +51,11 @@
                                                 <span ng-bind="user.user_email" class="fw-normal"></span>
                                             </small>
                                         </td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <span ng-click="editStatus(user)" style="cursor:pointer"
                                                 class="badge bg-<%statusObject.color[user.admin_status]%> rounded-pill font-monospace p-2"><%statusObject.name[user.admin_status]%></span>
 
-                                        </td>
+                                        </td> --}}
                                         <td class="col-fit">
                                             <button class="btn btn-outline-primary btn-circle bi bi-pencil-square"
                                                 ng-click="setUser($index)"></button>
@@ -107,6 +107,15 @@
                                             maxlength="24" id="password">
                                     </div>
                                 </div>
+
+                                <div class="col-6">
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" name="status"
+                                            value="1" ng-checked="+list[updateUser].admin_status" id="adminStatus">
+                                        <label class="form-check-label" for="adminStatus">Status</label>
+                                    </div>
+                                </div>
+
                             </div>
                         </form>
                     </div>

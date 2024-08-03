@@ -36,9 +36,9 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" href="lang/en">EN</a>
+                        <a class="dropdown-item" href="\lang\en">EN</a>
                     </li>
-                    <li><a class="dropdown-item" href="lang/ar">AR</a></li>
+                    <li><a class="dropdown-item" href="\lang\ar">AR</a></li>
                 </ul>
             </div>
 
