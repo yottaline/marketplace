@@ -203,8 +203,6 @@
             $scope.submitting = false;
             $scope.list = [];
             $scope.offset = 0;
-
-            // $scope.categories = <?= json_encode($categories) ?>;
             $scope.brands = <?= json_encode($brands) ?>;
             $scope.load = function(reload = false) {
                 if (reload) {
